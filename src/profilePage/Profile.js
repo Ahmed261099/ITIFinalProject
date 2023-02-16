@@ -26,6 +26,7 @@ function Profile() {
     {/* end of header */}
 
     {/* start op p.p */}
+    <div id="profile" >
     <div className='container'>
         <div className='d-flex alin-center justify-content-center'>
             <img className='imgprofile' src={require('../assets/avatar2.png')}>
@@ -36,7 +37,7 @@ function Profile() {
 
 
     {/* start of carousel */}
-    <div className='container mt-120'>
+    <div className='container mt-120' >
     <Carousel fade className='align-center w-100 '>
       <Carousel.Item className=' '>
         <img
@@ -44,7 +45,7 @@ function Profile() {
           src={require("../assets/4-Unique-Office-Designs-1.jpeg")}
           alt="First slide"
         />
-        <Carousel.Caption>
+        <Carousel.Caption >
           <h3>First slide label</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
@@ -84,7 +85,7 @@ function Profile() {
 
 
     {/*start section buttons and content  */}
-     <div className="m-5  pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
+     <div className="m-5  pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50" >
             <div className="container">
                 <div className="row">
 
@@ -278,7 +279,7 @@ function Profile() {
             </div>
         </div>
     {/*end section of buttons and content */}
-
+    </div>
     </>
   )
 }

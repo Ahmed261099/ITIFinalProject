@@ -110,7 +110,7 @@ function Register() {
     }
 
     return (
-        <body>
+        <body className="reg">
         <div className="container">
         <div className="offset-md-3 col-md-6">
             <h1 className="h1 text-light"> Sign up </h1> <br/>
@@ -157,7 +157,7 @@ function Register() {
                     <p className="text-danger"> {error.confirmpassword} </p>
                 </div>
                 <br/>
-                <input className="btn btn-outline-dark " type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
+                <input className="btn btn-outline-dark" id="btn1" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
             </form>
             <br/> <br/>
         </div>

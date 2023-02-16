@@ -45,7 +45,7 @@ function Login() {
     }
 
     return (
-        <body>
+        <body className="reg">
         <div className="container">
             <h1 className="h1 text-light"> Login  </h1>
             <br/>
@@ -63,8 +63,9 @@ function Login() {
                     <input name="password" className="form-control p-2" placeholder="Enter your password" value={userData.password} onChange={(e) => changeUserData(e)} />
                     <p className="text-danger"> {error.password} </p>
                 </div>
-                <input className="btn btn-outline-light" type="submit" value={'Login'} disabled={error.email ||error.password} />
+                <input className="btn btn-outline-light" id="btn2" type="submit" value={'Login'} disabled={error.email ||error.password} />
             </form>
+            <br/>
         </div>
         </div>
         </body>

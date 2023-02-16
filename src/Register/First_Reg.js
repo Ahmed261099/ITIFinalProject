@@ -5,7 +5,7 @@ function First_Reg(){
 
     return(
         <>
-        <body>
+        <body className="reg">
             <div className="container">
                 <br/> <br/>
                 <Link  className="btn btn-light p-4" id="reg_1" to={"/registercus"}>
