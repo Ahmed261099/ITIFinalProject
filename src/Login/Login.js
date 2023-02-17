@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "../Register/register.css";
+
+
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
-const regPass = RegExp('((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*]).{8,20})');
-// const regPass = new RegExp(/^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*])(?=.{8,})/);
+ const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
 function Login() {
     const [userData, setUserData] = useState({
         email: "",
