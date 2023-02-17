@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./register.css";
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
-const regPass = RegExp('((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*]).{8,20})');
+const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
+
 // const regPhone = RegExp('(^[1-9]\d{2}\s\d{3}\s\d{4})');
 function Register() {
     const [userData, setUserData] = useState({
