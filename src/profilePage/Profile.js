@@ -39,7 +39,7 @@ function Profile() {
                             {/* start op p.p */}
 
                             <div className='d-flex '>
-                                <img className='imgprofile' src={require('../assets/avatar2.png')}>
+                                <img className='imgprofile' src={require('../assets/avatar2.png')} alt=''>
                                 </img>
                             </div>
 
@@ -73,7 +73,7 @@ function Profile() {
                                     <img
                                         className="d-block w-100 " height={'400px'}
                                         src={require(`../assets/img1.jpeg`)}
-
+                                        alt=''
                                     />
                                     <Carousel.Caption>
                                         <h3>{onePort.title}</h3>
