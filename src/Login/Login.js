@@ -46,7 +46,7 @@ function Login() {
     }
 
     return (
-        <body className="reg">
+        <body className="reg" >
         <div className="container">
             <h1 className="h1 text-light"> Login  </h1>
             <br/>
