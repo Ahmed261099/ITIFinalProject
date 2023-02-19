@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./register.css";
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
 const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
-const regPhone = RegExp(/^[1-9]\d{2}\s\d{3}\s\d{4}/);
+// const regPhone = RegExp(/^[1-9]\d{2}\s\d{3}\s\d{4}/);
 function Register() {
     const [userData, setUserData] = useState({
         name: "",
@@ -25,7 +25,7 @@ function Register() {
     })
 
     const changeUserData = (e) => {
-        if (e.target.name == "name") {
+        if (e.target.name === "name") {
             setUserData({
                 ...userData,
                 name: e.target.value
@@ -33,10 +33,10 @@ function Register() {
 
             setErros({
                 ...error,
-                name: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                name: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "email") {
+        else if (e.target.name === "email") {
             setUserData({
                 ...userData,
                 email: e.target.value
@@ -47,7 +47,7 @@ function Register() {
                 email: reg.test(e.target.value) ? '' : "Invalid email address"
             })
         }
-        else if (e.target.name == "username") {
+        else if (e.target.name === "username") {
             setUserData({
                 ...userData,
                 username: e.target.value
@@ -55,10 +55,10 @@ function Register() {
 
             setErros({
                 ...error,
-                username: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                username: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "address") {
+        else if (e.target.name === "address") {
             setUserData({
                 ...userData,
                 address: e.target.value
@@ -66,10 +66,10 @@ function Register() {
 
             setErros({
                 ...error,
-                address: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                address: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "phone") {
+        else if (e.target.name === "phone") {
             setUserData({
                 ...userData,
                 phone: e.target.value
@@ -77,10 +77,10 @@ function Register() {
 
             setErros({
                 ...error,
-                phone: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 11 ? "Min Length is 11" : null
+                phone: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 11 ? "Min Length is 11" : null
             })
         }
-        else if (e.target.name == "password") {
+        else if (e.target.name === "password") {
             setUserData({
                 ...userData,
                 password: e.target.value
@@ -88,7 +88,7 @@ function Register() {
 
             setErros({
                 ...error,
-                password: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8" : regPass.test(e.target.value) ? '' : "Invalid Password"
+                password: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8" : regPass.test(e.target.value) ? '' : "Invalid Password"
             })
         
         } else {
@@ -99,7 +99,7 @@ function Register() {
 
             setErros({
                 ...error,
-                confirmpassword: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min length is 8" : e.target.value == userData.password ? '' : "Password and confirm password should be the same"
+                confirmpassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min length is 8" : e.target.value === userData.password ? '' : "Password and confirm password should be the same"
             })
         }
 
