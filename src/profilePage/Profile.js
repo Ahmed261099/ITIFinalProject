@@ -4,7 +4,19 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 function Profile() {
-    const portfolios = [{
+    const user= {name:"rami menassa",
+    email:"rami@gmail.com",
+    role:"engineer",
+    address:[{
+        city:"minia",
+        street:"tahaHassen",
+    },{
+        city:"cairo",
+        street:"zatoon",    
+    }],
+    phone:"001212252",
+    experiance:["2 year experince in nile group","now work in trenty "]
+    ,portfolios : [{
         img: "../assets/img1.jpeg",
         title: "First slide label",
         caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
@@ -12,7 +24,7 @@ function Profile() {
         img: "../assets/img2.jpeg",
         title: "Second slide label",
         caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },];
+    },],}
 
 
 
@@ -55,7 +67,7 @@ function Profile() {
                 {/* start of carousel */}
                 <div className='container mt-5'>
                     <Carousel fade className='align-center w-100 '>
-                        {portfolios.map((onePort, index) => {
+                        {user.portfolios.map((onePort, index) => {
                             return (
                                 <Carousel.Item key={index} className=' '>
                                     <img
@@ -88,9 +100,9 @@ function Profile() {
 
                                     <div className="col-xl-3 col-12 mb-5">
                                         <div className=" flex-column  nav" role="tablist">
-                                            <button className="btn btn-outline-dark text-start border-secondary-subtle  rounded-0 p-3 text-uppercase active" type="button" id="dashboad-tab" data-bs-target="#dashboad" data-bs-toggle="tab" role='tab' aria-selected="true"  >
+                                            <button className="btn btn-outline-dark text-start border-secondary-subtle  rounded-0 p-3 text-uppercase active" type="button" id="info-tab" data-bs-target="#info" data-bs-toggle="tab" role='tab' aria-selected="true"  >
                                                 <i className="pe-2 fa fa-dashboard"></i>
-                                                Dashboard
+                                                info
                                             </button>
                                             <button className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" type="button" id="orders-tab" data-bs-target="#orders" data-bs-toggle="tab" role="tab" aria-controls="orders" aria-selected="false" tabIndex="-1">
                                                 <i className="pe-2 fa fa-cart-arrow-down"></i>
@@ -118,11 +130,11 @@ function Profile() {
                                         <div className="tab-content" id="myaccountContent">
                                             {/* <!-- Single Tab Content Start --> */}
 
-                                            <div className="tab-pane fade show active" id="dashboad" role="tabpanel" aria-labelledby="dashboad-tab" tabIndex="0">
+                                            <div className="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab" tabIndex="0">
                                                 <div className="border p-4">
-                                                    <h3 className='border-bottom pb-2 mb-4'>Dashboard</h3>
+                                                    <h3 className='border-bottom pb-2 mb-4'>Info</h3>
 
-                                                    <div className="welcome mb-20">
+                                                    <div className="">
                                                         <p>Hello, <strong>Alex Tuntuni</strong> (If Not <strong>Tuntuni !</strong><a href="login-register.html" className="text-dark text-decoration-none"> Logout</a>)</p>
                                                     </div>
 
