@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Switch>  
         <Route exact path={'/Profile'} component={Profile}/>
-        <Route exact path={"/login"} component={Login} />
+        <Route exact path={"/login"} component={Login} />        
         <Route exact path={"/firstreg"} component={First_Reg} />
         <Route exact path={"/register"} component={Register} />
         <Route exact path={"/registercus"} component={RegisterCustomer} />
