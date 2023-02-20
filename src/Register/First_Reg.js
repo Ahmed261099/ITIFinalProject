@@ -1,7 +1,19 @@
 import "./firstreg.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function First_Reg(){
+
+    const history = useHistory();
+
+    const { currentUser } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if(currentUser){
+          history.push("profile")
+        }
+      }, [currentUser, history])
 
     return(
         <>
@@ -13,7 +25,7 @@ function First_Reg(){
                 </Link>
                 <br/> <br/>
                 <Link  className="btn btn-light p-4" id="reg_2" to={"/register"}>
-                     REGISTER AS A NEW CLIENT
+                     REGISTER AS A NEW Engineer/Provider
                 </Link>
             </div>
         </body>

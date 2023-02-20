@@ -1,6 +1,8 @@
 import React from 'react'
 import './Profile.css'
 import Carousel from 'react-bootstrap/Carousel';
+import { logoutInitiate } from '../Store/Actions/AuthAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function Profile() {
@@ -13,6 +15,16 @@ function Profile() {
         title: "Second slide label",
         caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },];
+
+    const { currentUser } = useSelector((state) => state.user);
+
+    const dispatch = useDispatch();
+
+    const handleAuth = () => {
+        if (currentUser) {
+          dispatch(logoutInitiate());
+        }
+      };
 
 
 
@@ -108,7 +120,7 @@ function Profile() {
                                                 <i className="pe-2 fa fa-edit"></i>
                                                 Edit Details
                                             </button>
-                                            <a className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" href="login-register.html"><i className="pe-1 fa fa-sign-out"></i> Logout</a>
+                                            <a className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" href="login-register.html" onClick={handleAuth}><i className="pe-1 fa fa-sign-out"></i> Logout</a>
                                         </div>
                                     </div>
                                     {/* end section of buttons */}
