@@ -115,8 +115,8 @@ function Register() {
         <div className="container">
         <div className="offset-md-3 col-md-6">
             <br/>
-            <h1 className="h1 text-light"> Sign up </h1> <br/>
-            <form onSubmit={(e) => submitData(e)} className="border border-light rounded p-5">
+            <h1 className="h1 mt-3 text-light"> Sign up </h1> <br/>
+            <form onSubmit={(e) => submitData(e)} className="border border-light blur rounded p-5">
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label text-light">Name</label> <br />
                     <input name="name" type="text" placeholder="Enter your name"
