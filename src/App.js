@@ -41,6 +41,8 @@ function App() {
       <Switch>  
         <Route exact path={'/Home'} component={Home}/>
         <UserRoute exact path={'/Profile'} component={Profile}/>
+        <Route exact path={'/'} component={Home}/>
+        <Route exact path={'/Profile'} component={Profile}/>
         <Route exact path={"/login"} component={Login} />        
         <Route exact path={'/navbar'} component={Navbar}/>
         <Route exact path={"/login"} component={Login} />

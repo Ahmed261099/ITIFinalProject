@@ -68,6 +68,33 @@ function Login() {
 
     dispatch(loginInitiate(userData.email, userData.password))
 
+    return (
+        <body className="reg" >
+        <div className="container">
+            <h1 className="h1 text-light"> Login  </h1>
+            <br/>
+            <div className="offset-md-3 col-md-6">
+            <form onSubmit={(e) => submitData(e)} className="border border-light rounded p-5" >
+
+                <div className="mb-3">
+                    <label className="form-label text-light" htmlFor="email">Email</label> <br/>
+                    <input name="email" className="form-control p-2" placeholder="Enter your email" value={userData.email} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.email} </p>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label text-light">Password</label>  <br/>
+                    <input name="password" className="form-control p-2" placeholder="Enter your password" value={userData.password} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.password} </p>
+                </div>
+                <input className="btn btn-outline-light" id="btn2" type="submit" value={'Login'} disabled={error.email ||error.password} />
+            </form>
+            <br/>
+        </div>
+        </div>
+        </body>
+    )
+
   };
 
   return (

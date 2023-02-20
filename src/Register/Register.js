@@ -247,6 +247,78 @@ function Register() {
               <p className="text-danger"> {error.name} </p>
             </div>
 
+            <br/>
+            <h1 className="h1 mt-3 text-light"> Sign up </h1> <br/>
+            <form onSubmit={(e) => submitData(e)} className="border border-light blur rounded p-5">
+                <div className="mb-3">
+                    <label htmlFor="name" className="form-label text-light">Name</label> <br />
+                    <input name="name" type="text" placeholder="Enter your name"
+                        className={`form-control p-2 ${error.name && "border-danger"}`}
+                        value={userData.name} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger">  {error.name}  </p>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label text-light" htmlFor="email">Email</label> <br />
+                    <input name="email" placeholder="Enter your email" className="form-control p-2" value={userData.email} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.email} </p>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label text-light">Username</label>  <br />
+                    <input name="username" placeholder="Enter your username" className="form-control p-2" value={userData.username} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.username} </p>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label text-light">Address</label>  <br />
+                    <input name="address" placeholder="Enter your address" className="form-control p-2" value={userData.address} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.address} </p>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label text-light">Phone</label>  <br />
+                    <input name="phone" placeholder="Enter your phone" className="form-control p-2" value={userData.phone} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.phone} </p>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label text-light">Password</label>  <br />
+                    <input name="password" placeholder="Enter your password" className="form-control p-2" value={userData.password} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.password} </p>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label text-light">Confirm Password</label>  <br />
+                    <input name="confirmpassword" placeholder="Confirm your password" className="form-control p-2" value={userData.confirmpassword} onChange={(e) => changeUserData(e)} />
+                    <p className="text-danger"> {error.confirmpassword} </p>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label text-light">Roll</label>  <br />
+                    <select name="roll" className="form-control  p-2">
+                        <option>Civil Engineer</option>
+                        <option>Interior Designer</option>
+                        <option>Electrical Engineer</option>
+                        <option>Mechanical Engineer</option>
+                        <option>Mechaelectrical Engineer</option>
+                        <option>Telecom Engineer</option>
+                        <option>ُEnergy Engineer</option>
+                        <option>Archetect</option>
+                        <option>Painting Contractor</option>
+                        <option>Electrical Contractor</option>
+                        <option>Floor Contractor</option>
+                        <option>Plumbing Contractor</option>
+                        <option>Carpentry contractor</option>
+                        <option>Blacksmith contractor</option>
+                    </select>
+                </div>
+                <br/>
+                <input className="btn btn-outline-dark" id="btn" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
+            </form>
+            <br/> <br/>
+        </div>
+        </div>
+    </body>
+    )
+
             <div className="mb-3">
               <label className="form-label text-light" htmlFor="email">
                 Email
