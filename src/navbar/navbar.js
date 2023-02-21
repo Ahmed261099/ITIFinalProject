@@ -26,7 +26,7 @@ function navbar()
                         <NavLink className="nav-link fs-5" aria-current="page" to="About">About</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="Contact">Contact</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="firstreg">Contact</NavLink>
                     </li>    
                 </ul>
                 <div className=' d-flex'>

@@ -8,7 +8,8 @@ function Register() {
         name: "",
         email: "",
         username: "",
-        address: "",
+        city: "",
+        street:"",
         phone: "",
         password: "",
         confirmpassword: ""
@@ -18,7 +19,8 @@ function Register() {
         name: null,
         email: null,
         username: null,
-        address: null,
+        city: null,
+        street:null,
         phone: null,
         password: null,
         confirmpassword: null
@@ -58,15 +60,26 @@ function Register() {
                 username: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name === "address") {
+        else if (e.target.name === "city") {
             setUserData({
                 ...userData,
-                address: e.target.value
+                city: e.target.value
             })
 
             setErros({
                 ...error,
-                address: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                city: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+            })
+        }
+        else if (e.target.name === "street") {
+            setUserData({
+                ...userData,
+                street: e.target.value
+            })
+
+            setErros({
+                ...error,
+                street: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
         else if (e.target.name === "phone") {
@@ -135,10 +148,19 @@ function Register() {
                     <p className="text-danger"> {error.username} </p>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label text-light">Address</label>  <br />
-                    <input name="address" placeholder="Enter your address" className="form-control p-2" value={userData.address} onChange={(e) => changeUserData(e)} />
-                    <p className="text-danger"> {error.address} </p>
-                </div>
+                            <label className="form-label text-light">Address</label>  <br />
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <input name="city" placeholder="Enter your city" className="form-control p-2 " value={userData.city} onChange={(e) => changeUserData(e)} />
+                                    <p className="text-danger"> {error.city} </p>
+                                </div>
+                                
+                                <div>
+                                    <input name="street" placeholder="Enter your street" className="form-control p-2" value={userData.street} onChange={(e) => changeUserData(e)} />
+                                    <p className="text-danger"> {error.street} </p>
+                                </div>
+                            </div>
+                        </div>
                 <div className="mb-3">
                     <label className="form-label text-light">Phone</label>  <br />
                     <input name="phone" placeholder="Enter your phone" className="form-control p-2" value={userData.phone} onChange={(e) => changeUserData(e)} />
@@ -157,7 +179,7 @@ function Register() {
                     <p className="text-danger"> {error.confirmpassword} </p>
                 </div>
                 <br/>
-                <input className="btn btn-outline-dark" id="btn1" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
+                <input className="btn btn-outline-light" id="btn1" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
             </form>
             <br/> <br/>
         </div>
