@@ -12,3 +12,16 @@
     font-size: 25px;
     direction: ltr;
 }
+
+#log {
+    /* margin-left: 30%; */
+    color: white;
+    text-align: center;
+}
+#log2{
+    color: rgb(20, 20, 66);
+}
+#log2:hover{
+    color: brown;
+    text-shadow: 5px 5px 10px rgb(233, 116, 116);
+}

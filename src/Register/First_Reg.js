@@ -15,6 +15,10 @@ function First_Reg(){
                 <Link  className="btn btn-light p-4" id="reg_2" to={"/register"}>
                      REGISTER AS A NEW CLIENT
                 </Link>
+                <br/> <br/>
+                <h4 id="log">
+                If you have an account : <Link id="log2" to={"/login"}> LOGIN</Link> 
+                </h4>
             </div>
         </body>
         </>
