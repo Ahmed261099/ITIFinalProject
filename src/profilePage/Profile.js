@@ -2,9 +2,16 @@ import React, { useState } from 'react'
 import './Profile.css'
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
+import { logoutInitiate } from '../Store/Actions/AuthAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function Profile() {
+
+    const { currentUser } = useSelector((state) => state.user);
+
+    const dispatch = useDispatch();
+
     const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
     const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
 
@@ -243,6 +250,12 @@ function Profile() {
 
     }
 
+    const handleAuth = () => {
+        if (currentUser) {
+          dispatch(logoutInitiate());
+        }
+    }
+
     const submitData = (e) => {
         e.preventDefault()
     }
@@ -344,7 +357,7 @@ function Profile() {
                                             <i className="pe-2 fa fa-edit"></i>
                                             Edit Details
                                         </button>
-                                        <a className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" href="login-register.html"><i className="pe-1 fa fa-sign-out"></i> Logout</a>
+                                        <a className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" href="login-register.html" onClick={handleAuth}><i className="pe-1 fa fa-sign-out"></i> Logout</a>
                                     </div>
                                 </div>
                                 {/* end section of buttons */}
