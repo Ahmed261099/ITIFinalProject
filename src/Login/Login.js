@@ -48,10 +48,10 @@ function Login() {
     return (
         <body className="reg" >
         <div className="container">
-            <h1 className="h1 text-light"> Login  </h1>
+            <h1 className="h1 text-light pt-5"> Login  </h1>
             <br/>
             <div className="offset-md-3 col-md-6">
-            <form onSubmit={(e) => submitData(e)} className="border border-light rounded p-5" >
+            <form onSubmit={(e) => submitData(e)} className="border border-light login blur rounded p-5" >
 
                 <div className="mb-3">
                     <label className="form-label text-light" htmlFor="email">Email</label> <br/>

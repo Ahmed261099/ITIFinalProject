@@ -126,10 +126,10 @@ function Register() {
     return (
         <body className="reg">
             <div className="container">
-                <div className="offset-md-3 col-md-6">
+                <div className="offset-3 col-6">
                     <br />
                     <h1 className="h1 text-light"> Sign up </h1> <br />
-                    <form onSubmit={(e) => submitData(e)} className="border border-light rounded p-5">
+                    <form onSubmit={(e) => submitData(e)} className="border border-light rounded p-5 blur">
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label text-light">Name</label> <br />
                             <input name="name" type="text" placeholder="Enter your name"
@@ -151,13 +151,13 @@ function Register() {
                         </div>
                         <div className="mb-3">
                             <label className="form-label text-light">Address</label>  <br />
-                            <div className="d-flex justify-content-between">
-                                <div>
+                            <div className="d-flex  justify-content-between">
+                                <div className="w-50 pe-3">
                                     <input name="city" placeholder="Enter your city" className="form-control p-2 " value={userData.city} onChange={(e) => changeUserData(e)} />
                                     <p className="text-danger"> {error.city} </p>
                                 </div>
                                 
-                                <div>
+                                <div className="w-50 ps-3">
                                     <input name="street" placeholder="Enter your street" className="form-control p-2" value={userData.street} onChange={(e) => changeUserData(e)} />
                                     <p className="text-danger"> {error.street} </p>
                                 </div>
@@ -199,7 +199,7 @@ function Register() {
                             </select>
                         </div>
                         <br />
-                        <input className="btn btn-outline-dark" id="btn" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
+                        <input className="btn btn-outline-light" id="btn" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
                     </form>
                     <br /> <br />
                 </div>

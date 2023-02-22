@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
@@ -73,7 +73,7 @@ function Profile() {
     })
 
     const changeUserData = (e) => {
-        if (e.target.name == "name") {
+        if (e.target.name === "name") {
             setUserData({
                 ...userData,
                 name: e.target.value
@@ -81,10 +81,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                name: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                name: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "email") {
+        else if (e.target.name === "email") {
             setUserData({
                 ...userData,
                 email: e.target.value
@@ -95,7 +95,7 @@ function Profile() {
                 email: reg.test(e.target.value) ? '' : "Invalid email address"
             })
         }
-        else if (e.target.name == "userName") {
+        else if (e.target.name === "userName") {
             setUserData({
                 ...userData,
                 userName: e.target.value
@@ -103,10 +103,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                userName: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                userName: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "img") {
+        else if (e.target.name === "img") {
             setUserData({
                 ...userData,
                 img: e.target.value
@@ -114,10 +114,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                img: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                img: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "title") {
+        else if (e.target.name === "title") {
             setUserData({
                 ...userData,
                 title: e.target.value
@@ -125,10 +125,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                title: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                title: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "caption") {
+        else if (e.target.name === "caption") {
             setUserData({
                 ...userData,
                 caption: e.target.value
@@ -136,11 +136,11 @@ function Profile() {
 
             setErros({
                 ...error,
-                caption: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                caption: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
 
-        else if (e.target.name == "role") {
+        else if (e.target.name === "role") {
             setUserData({
                 ...userData,
                 role: e.target.value
@@ -148,9 +148,9 @@ function Profile() {
 
             setErros({
                 ...error,
-                role: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                role: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
-        } else if (e.target.name == "experiance") {
+        } else if (e.target.name === "experiance") {
             setUserData({
                 ...userData,
                 experiance: e.target.value
@@ -158,10 +158,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                experiance: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 10 ? "Min Length is 10 Char" : null
+                experiance: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 10 ? "Min Length is 10 Char" : null
             })
         }
-        else if (e.target.name == "specialization") {
+        else if (e.target.name === "specialization") {
 
             setUserData({
                 ...userData,
@@ -170,10 +170,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                specialization: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                specialization: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "city") {
+        else if (e.target.name === "city") {
             setUserData({
                 ...userData,
                 city: e.target.value
@@ -181,10 +181,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                city: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                city: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "street") {
+        else if (e.target.name === "street") {
             setUserData({
                 ...userData,
                 street: e.target.value
@@ -192,10 +192,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                street: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                street: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-        else if (e.target.name == "phone") {
+        else if (e.target.name === "phone") {
             setUserData({
                 ...userData,
                 phone: e.target.value
@@ -203,10 +203,10 @@ function Profile() {
 
             setErros({
                 ...error,
-                phone: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 11 ? "Min Length is 11" : null
+                phone: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 11 ? "Min Length is 11" : null
             })
         }
-        else if (e.target.name == "currentpassword") {
+        else if (e.target.name === "currentpassword") {
             setUserData({
                 ...userData,
                 currentpassword: e.target.value
@@ -214,11 +214,11 @@ function Profile() {
 
             setErros({
                 ...error,
-                currentpassword: e.target.value.length == 0 ? "This Field is Required" : e.target.value == user.password ? '' : "password is not correct"
+                currentpassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value === user.password ? '' : "password is not correct"
             })
 
         }
-        else if (e.target.name == "password") {
+        else if (e.target.name === "password") {
             setUserData({
                 ...userData,
                 password: e.target.value
@@ -226,7 +226,7 @@ function Profile() {
 
             setErros({
                 ...error,
-                password: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8" : regPass.test(e.target.value) ? '' : "Invalid Password"
+                password: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8" : regPass.test(e.target.value) ? '' : "Invalid Password"
             })
 
         } else {
@@ -237,7 +237,7 @@ function Profile() {
 
             setErros({
                 ...error,
-                confirmpassword: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min length is 8" : e.target.value == userData.password ? '' : "Password and confirm password should be the same"
+                confirmpassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min length is 8" : e.target.value === userData.password ? '' : "Password and confirm password should be the same"
             })
         }
 
@@ -250,11 +250,27 @@ function Profile() {
 
     const handleButtonPortfolio =() =>{
         user.portfolios.push({"title":userData.title,"caption":userData.caption,"img":userData.img})
-        userData.img="";
-        userData.caption="";
-        userData.title="";
+        setUserData({...userData,
+           portfolios:user.portfolios})
+
         console.log(user.portfolios);
     }
+
+    const handleButtonAddress =() =>{
+        user.address.push({"city":userData.city,"street":userData.street})
+        setUserData({...userData,
+            address:user.address
+         })
+ 
+        console.log(user.address);
+    }
+    const handleButtonEdit =() =>{
+        
+    }
+    const handleButtonChangePassword =() =>{
+        
+    }
+
 
     return (
 
@@ -379,7 +395,7 @@ function Profile() {
                                                 <h3 className='border-bottom pb-2 mb-4'>add Portfolio</h3>
                                                 <form onSubmit={(e) => submitData(e)} >
                                                     <div className=" col-12 ">
-                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Write title for Portfolio " type="text" name='title' value={userData.title} onChange={(e) => changeUserData(e)} />
+                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Write title for Portfolio " type="text" name='title'  onChange={(e) => changeUserData(e)} />
                                                         <p className="text-danger ms-2" > <small>{error.title}</small> </p>
                                                     </div>
                                                     <div className=" col-12 ">
@@ -391,7 +407,7 @@ function Profile() {
                                                         <p className="text-danger ms-2"> <small>{error.img}</small> </p>
                                                     </div>
                                                     <div className="col-12">
-                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='button' onClick={()=>handleButtonPortfolio()} disabled={error.img || error.caption || error.title} >Save</button>
+                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={()=>handleButtonPortfolio()} disabled={error.img || error.caption || error.title} >Save</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -403,7 +419,7 @@ function Profile() {
                                                 <h3 className='border-bottom pb-2 mb-4'>Message</h3>
                                                 <form onSubmit={(e) => submitData(e)}>
                                                     <div className="col-12 ">
-                                                        <textarea className='border m-2 border-secondary-subtle w-100 p-3 d-block ' id="first-name" placeholder="Send Message" type="text" />
+                                                        <textarea className='border m-2 border-secondary-subtle w-100 p-3 d-block '  placeholder="Send Message" type="text" />
                                                     </div>
                                                     <div className="col-12">
                                                         <button className="btn btn-outline-dark text-uppercase p-2 m-2">Send</button>
@@ -438,7 +454,7 @@ function Profile() {
                                                         <p className="text-danger ms-2"> <small>{error.street}</small> </p>
                                                     </div>
                                                     <div className="col-12">
-                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='button' disabled={ error.city || error.street }><i className="fa fa-edit" > </i>  add</button>
+                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={()=>handleButtonAddress()} disabled={ error.city || error.street }><i className="fa fa-edit" > </i>  add</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -455,7 +471,7 @@ function Profile() {
                                                     <div >
                                                         <form onSubmit={(e) => submitData(e)} className="row ">
                                                             <div className="col-lg-6 col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="first-name" name='userName' value={userData.userName} onChange={(e) => changeUserData(e)}  type="text" />
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block'  name='userName' value={userData.userName} onChange={(e) => changeUserData(e)}  type="text" />
                                                                 <p className="text-danger ms-2"> <small>{error.userName}</small> </p>
                                                             </div>
                                                             <div className="col-lg-6 col-12">
@@ -517,7 +533,7 @@ function Profile() {
                                                             </div>
 
                                                             <div className="d-flex justify-content-end">
-                                                                <button className="btn btn-outline-dark text-uppercase p-2 m-2">Save Changes</button>
+                                                                <button className="btn btn-outline-dark text-uppercase p-2 m-2" >Save Changes</button>
                                                             </div>
                                                         </form>
 
