@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "../Register/register.css";
+import { loginInitiate } from "../Store/Actions/AuthAction";
 
 
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
  const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
 function Login() {
+
+    const history = useHistory();
+
+    const { currentUser } = useSelector((state) => state.user);
+
+    const dispatch = useDispatch();
+
+  
     const [userData, setUserData] = useState({
         email: "",
         password: "",
@@ -41,8 +52,19 @@ function Login() {
             })
         }
     }
+
+    useEffect(() => {
+        if(currentUser){
+          history.push("profile")
+        }
+      }, [currentUser, history])
+
+      
     const submitData = (e) => {
         e.preventDefault()
+
+        dispatch(loginInitiate(userData.email, userData.password))
+        
     }
 
     return (
