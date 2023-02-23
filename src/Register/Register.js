@@ -270,7 +270,7 @@ import {
             <h1 className="h1 text-light"> Sign up </h1> <br />
             <form
               onSubmit={(e) => submitData(e)}
-              className="border border-light rounded p-5"
+              className="border border-light rounded p-5 blur"
             >
               <div className="mb-3">
                 <label htmlFor="name" className="form-label text-light">
@@ -317,22 +317,22 @@ import {
               <div className="mb-3">
                 <label className="form-label text-light">Address</label> <br />
                 <div className="d-flex justify-content-between">
-                  <div>
+                  <div className="w-100">
                     <input
                       name="city"
                       placeholder="Enter your city"
-                      className="form-control p-2 "
+                      className="form-control p-2 me-3 "
                       value={userData.city}
                       onChange={(e) => changeUserData(e)}
                     />
                     <p className="text-danger"> {error.city} </p>
                   </div>
   
-                  <div>
+                  <div className="w-100">
                     <input
                       name="street"
                       placeholder="Enter your street"
-                      className="form-control p-2"
+                      className="form-control p-2 ms-3 w-100"
                       value={userData.street}
                       onChange={(e) => changeUserData(e)}
                     />
@@ -401,7 +401,7 @@ import {
               </div>
               <br />
               <input
-                className="btn btn-outline-dark"
+                className="btn btn-outline-light"
                 id="btn"
                 type="submit"
                 value={"Sign up"}

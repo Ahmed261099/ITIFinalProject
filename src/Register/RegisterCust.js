@@ -244,10 +244,10 @@ function Register() {
     <body className="reg">
       <div className="container">
         <div className="offset-md-3 col-md-6">
-          <h1 className="h1 text-light"> Sign up </h1> <br />
+          <h1 className="h1 text-light pt-5"> Sign up </h1> <br />
           <form
             onSubmit={(e) => submitData(e)}
-            className="border border-light rounded p-5"
+            className="border border-light blur rounded p-5"
           >
             <div className="mb-3">
               <label htmlFor="name" className="form-label text-light">
@@ -294,22 +294,22 @@ function Register() {
             <div className="mb-3">
               <label className="form-label text-light">Address</label> <br />
               <div className="d-flex justify-content-between">
-                <div>
+                <div className="w-100">
                   <input
                     name="city"
                     placeholder="Enter your city"
-                    className="form-control p-2 "
+                    className="form-control p-2  me-3"
                     value={userData.city}
                     onChange={(e) => changeUserData(e)}
                   />
                   <p className="text-danger"> {error.city} </p>
                 </div>
 
-                <div>
+                <div className="w-100">
                   <input
                     name="street"
                     placeholder="Enter your street"
-                    className="form-control p-2"
+                    className="form-control p-2 ms-3"
                     value={userData.street}
                     onChange={(e) => changeUserData(e)}
                   />
