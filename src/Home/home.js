@@ -3,52 +3,114 @@ import './home.css'
 import Header from '../Header/header'
 import Banners from '../Banners/banners'
 import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { db } from "./../Firebase";
+import {
+  collection,
+  onSnapshot,
+  query,
+  limit,
+} from "firebase/firestore";
 
-
-function home()
+function Home()
 {
-    var Engineers = [
-        {
-            engName:"Ahmed Samy",
-            engImage:"../assets/Engineers/client-1.png",
-            engRate:8,
-        },
-        {
-            engName:"Mohamed Amer",
-            engImage:"../assets/Engineers/client-2.png",
-            engRate:9,
-        },
-        {
-            engName:"Omar salah",
-            engImage:"../assets/Engineers/client-3.png",
-            engRate:5,
-        },
-        {
-            engName:"Rami Menissa",
-            engImage:"../assets/Engineers/client-4.png",
-            engRate:10,
-        },
-        {
-            engName:"Engy Nader",
-            engImage:"../assets/Engineers/client-5.png",
-            engRate:7,
-        },
-        {
-            engName:"Eslam Elwy",
-            engImage:"../assets/Engineers/client-6.png",
-            engRate:9,
-        },
-        {
-            engName:"Ahmed Yosry",
-            engImage:"../assets/Engineers/client-7.png",
-            engRate:6,
-        },
-        {
-            engName:"Moaaz Taha",
-            engImage:"../assets/Engineers/client-8.png",
-            engRate:9.3,
-        },
-    ]
+    const [dataEng, setDataEng] = useState([]);
+    const [dataCont, setDataCont] = useState([]);
+    const [dataProd, setDataProd] = useState([]);
+    const [dataFilter, setDataFilter] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
+    const [sortValue, setSortValue] = useState("");
+    const [keyword, setKeyword] = useState("engineers");
+    const [operation, setOperation] = useState("");
+    const dataEngColl = query(collection(db, "engineers"), limit(4));
+    const dataContColl = query(collection(db, `providers`), limit(4));
+    const dataProdColl = query(collection(db, `users`), limit(4));
+    const dataRef = collection(db, `${keyword}`);
+    const loadDataFilter = async (optType = null) => {
+      onSnapshot(dataRef, (snapshot) => {
+        setDataFilter(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+            role: doc.data().role,
+            phone: doc.data().phone,
+            rate: doc.data().rate,
+            spetialization: doc.data().spetialization,
+          }))
+        );
+      });
+    };
+    const loadDataEng = async (optType = null) => {
+      onSnapshot(dataEngColl, (snapshot) => {
+        setDataEng(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+            role: doc.data().role,
+            phone: doc.data().phone,
+            rate: doc.data().rate,
+            spetialization: doc.data().spetialization
+          }))
+        );
+      });
+    };
+    console.log(dataFilter);
+    const loadDataCont = async (optType = null, filterOrSortValue) => {
+      onSnapshot(dataContColl, (snapshot) => {
+        setDataCont(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+            role: doc.data().role,
+            phone: doc.data().phone,
+            rate: doc.data().rate,
+            spetialization: doc.data().spetialization
+          }))
+        );
+      });
+    };
+    const loadDataProd = async () => {
+      onSnapshot(dataProdColl, (snapshot) => {
+        setDataProd(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+            category: doc.data().category,
+            spetialization: doc.data().spetialization
+          }))
+        );
+      });
+    };
+    const handleFilter = (e) => {
+      let value = e.target.value;
+      setSortValue(value);
+      setOperation("filter");
+      setKeyword(e.target.value);
+    };
+  
+    const handleRest = async () => {
+      setOperation("");
+      setSearchValue("");
+      setSortValue("");
+      loadDataEng();
+      loadDataCont();
+      loadDataProd();
+    };
+    const handleSearch = async (e) => {
+      e.preventDefault();
+      loadDataEng();
+      loadDataCont();
+      loadDataProd();
+    };
+    useEffect(() => {
+      loadDataEng();
+      loadDataCont();
+      loadDataProd();
+      loadDataFilter();
+    }, [keyword]);
 
     var Products = [
         {
@@ -122,137 +184,236 @@ function home()
           <Banners></Banners>
 
 
-            <section id='Popular-Eng' className='pt-5'>
-                <div className='container text-center'>
-                    <h2 className='fw-bold'>Popular Engineers</h2>
-                    <div class="line line1"></div>
-                    <div class="line line2"></div>
-                    <div class="line line1"></div>
-                    <div  className='row py-3 gy-2'>
-                        {
-                            Engineers.map((item) => {
-                                return(
-                                    <div className='col-lg-3'>
-                                        <div className='card-Eng position-relative'>
-                                            <div className='card-Eng-img'>
+          <div className="bg-white">
+      <div className="d-flex justify-content-evenly">
+        <div className="mt-3 col-4 d-flex flex-row">
+          <h3 className="col-xl-5 col-md-5">Filter By Category : </h3>
+          <select
+            onChange={(e) => handleFilter(e)}
+            className="form-select "
+            value={sortValue}
+          >
+            <option selected>Select By Category</option>
+            <option value="engineers">Engineers</option>
+            <option value="providers">Providers</option>
+            <option value="users">Products</option>
+          </select>
+        </div>
+        <Form className="d-flex flex-row" onSubmit={handleSearch}>
+          <Form.Control
+            type="search"
+            placeholder="Search By Name"
+            className="me-2 "
+            aria-label="Search"
+            value={searchValue}
+            onChange={(e) => 
+                setSearchValue(e.target.value)
+                // setDataFilter(dataFilter.filter(user=>user.name.toLowerCase().includes(`${searchValue}`.toLowerCase())))}
+            }
+          />
+          {/* <Button type="submit" variant="outline-success">
+            Search
+          </Button> */}
+          <Button variant="outline-danger ms-2" onClick={() => handleRest()}>
+            Rest
+          </Button>
+        </Form>
+      </div>
+      {operation === "filter" && dataFilter.length>0 ? (
+        <section id="Popular-Eng" className="pt-5">
+          <div className="container text-center">
+            <h2 className="fw-bold">{keyword}</h2>
+            <div className="line line1"></div>
+            <div className="line line2"></div>
+            <div className="line line1"></div>
+            <div className="row py-3 gy-2">
+              {dataFilter.filter(user=>user.spetialization.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
+                return(
+                    
+                    <div className="col-lg-3">
+                    <div className="card-Eng position-relative">
+                      <div className="card-Eng-img">
+                      <div className='card-Eng-img'>
                                                 <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
                                             </div>
-                                            <h3 className='py-2'>{item.engName}</h3>
-                                            <div className='d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1'>
-                                                {item?.engRate && <>
-                                                <i class="fa-solid fa-star star pe-1 text-warning" ></i>
-                                                <p className='mb-0 star text-warning'>{item?.engRate?.toFixed(1)}</p>
-                                                </>}   
-                                                {!item.engRate && null}   
-                                            </div>
-                                            <div className='Item-Icon position-absolute rounded-circle  py-4'>
-                                                <div className='favorite-Icon bg-white Icon-shape rounded-circle'>
-                                                    <i className="fa-regular fa-heart "></i>
-                                                </div>
-                                                <div className='view-Icon bg-white my-2 Icon-shape rounded-circle'>
-                                                    <i className="fa-regular fa-eye"></i>
-                                                </div>
-                                            </div>
+                      </div>
+                      <h3 className="py-2">{item.name}</h3>
+                      <h3 className="py-2">{item.role}</h3>
+                      <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                        {item?.engRate && (
+                          <>
+                            <i class="fa-solid fa-star star pe-1 text-warning"></i>
+                            <p className="mb-0 star text-warning">
+                              {item?.engRate?.toFixed(1)}
+                            </p>
+                          </>
+                        )}
+                        {!item.engRate && null}
+                      </div>
+                      <div className="Item-Icon position-absolute rounded-circle  py-4">
+                        <div className="favorite-Icon bg-white Icon-shape rounded-circle">
+                          <i className="fa-regular fa-heart "></i>
+                        </div>
+                        <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                          <i className="fa-regular fa-eye"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
         
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    
+              })}
+            </div>
+          </div>
+        </section>
+      ) : operation === "" ? (
+        <div>
+          <section id="Popular-Eng" className="pt-5">
+            <div className="container text-center">
+              <h2 className="fw-bold">Popular Engineers</h2>
+              <div className="line line1"></div>
+              <div className="line line2"></div>
+              <div className="line line1"></div>
+              <div className="row py-3 gy-2">
+                {dataEng.map((item) => {
+                  return (
+                    <div className="col-lg-3">
+                      <div className="card-Eng position-relative">
+                        <div className="card-Eng-img">
+                        
+                        <img src={require('./../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                                           
+                        </div>
+                        <h3 className="py-2">{item.name}</h3>
+                        <h3 className="py-2">{item.role}</h3>
+                        <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                          {item?.engRate && (
+                            <>
+                              <i className="fa-solid fa-star star pe-1 text-warning"></i>
+                              <p className="mb-0 star text-warning">
+                                {item?.engRate?.toFixed(1)}
+                              </p>
+                            </>
+                          )}
+                          {!item.engRate && null}
+                        </div>
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">
+                          <div className="favorite-Icon bg-white Icon-shape rounded-circle">
+                            <i className="fa-regular fa-heart "></i>
+                          </div>
+                          <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </section>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
 
-            <section id='Popular-Proivers' className='pt-5'>
-                <div className='container text-center'>
-                    <h2 className='fw-bold'>Popular Providers</h2>
-                    <div class="line line1"></div>
-                    <div class="line line2"></div>
-                    <div class="line line1"></div>
-                    <div  className='row py-3 gy-2'>
-                        {
-                            Engineers.map((item) => {
-                                return(
-                                    <div className='col-lg-3'>
-                                        <div className='card-Eng position-relative'>
-                                            <div className='card-Eng-img'>
-                                                <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
-                                            </div>
-                                            <h3 className='py-2'>{item.engName}</h3>
-                                            <div className='d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1'>
-                                                {item?.engRate && <>
-                                                <i class="fa-solid fa-star star pe-1 text-warning" ></i>
-                                                <p className='mb-0 star text-warning'>{item?.engRate?.toFixed(1)}</p>
-                                                </>}   
-                                                {!item.engRate && null}   
-                                            </div>
-                                            <div className='Item-Icon position-absolute rounded-circle  py-4'>
-                                                <div className='favorite-Icon bg-white Icon-shape rounded-circle'>
-                                                    <i className="fa-regular fa-heart "></i>
-                                                </div>
-                                                <div className='view-Icon bg-white my-2 Icon-shape rounded-circle'>
-                                                    <i className="fa-regular fa-eye"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    
+          <section id="Popular-Proivers" className="pt-5">
+            <div className="container text-center">
+              <h2 className="fw-bold">Popular Providers</h2>
+              <div className="line line1"></div>
+              <div className="line line2"></div>
+              <div className="line line1"></div>
+              <div className="row py-3 gy-2">
+                {dataCont.map((item) => {
+                  return (
+                    <div className="col-lg-3">
+                      <div className="card-Eng position-relative">
+                        <div className="card-Eng-img">
+                        <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
+                        </div>
+                        <h3 className="py-2">{item.name}</h3>
+                        <h3 className="py-2">{item.role}</h3>
+                        <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                          {item?.engRate && (
+                            <>
+                              <i className="fa-solid fa-star star pe-1 text-warning"></i>
+                              <p className="mb-0 star text-warning">
+                                {item?.engRate?.toFixed(1)}
+                              </p>
+                            </>
+                          )}
+                          {!item.engRate && null}
+                        </div>
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">
+                          <div className="favorite-Icon bg-white Icon-shape rounded-circle">
+                            <i className="fa-regular fa-heart "></i>
+                          </div>
+                          <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </section>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
 
-
-            <section id='Popular-Products' className='pt-5'>
-                <div className='container text-center'>
-                    <h2 className='fw-bold'>Popular Products</h2>
-                    <div class="line line1"></div>
-                    <div class="line line2"></div>
-                    <div class="line line1"></div>
-                    <div  className='row py-3 gy-2'>
-                        {
-                            Products.map((item) => {
-                                return(
-                                    <div className='col-lg-3'>
-                                        <div className='card-Eng position-relative'>
-                                            <div className='card-Eng-img'>
-                                                <img src={require('../assets/Products/product-1.jpg')} className='w-100' alt=''/>
-                                            </div>
-                                            <h3 className='pt-2'>{item.productName}</h3>
-                                            <div className='Item-Extra-Data d-flex justify-content-center'>
-                                                <h5 className='text-danger pe-4'>{item.productPriceAfterDiscount}$</h5>
-                                                <h5 className='text-muted text-decoration-line-through'>{item.productPrice}$</h5>
-                                            </div>
-                                            <div className='d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1'>
-                                                {item?.productRate && <>
-                                                <i class="fa-solid fa-star star pe-1 text-warning" ></i>
-                                                <p className='mb-0 star text-warning'>{item?.productRate?.toFixed(1)}</p>
-                                                </>}   
-                                                {!item?.productRate && null}   
-                                            </div>
-                                            <div className='Item-Icon position-absolute rounded-circle  py-4'>
-                                               <div className='view-Icon bg-white my-2 Icon-shape rounded-circle'>
-                                                    <i className="fa-solid fa-cart-shopping"></i>
-                                                </div>
-                                                <div className='favorite-Icon bg-white Icon-shape rounded-circle'>
-                                                    <i className="fa-regular fa-heart "></i>
-                                                </div>
-                                                <div className='view-Icon bg-white my-2 Icon-shape rounded-circle'>
-                                                    <i className="fa-regular fa-eye"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+          <section id="Popular-Products" className="pt-5">
+            <div className="container text-center">
+              <h2 className="fw-bold">Popular Products</h2>
+              <div className="line line1"></div>
+              <div className="line line2"></div>
+              <div className="line line1"></div>
+              <div className="row py-3 gy-2">
+                {dataProd.map((item) => {
+                  return (
+                    <div className="col-lg-3">
+                      <div className="card-Eng position-relative">
+                        <div className="card-Eng-img">
+                      
+                     <img src={require('../assets/Products/product-1.jpg')} className='w-100' alt=''/>
+                                          
+                        </div>
+                        <h3 className="pt-2">{item.name}</h3>
+                        <div className="Item-Extra-Data d-flex justify-content-center">
+                          <h5 className="text-danger pe-4">{item.category}</h5>
+                          <h5 className="text-muted text-decoration-line-through">
+                            {item.productPrice}$
+                          </h5>
+                        </div>
+                        <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                          {item?.productRate && (
+                            <>
+                              <i className="fa-solid fa-star star pe-1 text-warning"></i>
+                              <p className="mb-0 star text-warning">
+                                {item?.productRate?.toFixed(1)}
+                              </p>
+                            </>
+                          )}
+                          
+                        </div>
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">
+                          <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-solid fa-cart-shopping"></i>
+                          </div>
+                          <div className="favorite-Icon bg-white Icon-shape rounded-circle">
+                            <i className="fa-regular fa-heart "></i>
+                          </div>
+                          <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </section>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </div>
+      ) :dataFilter.length===0 ?(
+        <h3 className="text-danger">No data</h3>
+      ):(<div></div>)}
+    </div>
         </div>
     )
 }
-export default home;
+export default Home;
