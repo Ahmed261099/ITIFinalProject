@@ -42,12 +42,12 @@ function Profile() {
     //   })
 
     const [getUser, setGetUser] = useState({})
+    const [getAddress , setAddress] = useState([])
+    const [getPortofolio , setPortofolio] = useState([])
 
     useEffect(() => {
         getData();
     }, [])
-
-
 
     const getData = () => {
         const q = query(
@@ -58,12 +58,15 @@ function Profile() {
         onSnapshot(q, (snapshot) => {
             snapshot.docs.forEach((doc) => {
                 setGetUser({ ...doc.data(), id: doc.id })
+                setAddress( doc.data().address)
+                setPortofolio( doc.data().portofolio)
                 console.log(doc.id, " => ", doc.data());
             });
         })
     }
 
     console.log(currentUser);
+    console.log(getAddress);
     console.log(getUser);
 
     // const user = {
@@ -106,7 +109,7 @@ function Profile() {
 
     const [error, setErros] = useState({
         name: null,
-        userName: null,
+        username: null,
         email: null,
         role: null,
         spetialization: null,
@@ -117,7 +120,7 @@ function Profile() {
         img: null,
         title: null,
         caption: null,
-        currentpassword: null,
+        password: null,
         newPassword: null,
         confirmpassword: null
     })
@@ -240,7 +243,7 @@ function Profile() {
 
             setErros({
                 ...error,
-                userName: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+                username: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
 
@@ -291,14 +294,11 @@ function Profile() {
             })
         }
         else if (e.target.name === "password") {
-            setGetUser({
-                ...getUser,
-                password: e.target.value
-            })
+           
 
             setErros({
                 ...error,
-                password: e.target.value.length === 0 ? "This Field is Required" : e.target.value === getUser.password ? '' : "password is not correct"
+                password: e.target.value.length === 0 ? "This Field is Required" : e.target.value===getUser.password ? '' : "password is not correct"
             })
 
         }
@@ -318,7 +318,7 @@ function Profile() {
 
 
     const handleButtonPortfolio = () => {
-        setGetUser(...getUser, getUser.portofolio.push({ "title": userData.title, "caption": userData.caption, "image": userData.img }))
+         getUser.portofolio.push({ "title": userData.title, "caption": userData.caption, "image": userData.img })
         
 
         console.log(getUser.portofolio);
@@ -329,7 +329,7 @@ function Profile() {
             portofolio: getUser.portofolio,
         })
             .then(() => {
-                console.log("done");
+                console.log("done portoflio");
             })
             .catch((error) => {
                 console.log("ERROR" + error);
@@ -337,18 +337,56 @@ function Profile() {
     }
 
     const handleButtonAddress = () => {
-        setGetUser(...getUser, getUser.address.push({ "city": userData.city, "street": userData.street }))
+        getUser.address.push({ "city": userData.city, "street": userData.street })
 
         console.log(getUser.address);
+        const docRef = doc(db, "providers", getUser.id);
+
+
+        updateDoc(docRef, {
+            address: getUser.address,
+        })
+            .then(() => {
+                console.log("done address");
+            })
+            .catch((error) => {
+                console.log("ERROR" + error);
+            });
+
     }
     const handleButtonEdit = () => {
+        const docRef = doc(db, "providers", getUser.id);
+
+
+        updateDoc(docRef, {
+            name: getUser.name,
+            username:getUser.username,
+            experience:getUser.experience,
+            email:getUser.email,
+            spetialization:getUser.spetialization,
+        })
+            .then(() => {
+                console.log("done edit ");
+            })
+            .catch((error) => {
+                console.log("ERROR" + error);
+            });
 
     }
     const handleButtonChangePassword = () => {
+        const docRef = doc(db, "providers", getUser.id);
 
+
+        updateDoc(docRef, {
+            password:userData.newPassword,
+        })
+            .then(() => {
+                console.log("done change Password ");
+            })
+            .catch((error) => {
+                console.log("ERROR" + error);
+            });
     }
-
-
     return (
 
         <>
@@ -387,8 +425,8 @@ function Profile() {
 
                 {/* start of carousel */}
                 <div className='container mt-5'>
-                    {/* <Carousel fade className='align-center w-100 '>
-                        {  getUser.portfolios == ""?"":  getUser.portfolios.map((onePort, index) => {
+                    <Carousel fade className='align-center w-100 '>
+                        {  getPortofolio.map((onePort, index) => {
                             return (
                                 <Carousel.Item key={index} className=' '>
                                     <img
@@ -404,7 +442,7 @@ function Profile() {
                             )
                         })
                         }
-                    </Carousel>  */}
+                    </Carousel> 
                 </div>
                 {/* end of Carousel */}
                 {/*start section buttons and content  */}
@@ -484,7 +522,7 @@ function Profile() {
                                                         <p className="text-danger ms-2"> <small>{error.img}</small> </p>
                                                     </div>
                                                     <div className="col-12">
-                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={() => handleButtonPortfolio()} disabled={error.img || error.caption || error.title} >Save</button>
+                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={() => handleButtonPortfolio()} disabled={error.img || error.caption || error.title || userData.img===""|| userData.title===""|| userData.caption===""} >Save</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -511,32 +549,32 @@ function Profile() {
                                             <div className="border p-4">
                                                 <h3 className='border-bottom pb-2 mb-4'>Billing Address</h3>
                                                 {
-                                                    // getUser.address.street === "" && getUser.address.city === "" ? '' : getUser.address.map((add, index) => {
-                                                    //     return (
-                                                    //         < >
-                                                    //             <div key={index}>
-                                                    //                 <p><strong>{add.city}</strong></p>
-                                                    //                 <p>{add.street}</p>
-                                                    //             </div>
+                                                    getAddress?.map((address, index) => {
+                                                        return (
+                                                            < >
+                                                                <div key={index}>
+                                                                    <p><strong>{address.city}</strong></p>
+                                                                    <p>{address.street}</p>
+                                                                </div>
 
-                                                    //         </>
-                                                    //     )
-                                                    // })
+                                                            </>
+                                                        )
+                                                    })
                                                 }
 
                                                 <p>Mobile: {getUser.phone}</p>
                                                 <hr />
                                                 <form className='row' onSubmit={(e) => submitData(e)}>
                                                     <div className="col-lg-6 col-12 ">
-                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="add city" name='city' type="text" onChange={(e) => changeUserData(e)} />
+                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="add city" name='city' type="text" onChange={(e) => addUserData(e)} />
                                                         <p className="text-danger ms-2"> <small>{error.city}</small> </p>
                                                     </div>
                                                     <div className="col-lg-6 col-12 ">
-                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="add street and department" name='street' type="text" onChange={(e) => changeUserData(e)} />
+                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="add street and department" name='street' type="text" onChange={(e) => addUserData(e)} />
                                                         <p className="text-danger ms-2"> <small>{error.street}</small> </p>
                                                     </div>
                                                     <div className="col-12">
-                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={() => handleButtonAddress()} disabled={error.city || error.street}><i className="fa fa-edit" > </i>  add</button>
+                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={() => handleButtonAddress()} disabled={error.city || error.street || userData.city=== "" ||userData.street=== ""  }><i className="fa fa-edit" > </i>  add</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -554,7 +592,7 @@ function Profile() {
                                                         <form onSubmit={(e) => submitData(e)} className="row ">
                                                             <div className="col-lg-6 col-12 ">
                                                                 <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' name='username' value={getUser.username} onChange={(e) => changeUserData(e)} type="text" />
-                                                                <p className="text-danger ms-2"> <small>{error.userName}</small> </p>
+                                                                <p className="text-danger ms-2"> <small>{error.username}</small> </p>
                                                             </div>
                                                             <div className="col-lg-6 col-12">
                                                                 <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="display-name" name='name' value={getUser.name} onChange={(e) => changeUserData(e)} type="text" />
@@ -590,7 +628,10 @@ function Profile() {
                                                                 <p className="text-danger ms-2"> <small>{error.spetialization}</small> </p>
                                                             </div>
                                                             <div className="d-flex justify-content-end">
-                                                                <button className="btn btn-outline-dark text-uppercase p-2 m-2">edit</button>
+                                                                <button className="btn btn-outline-dark text-uppercase p-2 m-2" onClick={()=> handleButtonEdit() } 
+                                                                disabled={error.spetialization || error.name || error.email || error.username || error.experience ||
+                                                                getUser.spetialization===""||getUser.name===""||getUser.email===""||getUser.username===""||getUser.experience==="" }
+                                                                >edit</button>
                                                             </div>
                                                         </form >
 
@@ -599,23 +640,25 @@ function Profile() {
                                                         </div>
                                                         <form onSubmit={(e) => submitData(e)} className="row">
                                                             <div className="col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="current-pwd" placeholder="Current Password" name='currentpassword' onChange={(e) => changeUserData(e)} type="password" />
-                                                                <p className="text-danger ms-2"> <small>{error.currentpassword}</small> </p>
-                                                            </div>
-
-                                                            <div className="col-lg-6 col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="new-pwd" placeholder="New Password" name='password' onChange={(e) => changeUserData(e)} type="password" />
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="current-pwd" placeholder="Current Password" name='password' onChange={(e) => changeUserData(e)} type="password" />
                                                                 <p className="text-danger ms-2"> <small>{error.password}</small> </p>
+                                                            </div>
+
+                                                            <div className="col-lg-6 col-12 ">
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="new-pwd" placeholder="New Password" name='newPassword' onChange={(e) => addUserData(e)} type="password" />
+                                                                <p className="text-danger ms-2"> <small>{error.newPassword}</small> </p>
 
                                                             </div>
 
                                                             <div className="col-lg-6 col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="confirm-pwd" placeholder="Confirm Password" name='confirmpassword' onChange={(e) => changeUserData(e)} type="password" />
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="confirm-pwd" placeholder="Confirm Password" name='confirmpassword' onChange={(e) => addUserData(e)} type="password" />
                                                                 <p className="text-danger ms-2"> <small>{error.confirmpassword}</small> </p>
                                                             </div>
 
                                                             <div className="d-flex justify-content-end">
-                                                                <button className="btn btn-outline-dark text-uppercase p-2 m-2" >Save Changes</button>
+                                                                <button className="btn btn-outline-dark text-uppercase p-2 m-2" 
+                                                                disabled={ error.confirmpassword || error.currentpassword || error.newPassword || getUser.password===""|| userData.confirmpassword===""||userData.newPassword===""  } 
+                                                                 onClick={()=>handleButtonChangePassword() } type="reset">Save Changes</button>
                                                             </div>
                                                         </form>
 
