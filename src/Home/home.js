@@ -27,7 +27,7 @@ function Home()
     const [operation, setOperation] = useState("");
     const dataEngColl = query(collection(db, "engineers"), limit(4));
     const dataContColl = query(collection(db, `providers`), limit(4));
-    const dataProdColl = query(collection(db, `users`), limit(4));
+    const dataProdColl = query(collection(db, `products`), limit(4));
     const dataRef = collection(db, `${keyword}`);
     const loadDataFilter = async (optType = null) => {
       onSnapshot(dataRef, (snapshot) => {
@@ -58,7 +58,7 @@ function Home()
       });
     };
     console.log(dataFilter);
-    const loadDataCont = async (optType = null, filterOrSortValue) => {
+    const loadDataCont = async () => {
       onSnapshot(dataContColl, (snapshot) => {
         setDataCont(
           snapshot.docs.map((doc) => ({
@@ -79,7 +79,8 @@ function Home()
             id: doc.id,
             name: doc.data().name,
             category: doc.data().category,
-            spetialization: doc.data().spetialization
+            spetialization: doc.data().spetialization,
+            price:doc.data().price
           }))
         );
       });
@@ -112,72 +113,6 @@ function Home()
       loadDataFilter();
     }, [keyword]);
 
-    var Products = [
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-        {
-            productName:"Chair",
-            productPrice:1000,
-            productDiscount:"10%",
-            productPriceAfterDiscount:900,
-            count:20,
-            productRate:9.4
-        },
-    ]
     return(
         <div className='bg-white'>
           <Header></Header>
@@ -187,7 +122,7 @@ function Home()
           <div className="bg-white">
       <div className="d-flex justify-content-evenly">
         <div className="mt-3 col-4 d-flex flex-row">
-          <h3 className="col-xl-5 col-md-5">Filter By Category : </h3>
+          <h3 className="col-xl-5 col-md-5">Filter By Category:</h3>
           <select
             onChange={(e) => handleFilter(e)}
             className="form-select "
@@ -196,13 +131,13 @@ function Home()
             <option selected>Select By Category</option>
             <option value="engineers">Engineers</option>
             <option value="providers">Providers</option>
-            <option value="users">Products</option>
+            <option value="products">Products</option>
           </select>
         </div>
-        <Form className="d-flex flex-row" onSubmit={handleSearch}>
+        <Form className="d-flex flex-row col-3" onSubmit={handleSearch}>
           <Form.Control
             type="search"
-            placeholder="Search By Name"
+            placeholder="Search By Specialization ex(civil-arc-..)"
             className="me-2 "
             aria-label="Search"
             value={searchValue}
@@ -375,8 +310,8 @@ function Home()
                         <h3 className="pt-2">{item.name}</h3>
                         <div className="Item-Extra-Data d-flex justify-content-center">
                           <h5 className="text-danger pe-4">{item.category}</h5>
-                          <h5 className="text-muted text-decoration-line-through">
-                            {item.productPrice}$
+                          <h5 className="text-muted ">
+                            {item.price}$
                           </h5>
                         </div>
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
