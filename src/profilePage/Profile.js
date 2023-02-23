@@ -4,6 +4,18 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
 import { logoutInitiate } from '../Store/Actions/AuthAction';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+    addDoc,
+    collection,
+    getDoc,
+    getDocs,
+    query,
+    serverTimestamp,
+    where,
+    onSnapshot,
+    doc, updateDoc
+} from "firebase/firestore";
+import { db } from "../Firebase.js";
 
 
 function Profile() {
@@ -15,49 +27,80 @@ function Profile() {
     const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
     const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
 
-    const user = {
-        name: "Ramy Menassa",
-        userName: "rami menassa",
-        email: "rami@gmail.com",
-        role: "Engineer",
-        specialization: "Civil Engineer",
-        address: [{
-            city: "minia",
-            street: "tahaHassen",
-        }, {
-            city: "cairo",
-            street: "zatoon",
-        }],
-        phone: "001212252",
-        experiance: "2 year experince in nile group now work in trenty ",
-        portfolios: [{
-            img: "../assets/img1.jpeg",
-            title: "First slide label",
-            caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        }, {
-            img: "../assets/img2.jpeg",
-            title: "Second slide label",
-            caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },],
-        password: "R@mi1234"
+
+
+    // const q = query(
+    //     collection(db, "users"),
+    //     where("email", "==", user.email)
+    //   );
+
+    //   onSnapshot(q, (snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //       setGetUser({...doc.data(), id: doc.id})
+    //       console.log(doc.id, " => ", doc.data());
+    //     });
+    //   })
+
+    const [getUser, setGetUser] = useState({})
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+
+
+    const getData = () => {
+        const q = query(
+            collection(db, "providers"),
+            where("email", "==", currentUser.email)
+        );
+
+        onSnapshot(q, (snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                setGetUser({ ...doc.data(), id: doc.id })
+                console.log(doc.id, " => ", doc.data());
+            });
+        })
     }
+
+    console.log(currentUser);
+    console.log(getUser);
+
+    // const user = {
+    //     name: getUser.name,
+    //     userName: "rami menassa",
+    //     email: "rami@gmail.com",
+    //     role: "Engineer",
+    //     spetialization: "Civil Engineer",
+    //     address: [{
+    //         city: "minia",
+    //         street: "tahaHassen",
+    //     }, {
+    //         city: "cairo",
+    //         street: "zatoon",
+    //     }],
+    //     phone: "001212252",
+    //     experience: "2 year experince in nile group now work in trenty ",
+    //     portfolios: [{
+    //         img: "../assets/img1.jpeg",
+    //         title: "First slide label",
+    //         caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
+    //     }, {
+    //         img: "../assets/img2.jpeg",
+    //         title: "Second slide label",
+    //         caption: "Nulla vitae elit libero, a pharetra augue mollis interdum."
+    //     },],
+    //     password: "R@mi1234"
+    // }
+
+
     const [userData, setUserData] = useState({
-        name: user.name,
-        userName: user.userName,
-        email: user.email,
-        role: user.role,
-        specialization: user.specialization,
-        address: user.address,
-        city:"",
-        street:"",
-        phone: user.phone,
-        experiance: user.experiance,
-        portfolios: user.portfolios,
-        title:"",
-        caption:"",
-        img:"",
-        currentpassword:"",
-        password: "",
+        city: "",
+        street: "",
+        title: "",
+        caption: "",
+        img: "",
+        newPassword: "",
         confirmpassword: ""
     })
 
@@ -66,54 +109,22 @@ function Profile() {
         userName: null,
         email: null,
         role: null,
-        specialization: null,
+        spetialization: null,
         street: null,
         city: null,
         phone: null,
-        experiance: null,
+        experience: null,
         img: null,
         title: null,
         caption: null,
-        currentpassword:null,
-        password: null,
+        currentpassword: null,
+        newPassword: null,
         confirmpassword: null
     })
 
-    const changeUserData = (e) => {
-        if (e.target.name === "name") {
-            setUserData({
-                ...userData,
-                name: e.target.value
-            })
 
-            setErros({
-                ...error,
-                name: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
-            })
-        }
-        else if (e.target.name === "email") {
-            setUserData({
-                ...userData,
-                email: e.target.value
-            })
-
-            setErros({
-                ...error,
-                email: reg.test(e.target.value) ? '' : "Invalid email address"
-            })
-        }
-        else if (e.target.name === "userName") {
-            setUserData({
-                ...userData,
-                userName: e.target.value
-            })
-
-            setErros({
-                ...error,
-                userName: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
-            })
-        }
-        else if (e.target.name === "img") {
+    const addUserData = (e) => {
+        if (e.target.name === "img") {
             setUserData({
                 ...userData,
                 img: e.target.value
@@ -146,40 +157,6 @@ function Profile() {
                 caption: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
         }
-
-        else if (e.target.name === "role") {
-            setUserData({
-                ...userData,
-                role: e.target.value
-            })
-
-            setErros({
-                ...error,
-                role: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
-            })
-        } else if (e.target.name === "experiance") {
-            setUserData({
-                ...userData,
-                experiance: e.target.value
-            })
-
-            setErros({
-                ...error,
-                experiance: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 10 ? "Min Length is 10 Char" : null
-            })
-        }
-        else if (e.target.name === "specialization") {
-
-            setUserData({
-                ...userData,
-                specialization: e.target.value
-            })
-
-            setErros({
-                ...error,
-                specialization: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
-            })
-        }
         else if (e.target.name === "city") {
             setUserData({
                 ...userData,
@@ -201,39 +178,15 @@ function Profile() {
                 ...error,
                 street: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
             })
-        }
-        else if (e.target.name === "phone") {
+        } else if (e.target.name === "newPassword") {
             setUserData({
                 ...userData,
-                phone: e.target.value
+                newPassword: e.target.value
             })
 
             setErros({
                 ...error,
-                phone: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 11 ? "Min Length is 11" : null
-            })
-        }
-        else if (e.target.name === "currentpassword") {
-            setUserData({
-                ...userData,
-                currentpassword: e.target.value
-            })
-
-            setErros({
-                ...error,
-                currentpassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value === user.password ? '' : "password is not correct"
-            })
-
-        }
-        else if (e.target.name === "password") {
-            setUserData({
-                ...userData,
-                password: e.target.value
-            })
-
-            setErros({
-                ...error,
-                password: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8" : regPass.test(e.target.value) ? '' : "Invalid Password"
+                newPassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8" : regPass.test(e.target.value) ? '' : "Invalid Password"
             })
 
         } else {
@@ -244,15 +197,118 @@ function Profile() {
 
             setErros({
                 ...error,
-                confirmpassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min length is 8" : e.target.value === userData.password ? '' : "Password and confirm password should be the same"
+                confirmpassword: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min length is 8" : e.target.value === userData.newPassword ? '' : "Password and confirm password should be the same"
             })
         }
+
+
+    }
+
+
+
+
+
+
+    const changeUserData = (e) => {
+        if (e.target.name === "name") {
+            setGetUser({
+                ...getUser,
+                name: e.target.value
+            })
+
+            setErros({
+                ...error,
+                name: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+            })
+        }
+        else if (e.target.name === "email") {
+            setGetUser({
+                ...getUser,
+                email: e.target.value
+            })
+
+            setErros({
+                ...error,
+                email: reg.test(e.target.value) ? '' : "Invalid email address"
+            })
+        }
+        else if (e.target.name === "username") {
+            setGetUser({
+                ...getUser,
+                username: e.target.value
+            })
+
+            setErros({
+                ...error,
+                userName: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+            })
+        }
+
+
+        else if (e.target.name === "role") {
+            setGetUser({
+                ...getUser,
+                role: e.target.value
+            })
+
+            setErros({
+                ...error,
+                role: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+            })
+        } else if (e.target.name === "experience") {
+            setGetUser({
+                ...getUser,
+                experience: e.target.value
+            })
+
+            setErros({
+                ...error,
+                experience: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 10 ? "Min Length is 10 Char" : null
+            })
+        }
+        else if (e.target.name === "spetialization") {
+
+            setGetUser({
+                ...getUser,
+                spetialization: e.target.value
+            })
+
+            setErros({
+                ...error,
+                spetialization: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 3 ? "Min Length is 3 Char" : null
+            })
+        }
+
+        else if (e.target.name === "phone") {
+            setGetUser({
+                ...getUser,
+                phone: e.target.value
+            })
+
+            setErros({
+                ...error,
+                phone: e.target.value.length === 0 ? "This Field is Required" : e.target.value.length < 11 ? "Min Length is 11" : null
+            })
+        }
+        else if (e.target.name === "password") {
+            setGetUser({
+                ...getUser,
+                password: e.target.value
+            })
+
+            setErros({
+                ...error,
+                password: e.target.value.length === 0 ? "This Field is Required" : e.target.value === getUser.password ? '' : "password is not correct"
+            })
+
+        }
+
 
     }
 
     const handleAuth = () => {
         if (currentUser) {
-          dispatch(logoutInitiate());
+            dispatch(logoutInitiate());
         }
     }
 
@@ -261,27 +317,35 @@ function Profile() {
     }
 
 
-    const handleButtonPortfolio =() =>{
-        user.portfolios.push({"title":userData.title,"caption":userData.caption,"img":userData.img})
-        setUserData({...userData,
-           portfolios:user.portfolios})
-
-        console.log(user.portfolios);
-    }
-
-    const handleButtonAddress =() =>{
-        user.address.push({"city":userData.city,"street":userData.street})
-        setUserData({...userData,
-            address:user.address
-         })
- 
-        console.log(user.address);
-    }
-    const handleButtonEdit =() =>{
+    const handleButtonPortfolio = () => {
+        setGetUser(...getUser, getUser.portofolio.push({ "title": userData.title, "caption": userData.caption, "image": userData.img }))
         
+
+        console.log(getUser.portofolio);
+        const docRef = doc(db, "providers", getUser.id);
+
+
+        updateDoc(docRef, {
+            portofolio: getUser.portofolio,
+        })
+            .then(() => {
+                console.log("done");
+            })
+            .catch((error) => {
+                console.log("ERROR" + error);
+            });
     }
-    const handleButtonChangePassword =() =>{
-        
+
+    const handleButtonAddress = () => {
+        setGetUser(...getUser, getUser.address.push({ "city": userData.city, "street": userData.street }))
+
+        console.log(getUser.address);
+    }
+    const handleButtonEdit = () => {
+
+    }
+    const handleButtonChangePassword = () => {
+
     }
 
 
@@ -303,7 +367,7 @@ function Profile() {
                             {/* end op p.p */}
                             <div className='ps-5'>
                                 <h2 className='ps-0 fs-1'>
-                                    {user.name}
+                                    {getUser.name}
                                 </h2>
                                 <ul className='paths '>
                                     <li className='dvider'>
@@ -323,8 +387,8 @@ function Profile() {
 
                 {/* start of carousel */}
                 <div className='container mt-5'>
-                    <Carousel fade className='align-center w-100 '>
-                        {userData.portfolios.map((onePort, index) => {
+                    {/* <Carousel fade className='align-center w-100 '>
+                        {  getUser.portfolios == ""?"":  getUser.portfolios.map((onePort, index) => {
                             return (
                                 <Carousel.Item key={index} className=' '>
                                     <img
@@ -340,7 +404,7 @@ function Profile() {
                             )
                         })
                         }
-                    </Carousel>
+                    </Carousel>  */}
                 </div>
                 {/* end of Carousel */}
                 {/*start section buttons and content  */}
@@ -388,11 +452,11 @@ function Profile() {
                                                 <h3 className='border-bottom pb-2 mb-4'>Info</h3>
 
                                                 <div className="">
-                                                    <p><strong>Name :</strong> {userData.name} </p>
-                                                    <p><strong>Email :</strong> {userData.email} </p>
-                                                    <p><strong>Role :</strong> {userData.role} </p>
-                                                    <p><strong>specialization :</strong> {userData.specialization} </p>
-                                                    <p><strong>Experiance :</strong> {userData.experiance} </p>
+                                                    <p><strong>Name :</strong> {getUser.name} </p>
+                                                    <p><strong>Email :</strong> {getUser.email} </p>
+                                                    <p><strong>Role :</strong> {getUser.role} </p>
+                                                    <p><strong>spetialization :</strong> {getUser.spetialization} </p>
+                                                    <p><strong>Experiance :</strong> {getUser.experience} </p>
 
 
                                                 </div>
@@ -408,19 +472,19 @@ function Profile() {
                                                 <h3 className='border-bottom pb-2 mb-4'>add Portfolio</h3>
                                                 <form onSubmit={(e) => submitData(e)} >
                                                     <div className=" col-12 ">
-                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Write title for Portfolio " type="text" name='title'  onChange={(e) => changeUserData(e)} />
+                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Write title for Portfolio " type="text" name='title'  onChange={(e)=>addUserData(e)}/>
                                                         <p className="text-danger ms-2" > <small>{error.title}</small> </p>
                                                     </div>
                                                     <div className=" col-12 ">
-                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Write caption for Portfolio" type="text" name='caption' onChange={(e) => changeUserData(e)} />
+                                                        <input className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Write caption for Portfolio" type="text" name='caption' onChange={(e)=>addUserData(e)} />
                                                         <p className="text-danger ms-2"> <small>{error.caption}</small> </p>
                                                     </div>
                                                     <div className="col-12 ">
-                                                        <input className='w-100 p-3 m-2  m-2   form-control ' accept="image/*" type="file" name='img' onChange={(e) => changeUserData(e)} />
+                                                        <input className='w-100 p-3 m-2  m-2   form-control ' accept="image/*" type="file" name='img' onChange={(e)=>addUserData(e)} />
                                                         <p className="text-danger ms-2"> <small>{error.img}</small> </p>
                                                     </div>
                                                     <div className="col-12">
-                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={()=>handleButtonPortfolio()} disabled={error.img || error.caption || error.title} >Save</button>
+                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={() => handleButtonPortfolio()} disabled={error.img || error.caption || error.title} >Save</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -432,7 +496,7 @@ function Profile() {
                                                 <h3 className='border-bottom pb-2 mb-4'>Message</h3>
                                                 <form onSubmit={(e) => submitData(e)}>
                                                     <div className="col-12 ">
-                                                        <textarea className='border m-2 border-secondary-subtle w-100 p-3 d-block '  placeholder="Send Message" type="text" />
+                                                        <textarea className='border m-2 border-secondary-subtle w-100 p-3 d-block ' placeholder="Send Message" type="text" />
                                                     </div>
                                                     <div className="col-12">
                                                         <button className="btn btn-outline-dark text-uppercase p-2 m-2">Send</button>
@@ -446,16 +510,21 @@ function Profile() {
                                         <div className="tab-pane fade" id="address-edit" role="tabpanel" aria-labelledby="address-tab" tabIndex="0">
                                             <div className="border p-4">
                                                 <h3 className='border-bottom pb-2 mb-4'>Billing Address</h3>
-                                                {userData.address.map((add) => {
-                                                    return (
-                                                        <>
-                                                            <p><strong>{add.city}</strong></p>
-                                                            <p>{add.street}</p>
+                                                {
+                                                    // getUser.address.street === "" && getUser.address.city === "" ? '' : getUser.address.map((add, index) => {
+                                                    //     return (
+                                                    //         < >
+                                                    //             <div key={index}>
+                                                    //                 <p><strong>{add.city}</strong></p>
+                                                    //                 <p>{add.street}</p>
+                                                    //             </div>
 
-                                                        </>
-                                                    )
-                                                })}
-                                                <p>Mobile: {userData.phone}</p>
+                                                    //         </>
+                                                    //     )
+                                                    // })
+                                                }
+
+                                                <p>Mobile: {getUser.phone}</p>
                                                 <hr />
                                                 <form className='row' onSubmit={(e) => submitData(e)}>
                                                     <div className="col-lg-6 col-12 ">
@@ -467,7 +536,7 @@ function Profile() {
                                                         <p className="text-danger ms-2"> <small>{error.street}</small> </p>
                                                     </div>
                                                     <div className="col-12">
-                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={()=>handleButtonAddress()} disabled={ error.city || error.street }><i className="fa fa-edit" > </i>  add</button>
+                                                        <button className="btn btn-outline-dark text-uppercase p-2 m-2" type='reset' onClick={() => handleButtonAddress()} disabled={error.city || error.street}><i className="fa fa-edit" > </i>  add</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -484,25 +553,25 @@ function Profile() {
                                                     <div >
                                                         <form onSubmit={(e) => submitData(e)} className="row ">
                                                             <div className="col-lg-6 col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block'  name='userName' value={userData.userName} onChange={(e) => changeUserData(e)}  type="text" />
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' name='username' value={getUser.username} onChange={(e) => changeUserData(e)} type="text" />
                                                                 <p className="text-danger ms-2"> <small>{error.userName}</small> </p>
                                                             </div>
                                                             <div className="col-lg-6 col-12">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="display-name" name='name' value={userData.name} onChange={(e) => changeUserData(e)} type="text" />
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="display-name" name='name' value={getUser.name} onChange={(e) => changeUserData(e)} type="text" />
                                                                 <p className="text-danger ms-2"> <small>{error.name}</small> </p>
                                                             </div>
 
                                                             <div className="col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="email" name='email' value={userData.email} onChange={(e) => changeUserData(e)} type="email" />
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="email" name='email' value={getUser.email} onChange={(e) => changeUserData(e)} type="email" />
                                                                 <p className="text-danger ms-2"> <small>{error.email}</small> </p>
                                                             </div>
                                                             <div className="col-12 ">
-                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="experince" name='experiance' value={userData.experiance} onChange={(e) => changeUserData(e)} type="text" />
-                                                                <p className="text-danger ms-2"> <small>{error.experiance}</small> </p>
+                                                                <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="experince" name='experience' value={getUser.experience} onChange={(e) => changeUserData(e)} type="text" />
+                                                                <p className="text-danger ms-2"> <small>{error.experience}</small> </p>
                                                             </div>
                                                             <div className="mb-3">
 
-                                                                <select name="specialization" value={userData.specialization} onChange={(e) => changeUserData(e)} className="border m-2 border-secondary-subtle w-100 p-3 d-block">
+                                                                <select name="spetialization" value={getUser.spetialization} onChange={(e) => changeUserData(e)} className="border m-2 border-secondary-subtle w-100 p-3 d-block">
                                                                     <option>Civil Engineer</option>
                                                                     <option>Interior Designer</option>
                                                                     <option>Electrical Engineer</option>
@@ -518,7 +587,7 @@ function Profile() {
                                                                     <option>Carpentry contractor</option>
                                                                     <option>Blacksmith contractor</option>
                                                                 </select>
-                                                                <p className="text-danger ms-2"> <small>{error.specialization}</small> </p>
+                                                                <p className="text-danger ms-2"> <small>{error.spetialization}</small> </p>
                                                             </div>
                                                             <div className="d-flex justify-content-end">
                                                                 <button className="btn btn-outline-dark text-uppercase p-2 m-2">edit</button>
@@ -528,7 +597,7 @@ function Profile() {
                                                         <div className="col-12 ">
                                                             <h4>Password change</h4>
                                                         </div>
-                                                        <form  onSubmit={(e) => submitData(e)} className="row">
+                                                        <form onSubmit={(e) => submitData(e)} className="row">
                                                             <div className="col-12 ">
                                                                 <input className='border m-2 border-secondary-subtle w-100 p-3 d-block' id="current-pwd" placeholder="Current Password" name='currentpassword' onChange={(e) => changeUserData(e)} type="password" />
                                                                 <p className="text-danger ms-2"> <small>{error.currentpassword}</small> </p>

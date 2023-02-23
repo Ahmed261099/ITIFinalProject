@@ -7,7 +7,7 @@ function navbar()
     return(
         <nav className="navbar navbar-expand-lg bg-light navbar-light py-3">
         <div className="container">
-          <NavLink className="navbar-brand fw-bolder  fs-2" exact='' to='/' ><span className='colored fw-bolder'>TASH</span>TIB<span className='colored fw-bolder'>.</span></NavLink>
+          <NavLink className="navbar-brand fw-bolder  fs-2"  to='/' ><span className='colored fw-bolder'>TASH</span>TIB<span className='colored fw-bolder'>.</span></NavLink>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

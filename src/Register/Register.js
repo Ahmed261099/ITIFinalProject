@@ -244,6 +244,7 @@ import {
           phone: userData.phone,
           cart: [],
           rate: "",
+          feedback:[],
           timestamp: serverTimestamp(),
         })
           .then(function (res) {
