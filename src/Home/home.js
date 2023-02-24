@@ -1,4 +1,4 @@
- import React from 'react'
+import React from 'react'
 import './home.css'
 import Header from '../Header/header'
 import Banners from '../Banners/banners'
