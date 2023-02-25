@@ -148,36 +148,24 @@ function Register() {
 
                 <div className="mb-3">
                     <label className="form-label text-light">Password</label>  <br />
-                    <input name="password" placeholder="Enter your password" className="form-control p-2" value={userData.password} onChange={(e) => changeUserData(e)} />
+                    <input type="password" name="password" placeholder="Enter your password" className="form-control p-2" value={userData.password} onChange={(e) => changeUserData(e)} />
                     <p className="text-danger"> {error.password} </p>
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label text-light">Confirm Password</label>  <br />
-                    <input name="confirmpassword" placeholder="Confirm your password" className="form-control p-2" value={userData.confirmpassword} onChange={(e) => changeUserData(e)} />
+                    <input type="password" name="confirmpassword" placeholder="Confirm your password" className="form-control p-2" value={userData.confirmpassword} onChange={(e) => changeUserData(e)} />
                     <p className="text-danger"> {error.confirmpassword} </p>
                 </div>
                 <div className="mb-3">
                     <label className="form-label text-light">Roll</label>  <br />
                     <select name="roll" className="form-control  p-2">
-                        <option>Civil Engineer</option>
-                        <option>Interior Designer</option>
-                        <option>Electrical Engineer</option>
-                        <option>Mechanical Engineer</option>
-                        <option>Mechaelectrical Engineer</option>
-                        <option>Telecom Engineer</option>
-                        <option>ُEnergy Engineer</option>
-                        <option>Archetect</option>
-                        <option>Painting Contractor</option>
-                        <option>Electrical Contractor</option>
-                        <option>Floor Contractor</option>
-                        <option>Plumbing Contractor</option>
-                        <option>Carpentry contractor</option>
-                        <option>Blacksmith contractor</option>
+                        <option>Engineer</option>
+                        <option>Provider</option>
                     </select>
                 </div>
                 <br/>
-                <input className="btn btn-outline-dark" id="btn" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
+                <input className="btn btn-outline-dark" id="btn" type="submit" value={"Sign up"} disabled={!userData.name || !userData.email || !userData.username || !userData.address || !userData.phone|| !userData.password || !userData.confirmpassword || error.name || error.username || error.email || error.address || error.phone || error.password || error.confirmpassword} />
             </form>
             <br/> <br/>
         </div>

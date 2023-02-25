@@ -60,10 +60,10 @@ function Login() {
 
                 <div className="mb-3">
                     <label className="form-label text-light">Password</label>  <br/>
-                    <input name="password" className="form-control p-2" placeholder="Enter your password" value={userData.password} onChange={(e) => changeUserData(e)} />
+                    <input type="password" name="password" className="form-control p-2" placeholder="Enter your password" value={userData.password} onChange={(e) => changeUserData(e)} />
                     <p className="text-danger"> {error.password} </p>
                 </div>
-                <input className="btn btn-outline-light" id="btn2" type="submit" value={'Login'} disabled={error.email ||error.password} />
+                <input className="btn btn-outline-light" id="btn2" type="submit" value={'Login'} disabled={!userData.email || !userData.password || error.email || error.password} />
             </form>
             <br/>
         </div>

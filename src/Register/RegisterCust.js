@@ -147,17 +147,17 @@ function Register() {
 
                 <div className="mb-3">
                     <label className="form-label text-light">Password</label>  <br />
-                    <input name="password" placeholder="Enter your password" className="form-control p-2" value={userData.password} onChange={(e) => changeUserData(e)} />
+                    <input type="password" name="password" placeholder="Enter your password" className="form-control p-2" value={userData.password} onChange={(e) => changeUserData(e)} />
                     <p className="text-danger"> {error.password} </p>
                 </div>
 
                 <div className="mb-3">
                     <label className="form-label text-light">Confirm Password</label>  <br />
-                    <input name="confirmpassword" placeholder="Confirm your password" className="form-control p-2" value={userData.confirmpassword} onChange={(e) => changeUserData(e)} />
+                    <input type="password" name="confirmpassword" placeholder="Confirm your password" className="form-control p-2" value={userData.confirmpassword} onChange={(e) => changeUserData(e)} />
                     <p className="text-danger"> {error.confirmpassword} </p>
                 </div>
                 <br/>
-                <input className="btn btn-outline-dark" id="btn1" type="submit" value={"Sign up"} disabled={error.name || error.email || error.username || error.password || error.confirmpassword} />
+                <input className="btn btn-outline-dark" id="btn1" type="submit" value={"Sign up"} disabled={!userData.name || !userData.email || !userData.username || !userData.address || !userData.phone || !userData.password || !userData.confirmpassword || error.name || error.email || error.username || error.address || error.phone || !userData.password || error.confirmpassword} />
             </form>
             <br/> <br/>
         </div>
