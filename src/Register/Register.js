@@ -349,7 +349,7 @@ import {
                     />
                     <p className="text-danger"> {error.street} </p>
                   </div>
-                </div>
+            </div>
               </div>
               <div className="mb-3">
                 <label className="form-label text-light">Phone</label> <br />
@@ -365,6 +365,7 @@ import {
               <div className="mb-3">
                 <label className="form-label text-light">Password</label> <br />
                 <input
+                  type="password"
                   name="password"
                   placeholder="Enter your password"
                   className="form-control p-2"
@@ -378,6 +379,7 @@ import {
                 <label className="form-label text-light">Confirm Password</label>{" "}
                 <br />
                 <input
+                  type="password"
                   name="confirmpassword"
                   placeholder="Confirm your password"
                   className="form-control p-2"
@@ -396,18 +398,6 @@ import {
                 >
                   <option value="Engineer">Engineer</option>
                   <option value="Provider">Provider</option>
-                  {/* <option>Electrical Engineer</option>
-                          <option>Mechanical Engineer</option>
-                          <option>Mechaelectrical Engineer</option>
-                          <option>Telecom Engineer</option>
-                          <option>ُEnergy Engineer</option>
-                          <option>Archetect</option>
-                          <option>Painting Contractor</option>
-                          <option>Electrical Contractor</option>
-                          <option>Floor Contractor</option>
-                          <option>Plumbing Contractor</option>
-                          <option>Carpentry contractor</option>
-                          <option>Blacksmith contractor</option> */}
                 </select>
               </div>
               <br />
@@ -417,15 +407,26 @@ import {
                 type="submit"
                 value={"Sign up"}
                 disabled={
+                  !userData.name ||
+                  !userData.username ||
+                  !userData.email ||
+                  !userData.phone ||
+                  !userData.street ||
+                  !userData.city ||
+                  !userData.password ||
+                  !userData.confirmpassword ||
                   error.name ||
                   error.email ||
                   error.username ||
+                  error.phone ||
+                  error.street ||
+                  error.city ||
                   error.password ||
                   error.confirmpassword
                 }
               />
             </form>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <br /> <br />
           </div>
         </div>

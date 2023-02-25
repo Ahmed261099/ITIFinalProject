@@ -335,6 +335,7 @@ function Register() {
             <div className="mb-3">
               <label className="form-label text-light">Password</label> <br />
               <input
+                type="password"
                 name="password"
                 placeholder="Enter your password"
                 className="form-control p-2"
@@ -343,11 +344,11 @@ function Register() {
               />
               <p className="text-danger"> {error.password} </p>
             </div>
-
             <div className="mb-3">
               <label className="form-label text-light">Confirm Password</label>{" "}
               <br />
               <input
+                type="password"
                 name="confirmpassword"
                 placeholder="Confirm your password"
                 className="form-control p-2"
@@ -363,18 +364,29 @@ function Register() {
               type="submit"
               value={"Sign up"}
               disabled={
+                !userData.name ||
+                !userData.username ||
+                !userData.email ||
+                !userData.phone ||
+                !userData.street ||
+                !userData.city ||
+                !userData.password ||
+                !userData.confirmpassword ||
                 error.name ||
                 error.email ||
                 error.username ||
+                error.phone ||
+                error.street ||
+                error.city ||
                 error.password ||
                 error.confirmpassword
               }
             />
-          </form>
-          <ToastContainer />
           <br /> <br />
+            </form>
+            <br/> <br/>
         </div>
-      </div>
+        </div>
     </body>
   );
 }
