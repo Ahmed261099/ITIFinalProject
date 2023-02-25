@@ -1,13 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, useHistory } from 'react-router-dom';
 
 const UserRoute = ({ children, ...rest }) => {
 
     const { currentUser } = useSelector((state) => state.user);
 
+    const history = useHistory();
+
   return (
-    currentUser ? <Route {...rest} /> : <Link to={"login"}></Link>
+    currentUser ? <Route {...rest} /> : history.push("login")
   )
 }
 

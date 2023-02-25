@@ -31,7 +31,7 @@ import {
   
     const dispatch = useDispatch();
   
-    const [newRole, setNewRole] = useState("");
+    const [newRole, setNewRole] = useState("Engineer");
   
     const [userData, setUserData] = useState({
       name: "",
@@ -197,28 +197,39 @@ import {
         )
       );
   
-      // const q = query(collection(db, "users"));
       const q = query(
-        collection(db, "users"),
+        collection(db, "providers"),
         where("email", "==", userData.email)
       );
   
-      var newUser;
+      var newProvider;
       const data = await getDocs(q);
-      console.log(data);
       data.forEach((doc) => {
-        newUser = doc.data();
+        newProvider = doc.data();
+        console.log(doc.id, " => ", doc.data());
+      });
+
+      const q2 = query(
+        collection(db, "providers"),
+        where("email", "==", userData.email)
+      );
+  
+      var newEngineer;
+      const data2 = await getDocs(q2);
+      data2.forEach((doc) => {
+        newEngineer = doc.data();
         console.log(doc.id, " => ", doc.data());
       });
   
-      console.log(newUser);
+      console.log(newProvider);
+      console.log(newEngineer);
       console.log(newRole);
   
-      if (newUser) {
+      if (!newProvider || !newEngineer) {
         // handle error
-        toast("email already in use !");
+        // toast("email already in use !");
         // alert("email already in use");
-      } else {
+      // } else {
         console.log("email does not exists");
         let database = "";
   

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import Carousel from 'react-bootstrap/Carousel';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { logoutInitiate } from '../Store/Actions/AuthAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage'
@@ -28,9 +28,14 @@ function Profile() {
     const [getFeedback, setFeedback] = useState([])
     const [getPortofolio, setPortofolio] = useState([])
 
+    const history = useHistory();
+
     useEffect(() => {
-        getData();
-    }, [])
+        if(currentUser)
+            getData();
+        else
+            history.push("login");
+    }, [currentUser, history])
 
     const getData = () => {
         const q = query(
@@ -606,7 +611,7 @@ function Profile() {
                                             <i className="pe-2 fa fa-edit"></i>
                                             Edit Details
                                         </button>
-                                        <a className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" href="login-register.html" onClick={handleAuth}><i className="pe-1 fa fa-sign-out"></i> Logout</a>
+                                        <button className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase" onClick={handleAuth}><i className="pe-1 fa fa-sign-out"></i> Logout</button>
                                     </div>
                                 </div>
                                 {/* end section of buttons */}
@@ -626,11 +631,7 @@ function Profile() {
                                                     <p><strong>Role :</strong> {getUser.role} </p>
                                                     <p><strong>spetialization :</strong> {getUser.spetialization} </p>
                                                     <p><strong>Experiance :</strong> {getUser.experience} </p>
-
-
                                                 </div>
-
-
                                             </div>
                                         </div>
                                         {/* <!-- Single Tab Content End --> */}
