@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "../Register/register.css";
 import { loginInitiate } from "../Store/Actions/AuthAction";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
@@ -88,6 +90,7 @@ function Login() {
                 </div>
                 <input className="btn btn-outline-light" id="btn2" type="submit" value={'Login'} disabled={!userData.email || !userData.password || error.email || error.password} />
             </form>
+            <ToastContainer />
             <br/>
         </div>
         </div>

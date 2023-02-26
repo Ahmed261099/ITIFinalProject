@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import Carousel from "react-bootstrap/Carousel";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { logoutInitiate } from "../Store/Actions/AuthAction";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
@@ -24,14 +24,21 @@ function Profile() {
   const regPass = new RegExp(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
   );
+  const [getProvidor, setGetProvidor] = useState({});
+  const [getEngineer, setGetEngineer] = useState({});
+  const [getCustomer, setGetCustomer] = useState({});
   const [getUser, setGetUser] = useState({});
   const [getAddress, setAddress] = useState([]);
   const [getFeedback, setFeedback] = useState([]);
   const [getPortofolio, setPortofolio] = useState([]);
+  const [getDB, setGetDB] = useState("");
+
+  const history = useHistory();
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (currentUser) getData();
+    else history.push("login");
+  }, [currentUser, history]);
 
   const getData = () => {
     const q = query(
@@ -41,16 +48,67 @@ function Profile() {
 
     onSnapshot(q, (snapshot) => {
       snapshot.docs.forEach((doc) => {
-        setGetUser({ ...doc.data(), id: doc.id });
-        setAddress(doc.data().address);
-        setFeedback(doc.data().feedback);
-        setPortofolio(doc.data().portofolio);
+        setGetProvidor({ ...doc.data(), id: doc.id });
+        if (getProvidor) {
+          setGetUser({ ...doc.data(), id: doc.id });
+          setAddress(doc.data().address);
+          setFeedback(doc.data().feedback);
+          setPortofolio(doc.data().portofolio);
+          setGetDB("providers");
+        }
         console.log(doc.id, " => ", doc.data());
       });
     });
-  };
 
-  console.log(getUser);
+    const q2 = query(
+      collection(db, "engineers"),
+      where("email", "==", currentUser.email)
+    );
+
+    onSnapshot(q2, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetEngineer({ ...doc.data(), id: doc.id });
+        if (getEngineer) {
+          setGetUser({ ...doc.data(), id: doc.id });
+          setAddress(doc.data().address);
+          setFeedback(doc.data().feedback);
+          setPortofolio(doc.data().portofolio);
+          setGetDB("engineers");
+        }
+
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+
+    const q3 = query(
+      collection(db, "users"),
+      where("email", "==", currentUser.email)
+    );
+
+    onSnapshot(q3, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetCustomer({ ...doc.data(), id: doc.id });
+        if (getCustomer) {
+          setGetUser({ ...doc.data(), id: doc.id });
+          setAddress(doc.data().address);
+          setFeedback(doc.data().feedback);
+          setPortofolio(doc.data().portofolio);
+          setGetDB("users");
+        }
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+
+    // onSnapshot(q, (snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //         setGetUser({ ...doc.data(), id: doc.id })
+    //         setAddress(doc.data().address)
+    //         setFeedback(doc.data().feedback)
+    //         setPortofolio(doc.data().portofolio)
+    //         console.log(doc.id, " => ", doc.data());
+    //     });
+    // })
+  };
 
   const [userData, setUserData] = useState({
     city: "",
@@ -359,7 +417,7 @@ function Profile() {
     getUser.rate = 0;
     let count = 0;
 
-    getFeedback.forEach((element, index) => {
+    getFeedback?.forEach((element, index) => {
       getUser.rate += parseInt(element.rating);
       count = index;
     });
@@ -423,7 +481,7 @@ function Profile() {
             image: downloadURL,
           });
           console.log(getUser.portofolio);
-          const docRef = doc(db, "providers", getUser.id);
+          const docRef = doc(db, getDB, getUser.id);
 
           updateDoc(docRef, {
             portofolio: getUser.portofolio,
@@ -448,7 +506,7 @@ function Profile() {
       rating: userData.rating,
     });
 
-    const docRef = doc(db, "providers", getUser.id);
+    const docRef = doc(db, getDB, getUser.id);
 
     updateDoc(docRef, {
       feedback: getUser.feedback,
@@ -468,7 +526,7 @@ function Profile() {
   const handleButtonAddress = () => {
     getUser.address.push({ city: userData.city, street: userData.street });
 
-    const docRef = doc(db, "providers", getUser.id);
+    const docRef = doc(db, getDB, getUser.id);
 
     updateDoc(docRef, {
       address: getUser.address,
@@ -507,7 +565,7 @@ function Profile() {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const docRef = doc(db, "providers", getUser.id);
+          const docRef = doc(db, getDB, getUser.id);
 
           updateDoc(docRef, {
             name: getUser.name,
@@ -528,7 +586,7 @@ function Profile() {
     );
   };
   const handleButtonChangePassword = () => {
-    const docRef = doc(db, "providers", getUser.id);
+    const docRef = doc(db, getDB, getUser.id);
 
     updateDoc(docRef, {
       password: userData.newPassword,
@@ -584,7 +642,7 @@ function Profile() {
         {/* start of carousel */}
         <div className="container mt-5">
           <Carousel fade className="align-center w-100 ">
-            {getPortofolio.map((onePort, index) => {
+            {getPortofolio?.map((onePort, index) => {
               return (
                 <Carousel.Item key={index} className=" ">
                   <img
@@ -722,13 +780,12 @@ function Profile() {
                       <i className="pe-2 fa fa-edit"></i>
                       Edit Details
                     </button>
-                    <a
+                    <button
                       className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
-                      href="login-register.html"
                       onClick={handleAuth}
                     >
                       <i className="pe-1 fa fa-sign-out"></i> Logout
-                    </a>
+                    </button>
                   </div>
                 </div>
                 {/* end section of buttons */}
