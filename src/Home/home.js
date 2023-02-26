@@ -8,12 +8,15 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { db } from "./../Firebase";
+import { useDispatch, useSelector } from 'react-redux'
 import {
   collection,
   onSnapshot,
   query,
   limit,
 } from "firebase/firestore";
+import { CollectionName } from '../Store/Actions/CollectionNameAction'
+
 
 function Home()
 {
@@ -29,6 +32,7 @@ function Home()
     const dataContColl = query(collection(db, `providers`), limit(4));
     const dataProdColl = query(collection(db, `products`), limit(4));
     const dataRef = collection(db, `${keyword}`);
+    const dispacth = useDispatch()
     const loadDataFilter = async (optType = null) => {
       onSnapshot(dataRef, (snapshot) => {
         setDataFilter(
@@ -106,6 +110,9 @@ function Home()
       loadDataCont();
       loadDataProd();
     };
+    const changeCollectionName=(e)=>{
+      dispacth(CollectionName(e))
+    }
     useEffect(() => {
       loadDataEng();
       loadDataCont();
@@ -169,10 +176,10 @@ function Home()
                     <div className="card-Eng position-relative">
                       <div className="card-Eng-img">
                       <div className='card-Eng-img'>
-                                                <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
-                                            </div>
+                         <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
                       </div>
-                      <h3 className="py-2">{item.name}</h3>
+                      </div>
+                      <Link onClick={()=>changeCollectionName(`${keyword}`)} to={`view/${item.id}`}><h3 className="py-2">{item.name}</h3></Link>
                       <h3 className="py-2">{item.role}</h3>
                       <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
                         {item?.engRate && (
@@ -219,7 +226,7 @@ function Home()
                         <img src={require('./../assets/Engineers/client-1.png')} className='w-100' alt=''/>
                                            
                         </div>
-                        <h3 className="py-2">{item.name}</h3>
+                        <Link onClick={()=>changeCollectionName("engineers")} to={`view/${item.id}`}><h3 className="py-2">{item.name}</h3></Link>
                         <h3 className="py-2">{item.role}</h3>
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
                           {item?.engRate && (
@@ -262,7 +269,7 @@ function Home()
                         <div className="card-Eng-img">
                         <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
                         </div>
-                        <h3 className="py-2">{item.name}</h3>
+                        <Link onClick={()=>changeCollectionName("providers")} to={`view/${item.id}`}><h3 className="py-2">{item.name}</h3></Link>
                         <h3 className="py-2">{item.role}</h3>
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
                           {item?.engRate && (
@@ -307,7 +314,7 @@ function Home()
                      <img src={require('../assets/Products/product-1.jpg')} className='w-100' alt=''/>
                                           
                         </div>
-                        <h3 className="pt-2">{item.name}</h3>
+                        <Link onClick={()=>changeCollectionName("products")} to={`view/${item.id}`}><h3 className="py-2">{item.name}</h3></Link>
                         <div className="Item-Extra-Data d-flex justify-content-center">
                           <h5 className="text-danger pe-4">{item.category}</h5>
                           <h5 className="text-muted ">
