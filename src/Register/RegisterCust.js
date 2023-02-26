@@ -207,37 +207,40 @@ function Register() {
     });
 
     console.log(newUser);
+    console.log(userData.email)
 
-    if (newUser) {
-      // handle error
-      toast("email already in use !");
-      // alert("email already in use");
-    } else {
-      console.log("email does not exists");
-      addDoc(collection(db, "users"), {
-        // ...userData,
-        name: userData.name,
-        username: userData.username,
-        password: userData.password,
-        email: userData.email.toLowerCase(),
-        emailFormated: userData.email,
-        image: "",
-        role: "customer",
-        wishlist: [],
-        address: [{ city: userData.city, street: userData.street }],
-        
-        phone: userData.phone,
-        cart: [],
-        timestamp: serverTimestamp(),
-      })
-        .then(function (res) {
-          alert("added successfuly ");
+    // if(userData.email !== ""){
+      if (!newUser) {
+        // handle error
+        // toast("email already in use !");
+        // alert("email already in use");
+      // } else {
+        console.log("email does not exists");
+        addDoc(collection(db, "users"), {
+          // ...userData,
+          name: userData.name,
+          username: userData.username,
+          password: userData.password,
+          email: userData.email.toLowerCase(),
+          emailFormated: userData.email,
+          image: "",
+          role: "customer",
+          wishlist: [],
+          address: [{ city: userData.city, street: userData.street }],
+          
+          phone: userData.phone,
+          cart: [],
+          timestamp: serverTimestamp(),
         })
-        .catch(function (error) {
-          alert("ERROR " + error);
-        });
-      // push record to Firebase
-    }
+          .then(function (res) {
+            alert("added successfuly ");
+          })
+          .catch(function (error) {
+            alert("ERROR " + error);
+          });
+        // push record to Firebase
+      }
+    // }
   };
 
   return (
@@ -332,6 +335,7 @@ function Register() {
             <div className="mb-3">
               <label className="form-label text-light">Password</label> <br />
               <input
+                type="password"
                 name="password"
                 placeholder="Enter your password"
                 className="form-control p-2"
@@ -340,11 +344,11 @@ function Register() {
               />
               <p className="text-danger"> {error.password} </p>
             </div>
-
             <div className="mb-3">
               <label className="form-label text-light">Confirm Password</label>{" "}
               <br />
               <input
+                type="password"
                 name="confirmpassword"
                 placeholder="Confirm your password"
                 className="form-control p-2"
@@ -360,18 +364,29 @@ function Register() {
               type="submit"
               value={"Sign up"}
               disabled={
+                !userData.name ||
+                !userData.username ||
+                !userData.email ||
+                !userData.phone ||
+                !userData.street ||
+                !userData.city ||
+                !userData.password ||
+                !userData.confirmpassword ||
                 error.name ||
                 error.email ||
                 error.username ||
+                error.phone ||
+                error.street ||
+                error.city ||
                 error.password ||
                 error.confirmpassword
               }
             />
-          </form>
-          <ToastContainer />
           <br /> <br />
+            </form>
+            <br/> <br/>
         </div>
-      </div>
+        </div>
     </body>
   );
 }

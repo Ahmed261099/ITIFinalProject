@@ -31,7 +31,7 @@ import {
   
     const dispatch = useDispatch();
   
-    const [newRole, setNewRole] = useState("");
+    const [newRole, setNewRole] = useState("Engineer");
   
     const [userData, setUserData] = useState({
       name: "",
@@ -197,28 +197,38 @@ import {
         )
       );
   
-      // const q = query(collection(db, "users"));
       const q = query(
-        collection(db, "users"),
+        collection(db, "providers"),
         where("email", "==", userData.email)
       );
   
-      var newUser;
+      var newProvider;
       const data = await getDocs(q);
-      console.log(data);
       data.forEach((doc) => {
-        newUser = doc.data();
+        newProvider = doc.data();
+        console.log(doc.id, " => ", doc.data());
+      });
+
+      const q2 = query(
+        collection(db, "providers"),
+        where("email", "==", userData.email)
+      );
+  
+      var newEngineer;
+      const data2 = await getDocs(q2);
+      data2.forEach((doc) => {
+        newEngineer = doc.data();
         console.log(doc.id, " => ", doc.data());
       });
   
-      console.log(newUser);
+      console.log(newProvider);
+      console.log(newEngineer);
       console.log(newRole);
   
-      if (newUser) {
+      if (!newProvider || !newEngineer) {
         // handle error
-        toast("email already in use !");
-        // alert("email already in use");
-      } else {
+        // toast("email already in use !");
+      // } else {
         console.log("email does not exists");
         let database = "";
   
@@ -238,7 +248,7 @@ import {
           role: newRole,
           experience: "",
           spetialization: "",
-          portofolio: [{ image: "", title: "", caption: "" }],
+          portofolio: [],
           wishlist: [],
           address: [{ city: userData.city, street: userData.street }],
           phone: userData.phone,
@@ -338,7 +348,7 @@ import {
                     />
                     <p className="text-danger"> {error.street} </p>
                   </div>
-                </div>
+            </div>
               </div>
               <div className="mb-3">
                 <label className="form-label text-light">Phone</label> <br />
@@ -354,6 +364,7 @@ import {
               <div className="mb-3">
                 <label className="form-label text-light">Password</label> <br />
                 <input
+                  type="password"
                   name="password"
                   placeholder="Enter your password"
                   className="form-control p-2"
@@ -367,6 +378,7 @@ import {
                 <label className="form-label text-light">Confirm Password</label>{" "}
                 <br />
                 <input
+                  type="password"
                   name="confirmpassword"
                   placeholder="Confirm your password"
                   className="form-control p-2"
@@ -385,18 +397,6 @@ import {
                 >
                   <option value="Engineer">Engineer</option>
                   <option value="Provider">Provider</option>
-                  {/* <option>Electrical Engineer</option>
-                          <option>Mechanical Engineer</option>
-                          <option>Mechaelectrical Engineer</option>
-                          <option>Telecom Engineer</option>
-                          <option>ُEnergy Engineer</option>
-                          <option>Archetect</option>
-                          <option>Painting Contractor</option>
-                          <option>Electrical Contractor</option>
-                          <option>Floor Contractor</option>
-                          <option>Plumbing Contractor</option>
-                          <option>Carpentry contractor</option>
-                          <option>Blacksmith contractor</option> */}
                 </select>
               </div>
               <br />
@@ -406,15 +406,26 @@ import {
                 type="submit"
                 value={"Sign up"}
                 disabled={
+                  !userData.name ||
+                  !userData.username ||
+                  !userData.email ||
+                  !userData.phone ||
+                  !userData.street ||
+                  !userData.city ||
+                  !userData.password ||
+                  !userData.confirmpassword ||
                   error.name ||
                   error.email ||
                   error.username ||
+                  error.phone ||
+                  error.street ||
+                  error.city ||
                   error.password ||
                   error.confirmpassword
                 }
               />
             </form>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <br /> <br />
           </div>
         </div>
