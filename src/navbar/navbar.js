@@ -17,16 +17,16 @@ function navbar()
                         <NavLink className="nav-link fs-5" aria-current="page" to="/">Home</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="Shop">Shop</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/Shop">Shop</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="NewArrivals">New Arrivals</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/NewArrivals">New Arrivals</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="About">About</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/About">About</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="firstreg">Contact</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/firstreg">Contact</NavLink>
                     </li>    
                 </ul>
                 <div className=' d-flex'>
