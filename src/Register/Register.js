@@ -228,7 +228,6 @@ import {
       if (!newProvider || !newEngineer) {
         // handle error
         // toast("email already in use !");
-        // alert("email already in use");
       // } else {
         console.log("email does not exists");
         let database = "";
@@ -249,7 +248,7 @@ import {
           role: newRole,
           experience: "",
           spetialization: "",
-          portofolio: [{ image: "", title: "", caption: "" }],
+          portofolio: [],
           wishlist: [],
           address: [{ city: userData.city, street: userData.street }],
           phone: userData.phone,

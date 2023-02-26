@@ -209,7 +209,7 @@ function Register() {
     console.log(newUser);
     console.log(userData.email)
 
-    if(userData.email !== ""){
+    // if(userData.email !== ""){
       if (!newUser) {
         // handle error
         // toast("email already in use !");
@@ -240,7 +240,7 @@ function Register() {
           });
         // push record to Firebase
       }
-    }
+    // }
   };
 
   return (
