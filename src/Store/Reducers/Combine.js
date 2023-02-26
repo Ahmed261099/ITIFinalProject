@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import UserReducer from "./AuthReducer";
-import CollectionNameReducer from "./CollectionNameReducer";
+import CollReducer from "./CollReducer";
+
 
 export default combineReducers({
 
     user: UserReducer,
-    collName: CollectionNameReducer
+    coll: CollReducer
+   
 
 });

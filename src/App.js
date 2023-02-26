@@ -47,7 +47,7 @@ function App() {
         <Route exact path={"/firstreg"} component={First_Reg} />
         <Route exact path={"/register"} component={Register} />
         <Route exact path={"/registercus"} component={RegisterCustomer} />
-        <Route exact path={"/view/:id"} component={ViewProfile}/>
+        <Route exact path={"/view/:role/:id"} component={ViewProfile}/>
       </Switch>
     </Router>
 
