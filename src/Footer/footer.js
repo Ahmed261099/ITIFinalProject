@@ -9,7 +9,7 @@ function footer()
                 <div className="row gy-2 d-flex justify-content-center align-items-center">
                     <div className="col-lg-3">
                         <div className="footer-logo">
-                            <img className="w-100" src={require('../assets/Footer/Footer.png')} alt="footer"></img>
+                            <img className="w-100" src={require('../assets/Footer/My project-1 (1).png')} alt="footer"></img>
                         </div>
                     </div>
                     <div className="col-lg-3">

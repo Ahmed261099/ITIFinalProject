@@ -1,6 +1,6 @@
 #Footer
 {
-    background-color: #24a4a4; 
+    background-color: #A0D5D3; 
 }
 .newsletter-form {
     position: relative;
@@ -36,9 +36,9 @@
 
 .footer-end
 {
-    background-color: #1f7f7f;
+    background-color: #24a4a4;
 }
 .social-media a:hover i
 {
-    color: pink !important;
+    color: #A0D5D3 !important;
 }
