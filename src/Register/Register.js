@@ -255,6 +255,7 @@ import {
           cart: [],
           rate: "",
           feedback:[],
+          messages:[],
           timestamp: serverTimestamp(),
         })
           .then(function (res) {

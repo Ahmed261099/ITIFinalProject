@@ -8,6 +8,7 @@ import {
   Route, Switch
 } from "react-router-dom";
 import Profile from './profilePage/Profile';
+import ViewProfile from './ViewProfile/ViewProfile';
 import Navbar from './navbar/navbar';
 import Home from './Home/home';
 import { useEffect } from 'react';
@@ -48,6 +49,7 @@ function App() {
         <Route exact path={"/firstreg"} component={First_Reg} />
         <Route exact path={"/register"} component={Register} />
         <Route exact path={"/registercus"} component={RegisterCustomer} />
+        <Route exact path={"/view/:role/:id"} component={ViewProfile}/>
       </Switch>
     </Router>
 
