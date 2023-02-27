@@ -15,7 +15,12 @@ import {
   query,
   limit,
 } from "firebase/firestore";
-// import { CollectionName } from '../Store/Actions/CollectionNameAction'
+
+import Testmonial from '../testmonials/testmonials' ;
+import Footer from '../Footer/footer' ;
+
+
+
 
 
 function Home()
@@ -126,41 +131,43 @@ function Home()
           <Banners></Banners>
 
 
-          <div className="bg-white">
-      <div className="d-flex justify-content-evenly">
-        <div className="mt-3 col-4 d-flex flex-row">
-          <h3 className="col-xl-5 col-md-5">Filter By Category:</h3>
-          <select
-            onChange={(e) => handleFilter(e)}
-            className="form-select "
-            value={sortValue}
-          >
-            <option selected>Select By Category</option>
-            <option value="engineers">Engineers</option>
-            <option value="providers">Providers</option>
-            <option value="products">Products</option>
-          </select>
-        </div>
-        <Form className="d-flex flex-row col-3" onSubmit={handleSearch}>
-          <Form.Control
-            type="search"
-            placeholder="Search By Specialization ex(civil-arc-..)"
-            className="me-2 "
-            aria-label="Search"
-            value={searchValue}
-            onChange={(e) => 
-                setSearchValue(e.target.value)
-                // setDataFilter(dataFilter.filter(user=>user.name.toLowerCase().includes(`${searchValue}`.toLowerCase())))}
-            }
-          />
-          {/* <Button type="submit" variant="outline-success">
-            Search
-          </Button> */}
-          <Button variant="outline-danger ms-2" onClick={() => handleRest()}>
-            Rest
-          </Button>
-        </Form>
-      </div>
+          <div className="container">
+           <div className=" row d-flex justify-content-evenly w-75 mx-auto">
+              <div className="col-lg-6 mt-3 d-flex flex-row">
+                <h3 className="col-xl-5 col-md-5">Filter By Category:</h3>
+                <select
+                  onChange={(e) => handleFilter(e)}
+                  className="form-select "
+                  value={sortValue}
+                >
+                  <option selected>Select By Category</option>
+                  <option value="engineers">Engineers</option>
+                  <option value="providers">Providers</option>
+                  <option value="products">Products</option>
+                </select>
+              </div>
+              <div className='col-lg-6 mt-3 d-flex flex-row'>
+                  <Form className="d-flex flex-row w-100" onSubmit={handleSearch}>
+                    <Form.Control
+                      type="search"
+                      placeholder="Search By Specialization..."
+                      className="me-2 w-75"
+                      aria-label="Search"
+                      value={searchValue}
+                      onChange={(e) => 
+                          setSearchValue(e.target.value)
+                          // setDataFilter(dataFilter.filter(user=>user.name.toLowerCase().includes(`${searchValue}`.toLowerCase())))}
+                      }
+                    />
+                    {/* <Button type="submit" variant="outline-success">
+                      Search
+                    </Button> */}
+                    <Button variant="outline-danger ms-2 w-25" onClick={() => handleRest()}>
+                      Rest
+                    </Button>
+                  </Form>
+              </div>
+            </div>
       {operation === "filter" && dataFilter.length>0 ? (
         <section id="Popular-Eng" className="pt-5">
           <div className="container text-center">
@@ -355,6 +362,7 @@ function Home()
         <h3 className="text-danger">No data</h3>
       ):(<div></div>)}
     </div>
+        <Footer/>
         </div>
     )
 }

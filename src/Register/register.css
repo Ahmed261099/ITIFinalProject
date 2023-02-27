@@ -1,9 +1,10 @@
-.reg{
+.reg
+{
     background-image: url("../assets/f3.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 180vh;
+    min-height:100vh ;
 }
 
 h1{
