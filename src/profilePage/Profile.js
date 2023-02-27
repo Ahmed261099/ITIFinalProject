@@ -622,7 +622,7 @@ function Profile() {
               {/* end op p.p */}
               <div className="ps-5">
                 <div className="d-flex">
-                  <h2 className="ps-0 fs-1">{getUser.name}</h2>
+                  <h2 className="ps-0 fs-1">{getUser.username}</h2>
                   <div className="m-3">{drawStar(calcRating())}</div>
                 </div>
                 <ul className="paths ">
@@ -640,7 +640,8 @@ function Profile() {
         {/* end of header */}
 
         {/* start of carousel */}
-        <div className="container mt-5">
+        { getUser.role === "customer" ? "" :
+        (<div className="container mt-5">
           <Carousel fade className="align-center w-100 ">
             {getPortofolio?.map((onePort, index) => {
               return (
@@ -659,7 +660,7 @@ function Profile() {
               );
             })}
           </Carousel>
-        </div>
+        </div>) }
         {/* end of Carousel */}
         {/*start section buttons and content  */}
         <div className="mt-5  p-5">
@@ -682,7 +683,8 @@ function Profile() {
                       <i className="pe-2 fa fa-dashboard"></i>
                       info
                     </button>
-                    <button
+                    { getUser.role === "customer" ? null :
+                      (<button
                       className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
                       type="button"
                       id="addPortfolio-tab"
@@ -695,8 +697,9 @@ function Profile() {
                     >
                       <i class="pe-2 fa-solid fa-wand-magic-sparkles"></i>
                       Add Portfolio
-                    </button>
-                    <button
+                    </button>)}
+                    {getUser.role === "customer" ? "" : 
+                    (<button
                       className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
                       type="button"
                       id="feedback-tab"
@@ -709,7 +712,7 @@ function Profile() {
                     >
                       <i className="pe-2 fa fa-comment"></i>
                       FeedBack
-                    </button>
+                    </button>)}
                     <button
                       className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
                       type="button"
@@ -722,7 +725,7 @@ function Profile() {
                       tabIndex="-1"
                     >
                       <i className="pe-2 fa fa-message"></i>
-                      Message
+                      Messages
                     </button>
                     <button
                       className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
@@ -812,23 +815,27 @@ function Profile() {
                           <p>
                             <strong>Email :</strong> {getUser.email}{" "}
                           </p>
-                          <p>
+                          {getUser.role === "customer" ? null :
+                          (<p>
                             <strong>Role :</strong> {getUser.role}{" "}
-                          </p>
-                          <p>
+                          </p>)}
+                          {getUser.role === "customer" ? null :
+                          (<p>
                             <strong>spetialization :</strong>{" "}
                             {getUser.spetialization}{" "}
-                          </p>
-                          <p>
+                          </p>)}
+                          {getUser.role === "customer" ? null :
+                          (<p>
                             <strong>Experiance :</strong> {getUser.experience}{" "}
-                          </p>
+                          </p>)}
                         </div>
                       </div>
                     </div>
                     {/* <!-- Single Tab Content End --> */}
 
                     {/* <!-- Single Tab Content Start --> */}
-                    <div
+                    {getUser.role === "customer" ? "" :
+                    (<div
                       className="tab-pane fade"
                       id="addPortfolio"
                       role="tabpanel"
@@ -898,10 +905,11 @@ function Profile() {
                           </div>
                         </form>
                       </div>
-                    </div>
+                    </div>)}
                     {/* <!-- Single Tab Content End --> */}
                     {/* <!-- Single Tab Content Start --> */}
-                    <div
+                    {getUser.role === "customer" ? "" : 
+                    (<div
                       className="tab-pane fade"
                       id="feedback"
                       role="tabpanel"
@@ -911,7 +919,8 @@ function Profile() {
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
 
-                        {getFeedback?.map((feedback, index) => {
+                        { getFeedback.length === 0 ? (<h2 className="fs-5">No Feedback to show!</h2>) :
+                        (getFeedback?.map((feedback, index) => {
                           return (
                             <>
                               <div
@@ -927,9 +936,10 @@ function Profile() {
                               </div>
                             </>
                           );
-                        })}
+                        }))}
                         <hr />
-                        <form onSubmit={(e) => submitData(e)}>
+                        
+                        {/* <form onSubmit={(e) => submitData(e)}>
                           <div className="col-12 ">
                             <textarea
                               className="border m-2 border-secondary-subtle w-100 p-3 d-block "
@@ -976,12 +986,12 @@ function Profile() {
                               Comment
                             </button>
                           </div>
-                        </form>
+                        </form> */}
                       </div>
-                    </div>
+                    </div>)}
                     {/* <!-- Single Tab Content End --> */}
                     {/* <!-- Single Tab Content Start --> */}
-                    <div
+                    {<div
                       className="tab-pane fade"
                       id="message"
                       role="tabpanel"
@@ -1005,7 +1015,7 @@ function Profile() {
                           </div>
                         </form>
                       </div>
-                    </div>
+                    </div>}
                     {/* <!-- Single Tab Content End --> */}
                     {/* <!-- Single Tab Content Start --> */}
                     <div
@@ -1282,11 +1292,13 @@ function Profile() {
                                   <small>{error.email}</small>{" "}
                                 </p>
                               </div>
-                              <div className="col-12 ">
+                              {getUser.role === "customer" ? "" :
+                              (<div className="col-12 ">
                                 <input
                                   className="border m-2 border-secondary-subtle w-100 p-3 d-block"
                                   id="experince"
                                   name="experience"
+                                  placeholder="Enter you experience"
                                   value={getUser.experience}
                                   onChange={(e) => changeUserData(e)}
                                   type="text"
@@ -1295,7 +1307,7 @@ function Profile() {
                                   {" "}
                                   <small>{error.experience}</small>{" "}
                                 </p>
-                              </div>
+                              </div>)}
                               <div className="col-12 ">
                                 <input
                                   className="w-100 p-3 m-2  m-2   form-control "
@@ -1309,7 +1321,8 @@ function Profile() {
                                   <small>{error.image}</small>{" "}
                                 </p>
                               </div>
-                              <div className="mb-3">
+                              {getUser.role === "customer" ? "" : 
+                              (<div className="mb-3">
                                 <select
                                   name="spetialization"
                                   value={getUser.spetialization}
@@ -1335,7 +1348,7 @@ function Profile() {
                                   {" "}
                                   <small>{error.spetialization}</small>{" "}
                                 </p>
-                              </div>
+                              </div>)}
                               <div className="d-flex justify-content-end">
                                 <button
                                   className="btn btn-outline-dark text-uppercase p-2 m-2"
