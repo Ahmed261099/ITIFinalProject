@@ -17,6 +17,7 @@ import { auth } from './Firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from './Store/Actions/AuthAction';
 import UserRoute from './userRoute';
+import About from './About/About';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <UserRoute exact path={'/Profile'} component={Profile}/>
         <Route exact path={"/login"} component={Login} />        
         <Route exact path={'/navbar'} component={Navbar}/>
+        <Route exact path={'/About'} component={About}/>
         <Route exact path={"/login"} component={Login} />
         <Route exact path={"/firstreg"} component={First_Reg} />
         <Route exact path={"/register"} component={Register} />

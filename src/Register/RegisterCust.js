@@ -227,7 +227,7 @@ function Register() {
           role: "customer",
           wishlist: [],
           address: [{ city: userData.city, street: userData.street }],
-          
+          messages: [],
           phone: userData.phone,
           cart: [],
           timestamp: serverTimestamp(),
