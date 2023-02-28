@@ -32,6 +32,8 @@ function Profile() {
   const [getFeedback, setFeedback] = useState([]);
   const [getPortofolio, setPortofolio] = useState([]);
   const [getDB, setGetDB] = useState("");
+  const [getWishList, setWhishList] = useState([]);
+  const [getcart, setCart] = useState([]);
 
   const history = useHistory();
 
@@ -54,6 +56,8 @@ function Profile() {
           setAddress(doc.data().address);
           setFeedback(doc.data().feedback);
           setPortofolio(doc.data().portofolio);
+          setWhishList(doc.data().wishlist);
+          setCart(doc.data().cart);
           setGetDB("providers");
         }
         console.log(doc.id, " => ", doc.data());
@@ -73,6 +77,8 @@ function Profile() {
           setAddress(doc.data().address);
           setFeedback(doc.data().feedback);
           setPortofolio(doc.data().portofolio);
+          setWhishList(doc.data().wishlist);
+          setCart(doc.data().cart);
           setGetDB("engineers");
         }
 
@@ -93,21 +99,15 @@ function Profile() {
           setAddress(doc.data().address);
           setFeedback(doc.data().feedback);
           setPortofolio(doc.data().portofolio);
+          setWhishList(doc.data().wishlist);
+          setCart(doc.data().cart);
           setGetDB("users");
         }
         console.log(doc.id, " => ", doc.data());
       });
     });
 
-    // onSnapshot(q, (snapshot) => {
-    //     snapshot.docs.forEach((doc) => {
-    //         setGetUser({ ...doc.data(), id: doc.id })
-    //         setAddress(doc.data().address)
-    //         setFeedback(doc.data().feedback)
-    //         setPortofolio(doc.data().portofolio)
-    //         console.log(doc.id, " => ", doc.data());
-    //     });
-    // })
+  
   };
 
   const [userData, setUserData] = useState({
@@ -143,6 +143,7 @@ function Profile() {
     newPassword: null,
     confirmpassword: null,
   });
+  console.log(getWishList)
 
   const addUserData = (e) => {
     if (e.target.name === "img") {
@@ -598,6 +599,37 @@ function Profile() {
         console.log("ERROR" + error);
       });
   };
+  const removeFromCart=(index)=>{
+    getUser.cart.splice(index,1);
+
+    const docRef = doc(db, getDB, getUser.id);
+
+    updateDoc(docRef, {
+      cart: getUser.cart,
+    })
+      .then(() => {
+        console.log("remove cart");
+      })
+      .catch((error) => {
+        console.log("ERROR" + error);
+      });
+    }
+      const removeFromWhishList=(index)=>{
+        getUser.wishlist.splice(index,1);
+    
+        const docRef = doc(db, getDB, getUser.id);
+    
+        updateDoc(docRef, {
+          wishlist: getUser.wishlist,
+        })
+          .then(() => {
+            console.log("remove wishlist");
+          })
+          .catch((error) => {
+            console.log("ERROR" + error);
+          });
+    
+  }
   return (
     <>
       <div id="profile">
@@ -1029,62 +1061,45 @@ function Profile() {
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">Cart</h3>
                         <div className="myaccount-table table-responsive text-center">
-                          <table className="table table-bordered">
+                        { getcart.length === 0 ? (<h2 className="fs-5">No products to show!</h2>) :(
+                            <table className="table table-bordered">
                             <thead className="thead-light">
                               <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Date</th>
-                                <th>Total</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
-
                             <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Mostarizing Oil</td>
-                                <td>Aug 22, 2018</td>
-                                <td>$45</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Katopeno Altuni</td>
-                                <td>July 22, 2018</td>
-                                <td>$100</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Murikhete Paris</td>
-                                <td>June 12, 2017</td>
-                                <td>$99</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                              {getcart?.map((item,index)=>{
+                                return(
+                                  <tr>
+                                  <td>{index+1}</td>
+                                  <td>{item.name}</td>
+                                  <td>{item.price}</td>
+                                  <td>{item.quantity}</td>
+                                  <td>
+                                    <Link
+                                      to={`view/${item.role}/${item.id}`}
+                                      className="btn btn-outline-dark"
+                                    >
+                                      View
+                                    </Link>
+                                    <button
+                                      onClick={()=>removeFromCart(index)}
+                                      className="btn btn-outline-danger ms-2"
+                                    >
+                                      Delete
+                                    </button>
+                                  </td>
+                                </tr>
+                                )})}
+                                 </tbody>
+                                 </table>
+                        )}
+                          
                         </div>
                       </div>
                     </div>
@@ -1100,7 +1115,8 @@ function Profile() {
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">Wishlist</h3>
                         <div className="myaccount-table table-responsive text-center">
-                          <table className="table table-bordered">
+                        { getWishList.length === 0 ? (<h2 className="fs-5">No wishlist to show!</h2>) :(
+                            <table className="table table-bordered">
                             <thead className="thead-light">
                               <tr>
                                 <th>No</th>
@@ -1110,49 +1126,32 @@ function Profile() {
                                 <th>Action</th>
                               </tr>
                             </thead>
-
                             <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Mostarizing Oil</td>
-                                <td>$Provider</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Katopeno Altuni</td>
-                                <td>Engineer</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Murikhete Paris</td>
-                                <td>Provider</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                              {getWishList?.map((item,index)=>{
+                                return(
+                                  <tr>
+                                  <td>{index+1}</td>
+                                  <td>{item.name}</td>
+                                  <td>{item.role}</td>
+                                  <td>
+                                    <Link
+                                      to={`view/${item.role}/${item.id}`}
+                                      className="btn btn-outline-dark"
+                                    >
+                                      View
+                                    </Link>
+                                    <button
+                                      onClick={()=>removeFromWhishList(index)}
+                                      className="btn btn-outline-danger ms-2"
+                                    >
+                                      Delete
+                                    </button>
+                                  </td>
+                                </tr>
+                                )})}
+                                 </tbody>
+                                 </table>
+                        )}
                         </div>
                       </div>
                     </div>
