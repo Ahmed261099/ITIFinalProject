@@ -623,7 +623,8 @@ function Profile() {
               <div className="ps-5">
                 <div className="d-flex">
                   <h2 className="ps-0 fs-1">{getUser.username}</h2>
-                  <div className="m-3">{drawStar(calcRating())}</div>
+                  { getUser.role === "customer" ? null :
+                  <div className="m-3">{drawStar(calcRating())}</div>}
                 </div>
                 <ul className="paths ">
                   <li className="dvider">
