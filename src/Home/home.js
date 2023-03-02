@@ -430,7 +430,7 @@ function Home()
             </div>
           </section>
 
-          <section id="Popular-Products" className="pt-5">
+          <section id="Popular-Products" className="py-5">
             <div className="container text-center">
               <h2 className="fw-bold">Popular Products</h2>
               <div className="line line1"></div>
@@ -488,8 +488,6 @@ function Home()
         <h3 className="text-danger">No data</h3>
       ):(<div></div>)}
     </div>
-        <Footer/>
-        <div>logout</div>
         </div>
     )
 }

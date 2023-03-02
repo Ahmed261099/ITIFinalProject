@@ -14,7 +14,7 @@ function navbar()
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul className="navbar-nav m-auto mb-2 mb-lg-0 ">
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="/">Home</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/Home">Home</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/Shop">Shop</NavLink>
@@ -26,7 +26,7 @@ function navbar()
                         <NavLink className="nav-link fs-5" aria-current="page" to="/About">About</NavLink>
                     </li>
                     <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="/firstreg">Contact</NavLink>
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/Contact">Contact</NavLink>
                     </li>    
                 </ul>
                 <div className=' d-flex'>
