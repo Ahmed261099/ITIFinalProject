@@ -32,7 +32,9 @@ function Home()
     const [dataEng, setDataEng] = useState([]);
     const [dataCont, setDataCont] = useState([]);
     const [dataProd, setDataProd] = useState([]);
-    const [dataFilter, setDataFilter] = useState([]);
+    const [dataEngFilter, setDataEngFilter] = useState([]);
+    const [dataContFilter, setDataContFilter] = useState([]);
+    const [dataProFilter, setDataProFilter] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [sortValue, setSortValue] = useState("");
     const [keyword, setKeyword] = useState("providers");
@@ -49,18 +51,52 @@ function Home()
     const dispacth = useDispatch()
     const history = useHistory();
     const loadDataFilter = async () => {
-      onSnapshot(dataRef, (snapshot) => {
-        setDataFilter(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            name: doc.data().name,
-            role: doc.data().role,
-            phone: doc.data().phone,
-            rate: doc.data().rate,
-            spetialization: doc.data().spetialization,
-          }))
-        );
-      });
+      if(keyword==="engineers"){
+        const dataRefEng = collection(db, "engineers");
+        onSnapshot(dataRefEng, (snapshot) => {
+          setDataEngFilter(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              name: doc.data().name,
+              role: doc.data().role,
+              phone: doc.data().phone,
+              rate: doc.data().rate,
+              spetialization: doc.data().spetialization,
+            }))
+          );
+        });
+        
+      }else if(keyword==="providers"){
+        const dataRefCont = collection(db, "providers");
+        onSnapshot(dataRefCont, (snapshot) => {
+          setDataContFilter(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              name: doc.data().name,
+              role: doc.data().role,
+              phone: doc.data().phone,
+              rate: doc.data().rate,
+              spetialization: doc.data().spetialization,
+            }))
+          );
+        });
+      }else{
+        const dataRefPro = collection(db, "products");
+        onSnapshot(dataRefPro, (snapshot) => {
+          setDataProFilter(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              name: doc.data().name,
+              role: doc.data().role,
+              phone: doc.data().phone,
+              rate: doc.data().rate,
+              spetialization: doc.data().spetialization,
+            }))
+          );
+        });
+
+      }
+     
     };
     const loadDataEng = async () => {
       onSnapshot(dataEngColl, (snapshot) => {
@@ -76,8 +112,8 @@ function Home()
         );
       });
     };
-    console.log(dataFilter);
-    console.log(getUser2.cart)
+    
+    // console.log(getUser2.cart)
     const loadDataCont = async () => {
       onSnapshot(dataContColl, (snapshot) => {
         setDataCont(
@@ -108,13 +144,6 @@ function Home()
     const { currentUser } = useSelector((state) => state.user);
     const addToWhishList=(item)=>{
       const added = getUser2.wishlist.find(({id})=>id===item.id)
-      if(item.role==="Engineer"){
-        setKeyword("engineers")
-      }else if(item.role==="Provider"){
-        setKeyword("providers")
-      }else{
-        setKeyword("products")
-      }
       console.log(added)
     if (!added) {
       getUser2.wishlist.push({name:item.name,id:item.id,role:item.spetialization})
@@ -133,10 +162,10 @@ function Home()
     }
     const addToCart=(item)=>{
       const added = getUser2.cart.find(({id})=>id===item.id)
-      let quantity=parseInt("1")
+      // let quantity=parseInt("1")
       console.log(added)
     if (!added) {
-      getUser2.cart.push({name:item.name,id:item.id,role:item.role,quantity:quantity})
+      getUser2.cart.push({name:item.name,id:item.id,role:item.role})
       const docRef = doc(db, getDB, getUser2.id);
       updateDoc(docRef, {
         cart: getUser2.cart,
@@ -147,14 +176,14 @@ function Home()
         .catch((error) => {
           console.log("ERROR" + error);
         });}else{
-         console.log(getUser2.cart.Quantity)
+        //  console.log(getUser2.cart.Quantity)
         }
     }
     const handleFilter = (e) => {
       let value = e.target.value;
-      setSortValue(value);
+      // setSortValue(value);
       setOperation("filter");
-      setKeyword(e.target.value);
+      setKeyword(value);
     };
   
     const handleRest = async () => {
@@ -237,7 +266,8 @@ function Home()
       if (currentUser) getData2();
     else history.push("login");
     }, [keyword,currentUser,history]);
-
+    // console.log(dataFilter);
+    console.log(keyword)
     return(
         <div className='bg-white'>
           <Header></Header>
@@ -251,7 +281,7 @@ function Home()
                 <select
                   onChange={(e) => handleFilter(e)}
                   className="form-select "
-                  value={sortValue}
+                  // value={sortValue}
                 >
                   <option selected>Select By Category</option>
                   <option value="engineers">Engineers</option>
@@ -281,7 +311,7 @@ function Home()
                   </Form>
               </div>
             </div>
-      {operation === "filter" && dataFilter.length>0 ? (
+      {operation === "filter" ? (
         <section id="Popular-Eng" className="pt-5">
           <div className="container text-center">
             <h2 className="fw-bold">{keyword}</h2>
@@ -289,7 +319,86 @@ function Home()
             <div className="line line2"></div>
             <div className="line line1"></div>
             <div className="row py-3 gy-2">
-              {dataFilter.filter(user=>user.spetialization.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
+              {keyword==="engineers"?(
+                dataEngFilter.filter(user=>user.spetialization.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
+                  return(
+                      
+                      <div className="col-lg-3">
+                      <div className="card-Eng position-relative">
+                        <div className="card-Eng-img">
+                        <div className='card-Eng-img'>
+                           <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                        </div>
+                        </div>
+                        <h3 className="py-2">{item.name}</h3>
+                        <h3 className="py-2">{item.role}</h3>
+                        <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                          {item?.engRate && (
+                            <>
+                              <i class="fa-solid fa-star star pe-1 text-warning"></i>
+                              <p className="mb-0 star text-warning">
+                                {item?.engRate?.toFixed(1)}
+                              </p>
+                            </>
+                          )}
+                          {!item.engRate && null}
+                        </div>
+                       
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">
+                          <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
+                          {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
+                          </div>
+                          <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                            </div>
+                            </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )
+          
+                })
+              ):keyword==="providers"?(
+                dataContFilter.filter(user=>user.spetialization.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
+                  return(
+                      
+                      <div className="col-lg-3">
+                      <div className="card-Eng position-relative">
+                        <div className="card-Eng-img">
+                        <div className='card-Eng-img'>
+                           <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                        </div>
+                        </div>
+                        <h3 className="py-2">{item.name}</h3>
+                        <h3 className="py-2">{item.role}</h3>
+                        <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                          {item?.engRate && (
+                            <>
+                              <i class="fa-solid fa-star star pe-1 text-warning"></i>
+                              <p className="mb-0 star text-warning">
+                                {item?.engRate?.toFixed(1)}
+                              </p>
+                            </>
+                          )}
+                          {!item.engRate && null}
+                        </div>
+                       
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">
+                          <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
+                          {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
+                          </div>
+                          <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                            </div>
+                            </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )
+          
+                })
+              ):(
+                dataProFilter.filter(user=>user.spetialization.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
                 return(
                     
                     <div className="col-lg-3">
@@ -314,12 +423,12 @@ function Home()
                       </div>
                      
                       <div className="Item-Icon position-absolute rounded-circle  py-4">
-                      {keyword==="products"?(
+                      
                           
                           <div onClick={()=>addToCart(item)} className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                           <i className="fa-solid fa-cart-shopping"></i>
                         </div>
-                        ):(<></>)}
+                        
                         <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
                         {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
                         </div>
@@ -332,7 +441,7 @@ function Home()
                   </div>
                 )
         
-              })}
+              }))}
             </div>
           </div>
         </section>
@@ -484,7 +593,7 @@ function Home()
             </div>
           </section>
         </div>
-      ) :dataFilter.length===0 ?(
+      ) :dataEngFilter.length===0 ||dataContFilter.length===0||dataProFilter===0?(
         <h3 className="text-danger">No data</h3>
       ):(<div></div>)}
     </div>
