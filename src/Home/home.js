@@ -286,7 +286,7 @@ function Home()
                   <option selected>Select By Category</option>
                   <option value="engineers">Engineers</option>
                   <option value="providers">Providers</option>
-                  <option value="products">Products</option>
+                  <option value="c">Products</option>
                 </select>
               </div>
               <div className='col-lg-6 mt-3 d-flex flex-row'>

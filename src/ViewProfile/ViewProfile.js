@@ -46,8 +46,8 @@ function ViewProfile() {
     if(param.role==="Provider"){
         const docRef = doc(db,"providers",param.id);
         onSnapshot(docRef, (snapshot) => {
-            setGetProvidor({ ...snapshot.data(), id: doc.id });
-              setGetUser({ ...snapshot.data(), id: doc.id });
+            setGetProvidor({ ...snapshot.data(), id: snapshot.id });
+              setGetUser({ ...snapshot.data(), id: snapshot.id });
               setAddress(snapshot.data().address);
               setFeedback(snapshot.data().feedback);
               setPortofolio(snapshot.data().portofolio);
