@@ -80,7 +80,7 @@ function About()
                         </div>
                     </div>
                     <div className="col-lg-6">
-                        <div className="About-Img bg-danger">
+                        <div className="About-Img">
                             <img src={require('../assets/About/About.webp')} className='w-100' alt="AboutImage"></img>
                         </div>
                     </div>
