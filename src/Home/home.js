@@ -488,6 +488,7 @@ function Home()
         <h3 className="text-danger">No data</h3>
       ):(<div></div>)}
     </div>
+    <Testmonial/>
         </div>
     )
 }
