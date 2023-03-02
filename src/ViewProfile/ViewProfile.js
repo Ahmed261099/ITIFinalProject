@@ -46,6 +46,42 @@ function ViewProfile() {
     getData();
   }, []);
 
+  const getData = () => {     
+    if(param.role==="Provider"){
+        const docRef = doc(db,"providers",param.id);
+        onSnapshot(docRef, (snapshot) => {
+            setGetProvidor({ ...snapshot.data(), id: snapshot.id });
+              setGetUser({ ...snapshot.data(), id: snapshot.id });
+              setAddress(snapshot.data().address);
+              setFeedback(snapshot.data().feedback);
+              setPortofolio(snapshot.data().portofolio);
+              setGetDB("providers");
+        })
+        
+    }else if (param.role==="Engineer"){
+        const docRef = doc(db,"engineers",param.id);
+        onSnapshot(docRef, (snapshot) => {
+            setGetEngineer({ ...snapshot.data(), id: snapshot.id });
+              setGetUser({ ...snapshot.data(), id: snapshot.id });
+              setAddress(snapshot.data().address);
+              setFeedback(snapshot.data().feedback);
+              setPortofolio(snapshot.data().portofolio);
+              setGetDB("engineers")
+        })
+        
+    }else {
+        const docRef = doc(db,"products",param.id);
+        onSnapshot(docRef, (snapshot) => {
+            setGetProduct({ ...snapshot.data(), id: snapshot.id });
+              setGetUser({ ...snapshot.data(), id: snapshot.id });
+              setAddress(snapshot.data().address);
+              setFeedback(snapshot.data().feedback);
+              setPortofolio(snapshot.data().portofolio);
+              setGetDB("products")
+        })
+    } 
+
+
   const getData = () => {
     if (param.role === "Provider") {
       const docRef = doc(db, "providers", param.id);
@@ -83,6 +119,7 @@ function ViewProfile() {
         setGetDB("products")
       })
     }
+
   };
   console.log(getUser, getDB)
 
