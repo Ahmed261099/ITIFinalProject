@@ -397,6 +397,7 @@ function Home()
                       <div className="card-Eng position-relative">
                         <div className="card-Eng-img">
                         <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
+                        <img src={item.image} className='w-100' alt=''/>
                         </div>
                         <Link  to={`/category/${item.id}`}><h3 className="py-2">{item.title}</h3></Link>
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
