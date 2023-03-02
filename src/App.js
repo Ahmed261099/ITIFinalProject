@@ -17,6 +17,10 @@ import { auth } from './Firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from './Store/Actions/AuthAction';
 import UserRoute from './userRoute';
+import Category from './Category/Category';
+import CategoryPage from './CategoryPage/CategoryPage';
+import Cart from './Cart/Cart';
+import Error from './Error/Error';
 
 
 function App() {
@@ -48,6 +52,10 @@ function App() {
         <Route exact path={"/register"} component={Register} />
         <Route exact path={"/registercus"} component={RegisterCustomer} />
         <Route exact path={"/view/:role/:id"} component={ViewProfile}/>
+        <Route exact path={"/category"} component={Category}/>
+        <Route exact path={"/category/:category"} component={CategoryPage}/>
+        <Route exact path={"/Cart"} component={Cart} />
+        <Route exact path={"*"} component={Error} />
       </Switch>
     </Router>
 

@@ -32,6 +32,7 @@ function ViewProfile() {
   const [getEngineer, setGetEngineer] = useState({});
   const [getProduct, setGetProduct] = useState({});
   const [getUser, setGetUser] = useState({});
+  const [product, setProduct] = useState({});
   const [getAddress, setAddress] = useState([]);
   const [getFeedback, setFeedback] = useState([]);
   const [getPortofolio, setPortofolio] = useState([]);
@@ -66,18 +67,19 @@ function ViewProfile() {
         })
         
     }else {
-        const docRef = doc(db,"products",param.id);
+        const docRef = doc(db,"categories",param.role);
         onSnapshot(docRef, (snapshot) => {
-            setGetProduct({ ...snapshot.data(), id: snapshot.id });
               setGetUser({ ...snapshot.data(), id: snapshot.id });
-              setAddress(snapshot.data().address);
-              setFeedback(snapshot.data().feedback);
-              setPortofolio(snapshot.data().portofolio);
-              setGetDB("products")
+              console.log(snapshot.data());
+              const data = snapshot.data().products.filter((item) => item.id === param.id)  
+              console.log(data);       
+              setGetProduct( data );
+              setGetDB("categories")
         })
     } 
   };
-  console.log(getUser,getDB)
+  console.log(getUser["products"],getDB)
+  console.log(getProduct)
   
 
   const [userData, setUserData] = useState({
@@ -761,213 +763,198 @@ function ViewProfile() {
       </div>
       ):(
         <div className="container">
-        <div class="row g-0 rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">Products</strong>
-          <div className="d-flex">
-          <p class="mb-1 fs-1 fw-bolder text-success-emphasis">{getUser.name}</p>
-                  <div className="m-3">{drawStar(calcRating())}</div>
-                </div>
-          <div class="mb-1 text-muted">{getUser.spetialization}</div>
-          <p class="card-text mb-auto">
-            {getUser.description}
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-             when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-             It has survived not only five centuries, but also the leap into electronic typesetting, 
-             remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
-          <div className="d-flex flex-row mt-4 justify-content-around">
-          <span className="fs-3">Price:</span> <p className="col-6 text-success fs-3 text-danger">{getUser.price} EGP</p>
-          {/* <Button className="col-6" variant="outline-success">Add To Card</Button>{' '} */}
-          <button class="cart-button btn btn-outline-primary">
-	<span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i>  Add to cart</span>
-	<span class="added">Added</span>
-	<i class="fas fa-shopping-cart"></i>
-	<i class="fas fa-box"></i>
-</button>
-          
-          </div>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-        
-                {getUser.image === "" ? (
-                  <img
-                    // className="imgprofile"
-                    src={require("./../assets/Products/product-1.jpg")}
-                    alt=""
-                  ></img>
-                ) : (
-                  <img className="imgprofile" src={getUser.image} alt=""></img>
-                )}
-        </div>
-        
-      </div>
-    {/*start section buttons and content  */}
-    <div className="mt-5  p-5">
-          <div className="container">
-            <div className="col-12">
-              <div className="row">
-                {/* start section of buttons */}
-
-                <div className="col-xl-3 col-12 mb-5">
-                  <div className=" flex-column  nav" role="tablist">
-                    <button
-                      className="btn btn-outline-dark text-start border-secondary-subtle  rounded-0 p-3 text-uppercase active"
-                      type="button"
-                      id="info-tab"
-                      data-bs-target="#info"
-                      data-bs-toggle="tab"
-                      role="tab"
-                      aria-selected="true"
-                    >
-                      <i className="pe-2 fa fa-dashboard"></i>
-                      more info
-                    </button>
-                    
-                    <button
-                      className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
-                      type="button"
-                      id="feedback-tab"
-                      data-bs-target="#feedback"
-                      data-bs-toggle="tab"
-                      role="tab"
-                      aria-controls="feedback"
-                      aria-selected="false"
-                      tabIndex="-1"
-                    >
-                      <i className="pe-2 fa fa-comment"></i>
-                      FeedBack
-                    </button>
+          { Object.keys(getProduct).map((title) => {
+          const products = getProduct[title];
+          return(
+                <div class="row g-0 rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                          <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">Products</strong>
+                  <div className="d-flex">
+                            <p class="mb-1 fs-1 fw-bolder text-success-emphasis">{products.name}</p>
+                          <div className="m-3">{drawStar(calcRating())}</div>
+                        </div>
+                  <div class="mb-1 text-muted">{products.spetialization}</div>
+                  <p class="card-text mb-auto">
+                    {products.description}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                    It has survived not only five centuries, but also the leap into electronic typesetting, 
+                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                      and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                  </p>
+                  <div className="d-flex flex-row mt-4 justify-content-around">
+                  <span className="fs-3">Price:</span> <p className="col-6 text-success fs-3 text-danger">{products.price} EGP</p>
+                  <button class="cart-button btn btn-outline-primary">
+                    <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i>  Add to cart</span>
+                    <span class="added">Added</span>
+                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-box"></i>
+                  </button>
+                  
                   </div>
                 </div>
-                {/* end section of buttons */}
+                <div class="col-auto d-none d-lg-block">
+                
+                        {products.image === "" ? (
+                          <img
+                            src={require("./../assets/Products/product-1.jpg")}
+                            alt=""
+                          ></img>
+                        ) : (
+                          <img className="imgprofile" src={products.image} alt=""></img>
+                        )}
+                </div>
 
-                {/* start section of content */}
-                <div className="col-xl-9 col-12 w-xl-100">
-                  <div className="tab-content" id="myaccountContent">
-                    {/* <!-- Single Tab Content Start --> */}
+                <div className="mt-5  p-5">
+                  <div className="container">
+                    <div className="col-12">
+                      <div className="row">
+                        <div className="col-xl-3 col-12 mb-5">
+                          <div className=" flex-column  nav" role="tablist">
+                            <button
+                              className="btn btn-outline-dark text-start border-secondary-subtle  rounded-0 p-3 text-uppercase active"
+                              type="button"
+                              id="info-tab"
+                              data-bs-target="#info"
+                              data-bs-toggle="tab"
+                              role="tab"
+                              aria-selected="true"
+                            >
+                              <i className="pe-2 fa fa-dashboard"></i>
+                              more info
+                            </button>
+                            
+                            <button
+                              className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
+                              type="button"
+                              id="feedback-tab"
+                              data-bs-target="#feedback"
+                              data-bs-toggle="tab"
+                              role="tab"
+                              aria-controls="feedback"
+                              aria-selected="false"
+                              tabIndex="-1"
+                            >
+                              <i className="pe-2 fa fa-comment"></i>
+                              FeedBack
+                            </button>
+                          </div>
+                        </div>
+                        <div className="col-xl-9 col-12 w-xl-100">
+                          <div className="tab-content" id="myaccountContent">
+                            <div
+                              className="tab-pane fade show active"
+                              id="info"
+                              role="tabpanel"
+                              aria-labelledby="info-tab"
+                              tabIndex="0"
+                            >
+                              <div className="border p-4">
+                                <h3 className="border-bottom pb-2 mb-4">Info</h3>
 
-                    <div
-                      className="tab-pane fade show active"
-                      id="info"
-                      role="tabpanel"
-                      aria-labelledby="info-tab"
-                      tabIndex="0"
-                    >
-                      <div className="border p-4">
-                        <h3 className="border-bottom pb-2 mb-4">Info</h3>
+                                <div className="">
+                                  <p>
+                                    <strong>Quantity :</strong> {products.quantity}{" "}
+                                  </p>
+                                  <p>
+                                    <strong>Rate :</strong> {products.rate}{" "}
+                                  </p>
+                                  <p>
+                                    <strong>Category :</strong>{" "}
+                                    {products.spetialization}{" "}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="feedback"
+                              role="tabpanel"
+                              aria-labelledby="feedback-tab"
+                              tabIndex="0"
+                            >
+                              <div className="border p-4">
+                                <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
 
-                        <div className="">
-                          <p>
-                            <strong>Quantity :</strong> {getUser.quantity}{" "}
-                          </p>
-                          <p>
-                            <strong>Rate :</strong> {getUser.rate}{" "}
-                          </p>
-                          <p>
-                            <strong>Category :</strong>{" "}
-                            {getUser.spetialization}{" "}
-                          </p>
+                                {getFeedback?.map((feedback, index) => {
+                                  return (
+                                    <>
+                                      <div
+                                        className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
+                                        key={index}
+                                      >
+                                        <p className="m-4 w-75">
+                                          <strong>{feedback.comment}</strong>
+                                        </p>
+                                        <div className="m-4 d-flex justify-content-end w-25">
+                                          {drawStar(feedback.rating)}
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                                <hr />
+                                <form onSubmit={(e) => submitData(e)}>
+                                  <div className="col-12 ">
+                                    <textarea
+                                      className="border m-2 border-secondary-subtle w-100 p-3 d-block "
+                                      placeholder="Left FeedBack"
+                                      type="text"
+                                      name="comment"
+                                      onChange={(e) => addUserData(e)}
+                                    />
+                                    <p className="text-danger ms-2">
+                                      {" "}
+                                      <small>{error.comment}</small>{" "}
+                                    </p>
+                                  </div>
+                                  <div className="mb-3 d-flex">
+                                    <select
+                                      name="rating"
+                                      onChange={(e) => addUserData(e)}
+                                      className="border m-2 border-secondary-subtle w-50 p-3 d-block"
+                                    >
+                                      <option selected>rating</option>
+                                      <option>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                    </select>
+
+                                    <div className="m-4 d-flex justify-content-center w-50">
+                                      {drawStar(products.rating)}
+                                    </div>
+                                  </div>
+                                  <div className="col-12">
+                                    <button
+                                      className="btn btn-outline-dark text-uppercase p-2 m-2"
+                                      disabled={
+                                        error.rating ||
+                                        error.comment ||
+                                        userData.comment === "" ||
+                                        userData.rating === "rating"
+                                      }
+                                      onClick={() => handleButtonComment()}
+                                      type="reset"
+                                    >
+                                      Comment
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>                    
+                          </div>
                         </div>
                       </div>
                     </div>
-                    {/* <!-- Single Tab Content End --> */}
-                    {/* <!-- Single Tab Content Start --> */}
-                    <div
-                      className="tab-pane fade"
-                      id="feedback"
-                      role="tabpanel"
-                      aria-labelledby="feedback-tab"
-                      tabIndex="0"
-                    >
-                      <div className="border p-4">
-                        <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
-
-                        {getFeedback?.map((feedback, index) => {
-                          return (
-                            <>
-                              <div
-                                className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
-                                key={index}
-                              >
-                                <p className="m-4 w-75">
-                                  <strong>{feedback.comment}</strong>
-                                </p>
-                                <div className="m-4 d-flex justify-content-end w-25">
-                                  {drawStar(feedback.rating)}
-                                </div>
-                              </div>
-                            </>
-                          );
-                        })}
-                        <hr />
-                        <form onSubmit={(e) => submitData(e)}>
-                          <div className="col-12 ">
-                            <textarea
-                              className="border m-2 border-secondary-subtle w-100 p-3 d-block "
-                              placeholder="Left FeedBack"
-                              type="text"
-                              name="comment"
-                              onChange={(e) => addUserData(e)}
-                            />
-                            <p className="text-danger ms-2">
-                              {" "}
-                              <small>{error.comment}</small>{" "}
-                            </p>
-                          </div>
-                          <div className="mb-3 d-flex">
-                            <select
-                              name="rating"
-                              onChange={(e) => addUserData(e)}
-                              className="border m-2 border-secondary-subtle w-50 p-3 d-block"
-                            >
-                              <option selected>rating</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
-
-                            <div className="m-4 d-flex justify-content-center w-50">
-                              {drawStar(userData.rating)}
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <button
-                              className="btn btn-outline-dark text-uppercase p-2 m-2"
-                              disabled={
-                                error.rating ||
-                                error.comment ||
-                                userData.comment === "" ||
-                                userData.rating === "rating"
-                              }
-                              onClick={() => handleButtonComment()}
-                              type="reset"
-                            >
-                              Comment
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                    {/* <!-- Single Tab Content End --> */}
-                    
-                    
                   </div>
                 </div>
-                {/* end section of content */}
               </div>
-            </div>
-          </div>
-        </div>
-        {/*end section of buttons and content */}
-                
+          )
+          })}
       </div>
-   
-
       )}
     </>
   );

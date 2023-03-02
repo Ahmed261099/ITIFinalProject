@@ -14,6 +14,7 @@ import {
   onSnapshot,
   query,
   limit,
+  getDocs,
 } from "firebase/firestore";
 // import { CollectionName } from '../Store/Actions/CollectionNameAction'
 
@@ -23,6 +24,7 @@ function Home()
     const [dataEng, setDataEng] = useState([]);
     const [dataCont, setDataCont] = useState([]);
     const [dataProd, setDataProd] = useState([]);
+    const [dataCategory, setDataCategory] = useState([]);
     const [dataFilter, setDataFilter] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [sortValue, setSortValue] = useState("");
@@ -76,6 +78,23 @@ function Home()
         );
       });
     };
+    const loadDataCategory = async () => {
+      const collectionRef = collection(db, "categories");
+
+      const q = query(collectionRef, limit(4));
+
+      onSnapshot(q, (snapshot) => {
+        setDataCategory(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            title: doc.data().title,
+            products: doc.data().products,
+            spetialization: doc.data().spetialization,
+            // name: doc.data().name
+          }))
+        );
+      });
+    };
     const loadDataProd = async () => {
       onSnapshot(dataProdColl, (snapshot) => {
         setDataProd(
@@ -103,12 +122,14 @@ function Home()
       loadDataEng();
       loadDataCont();
       loadDataProd();
+      loadDataCategory();
     };
     const handleSearch = async (e) => {
       e.preventDefault();
       loadDataEng();
       loadDataCont();
       loadDataProd();
+      loadDataCategory();
     };
     // const changeCollectionName=(e)=>{
     //   dispacth(CollectionName(e))
@@ -117,8 +138,19 @@ function Home()
       loadDataEng();
       loadDataCont();
       loadDataProd();
+      // loadDataCategory();
+      // const getCategoryMap = async () => {
+      //   const categorymap = await 
+      //   // setDataCategory(categorymap);
+      //   console.log(categorymap);
+      //   console.log(dataCategory);
+      // }
+      loadDataCategory();
+      // getCategoryMap();
       loadDataFilter();
     }, [keyword]);
+
+    console.log(dataCategory);
 
     return(
         <div className='bg-white'>
@@ -139,6 +171,7 @@ function Home()
             <option value="engineers">Engineers</option>
             <option value="providers">Providers</option>
             <option value="products">Products</option>
+            <option value="products">Categories</option>
           </select>
         </div>
         <Form className="d-flex flex-row col-3" onSubmit={handleSearch}>
@@ -176,7 +209,7 @@ function Home()
                     <div className="card-Eng position-relative">
                       <div className="card-Eng-img">
                       <div className='card-Eng-img'>
-                         <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                          <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
                       </div>
                       </div>
                       <Link  to={`view/${item.role}/${item.id}`}><h3 className="py-2">{item.name}</h3></Link>
@@ -350,6 +383,50 @@ function Home()
               </div>
             </div>
           </section>
+
+          <section id="Popular-Categories" className="pt-5">
+            <div className="container text-center">
+              <h2 className="fw-bold">Popular Categories</h2>
+              <div className="line line1"></div>
+              <div className="line line2"></div>
+              <div className="line line1"></div>
+              <div className="row py-3 gy-2">
+                {dataCategory.map((item) => {
+                  return (
+                    <div className="col-lg-3">
+                      <div className="card-Eng position-relative">
+                        <div className="card-Eng-img">
+                        <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
+                        </div>
+                        <Link  to={`/category/${item.id}`}><h3 className="py-2">{item.title}</h3></Link>
+                        <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
+                          {item?.engRate && (
+                            <>
+                              <i className="fa-solid fa-star star pe-1 text-warning"></i>
+                              <p className="mb-0 star text-warning">
+                                {item?.engRate?.toFixed(1)}
+                              </p>
+                            </>
+                          )} 
+                          {!item.engRate && null}
+                        </div>
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">
+                          <div className="favorite-Icon bg-white Icon-shape rounded-circle">
+                            <i className="fa-regular fa-heart "></i>
+                          </div>
+                          <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+
         </div>
       ) :dataFilter.length===0 ?(
         <h3 className="text-danger">No data</h3>
