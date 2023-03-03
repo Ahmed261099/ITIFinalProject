@@ -74,7 +74,7 @@ const Cart = () => {
                         </a>
                       </td>
                       <td className="pro-title">
-                        <a href="https://htmldemo.net/nelson/nelson/cart.html#">
+                        <a href="#">
                           Product2 name
                         </a>
                       </td>

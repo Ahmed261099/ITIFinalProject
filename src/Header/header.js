@@ -11,7 +11,7 @@ function header()
                     <div className="carousel-caption d-none d-md-block top-50">
                         <div className='carousel-caption-visibility'>
                             <h5 className='h1'>First slide label</h5>
-                            <p className='h2'>Some representative placeholder content for the first slide.</p>
+                            <p className='h2 text-center'>Some representative placeholder content for the first slide.</p>
                             <button className='btn btn-dark  px-4 py-2 rounded-5 '>SHOP NOW</button>
                         </div>
                     </div>
@@ -21,7 +21,7 @@ function header()
                     <div className="carousel-caption d-none d-md-block top-50">
                         <div className='carousel-caption-visibility'>
                             <h5 className='h1'>Second slide label</h5>
-                            <p className='h2'>Some representative placeholder content for the Second slide.</p>
+                            <p className='h2 text-center'>Some representative placeholder content for the Second slide.</p>
                             <button className='btn btn-dark  px-4 py-2 rounded-5 '>SHOP NOW</button>
                         </div>
                     </div>
@@ -31,7 +31,7 @@ function header()
                     <div className="carousel-caption d-none d-md-block top-50">
                         <div className='carousel-caption-visibility'>
                             <h5 className='h1'>Third slide label</h5>
-                            <p className='h2'>Some representative placeholder content for the Third slide.</p>
+                            <p className='h2 text-center'>Some representative placeholder content for the Third slide.</p>
                             <button className='btn btn-dark  px-4 py-2 rounded-5 '>SHOP NOW</button>
                         </div>
                     </div>

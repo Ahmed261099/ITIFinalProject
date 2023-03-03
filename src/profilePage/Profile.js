@@ -32,7 +32,9 @@ function Profile() {
   const [getFeedback, setFeedback] = useState([]);
   const [getPortofolio, setPortofolio] = useState([]);
   const [getDB, setGetDB] = useState("");
-
+  const [getWishList, setWhishList] = useState([]);
+  const [getcart, setCart] = useState([]);
+  const [getMessage, setMessage] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
@@ -53,7 +55,10 @@ function Profile() {
           setGetUser({ ...doc.data(), id: doc.id });
           setAddress(doc.data().address);
           setFeedback(doc.data().feedback);
+          setMessage(doc.data().messages);
           setPortofolio(doc.data().portofolio);
+          setWhishList(doc.data().wishlist);
+          setCart(doc.data().cart);
           setGetDB("providers");
         }
         console.log(doc.id, " => ", doc.data());
@@ -72,7 +77,10 @@ function Profile() {
           setGetUser({ ...doc.data(), id: doc.id });
           setAddress(doc.data().address);
           setFeedback(doc.data().feedback);
+          setMessage(doc.data().messages);
           setPortofolio(doc.data().portofolio);
+          setWhishList(doc.data().wishlist);
+          setCart(doc.data().cart);
           setGetDB("engineers");
         }
 
@@ -92,22 +100,17 @@ function Profile() {
           setGetUser({ ...doc.data(), id: doc.id });
           setAddress(doc.data().address);
           setFeedback(doc.data().feedback);
+          setMessage(doc.data().messages);
           setPortofolio(doc.data().portofolio);
+          setWhishList(doc.data().wishlist);
+          setCart(doc.data().cart);
           setGetDB("users");
         }
         console.log(doc.id, " => ", doc.data());
       });
     });
 
-    // onSnapshot(q, (snapshot) => {
-    //     snapshot.docs.forEach((doc) => {
-    //         setGetUser({ ...doc.data(), id: doc.id })
-    //         setAddress(doc.data().address)
-    //         setFeedback(doc.data().feedback)
-    //         setPortofolio(doc.data().portofolio)
-    //         console.log(doc.id, " => ", doc.data());
-    //     });
-    // })
+
   };
 
   const [userData, setUserData] = useState({
@@ -143,6 +146,7 @@ function Profile() {
     newPassword: null,
     confirmpassword: null,
   });
+  console.log(getWishList)
 
   const addUserData = (e) => {
     if (e.target.name === "img") {
@@ -158,8 +162,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "title") {
       setUserData({
@@ -173,8 +177,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "caption") {
       setUserData({
@@ -188,8 +192,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "comment") {
       setUserData({
@@ -203,8 +207,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "rating") {
       setUserData({
@@ -228,8 +232,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "street") {
       setUserData({
@@ -243,8 +247,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "newPassword") {
       setUserData({
@@ -258,10 +262,10 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 8
-            ? "Min Length is 8"
-            : regPass.test(e.target.value)
-            ? ""
-            : "Invalid Password",
+              ? "Min Length is 8"
+              : regPass.test(e.target.value)
+                ? ""
+                : "Invalid Password",
       });
     } else {
       setUserData({
@@ -275,10 +279,10 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 8
-            ? "Min length is 8"
-            : e.target.value === userData.newPassword
-            ? ""
-            : "Password and confirm password should be the same",
+              ? "Min length is 8"
+              : e.target.value === userData.newPassword
+                ? ""
+                : "Password and confirm password should be the same",
       });
     }
   };
@@ -295,8 +299,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "email") {
       setGetUser({
@@ -331,8 +335,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "role") {
       setGetUser({
@@ -346,8 +350,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-            ? "Min Length is 3 Char"
-            : null,
+              ? "Min Length is 3 Char"
+              : null,
       });
     } else if (e.target.name === "experience") {
       setGetUser({
@@ -361,8 +365,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 10
-            ? "Min Length is 10 Char"
-            : null,
+              ? "Min Length is 10 Char"
+              : null,
       });
     } else if (e.target.name === "spetialization") {
       setGetUser({
@@ -397,8 +401,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 11
-            ? "Min Length is 11"
-            : null,
+              ? "Min Length is 11"
+              : null,
       });
     } else if (e.target.name === "password") {
       setErros({
@@ -407,8 +411,8 @@ function Profile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value === getUser.password
-            ? ""
-            : "password is not correct",
+              ? ""
+              : "password is not correct",
       });
     }
   };
@@ -598,6 +602,51 @@ function Profile() {
         console.log("ERROR" + error);
       });
   };
+  const removeFromCart = (index) => {
+    getUser.cart.splice(index, 1);
+
+    const docRef = doc(db, getDB, getUser.id);
+
+    updateDoc(docRef, {
+      cart: getUser.cart,
+    })
+      .then(() => {
+        console.log("remove cart");
+      })
+      .catch((error) => {
+        console.log("ERROR" + error);
+      });
+  }
+  const removeFromWhishList = (index) => {
+    getUser.wishlist.splice(index, 1);
+
+    const docRef = doc(db, getDB, getUser.id);
+
+    updateDoc(docRef, {
+      wishlist: getUser.wishlist,
+    })
+      .then(() => {
+        console.log("remove wishlist");
+      })
+      .catch((error) => {
+        console.log("ERROR" + error);
+      });
+  }
+  const removeFromMessage = (index) => {
+    getUser.messages.splice(index, 1);
+
+    const docRef = doc(db, getDB, getUser.id);
+
+    updateDoc(docRef, {
+      messages: getUser.messages,
+    })
+      .then(() => {
+        console.log("remove wishlist");
+      })
+      .catch((error) => {
+        console.log("ERROR" + error);
+      });
+  }
   return (
     <>
       <div id="profile">
@@ -623,7 +672,8 @@ function Profile() {
               <div className="ps-5">
                 <div className="d-flex">
                   <h2 className="ps-0 fs-1">{getUser.username}</h2>
-                  <div className="m-3">{drawStar(calcRating())}</div>
+                  {getUser.role === "customer" ? null :
+                    <div className="m-3">{drawStar(calcRating())}</div>}
                 </div>
                 <ul className="paths ">
                   <li className="dvider">
@@ -640,27 +690,27 @@ function Profile() {
         {/* end of header */}
 
         {/* start of carousel */}
-        { getUser.role === "customer" ? "" :
-        (<div className="container mt-5">
-          <Carousel fade className="align-center w-100 ">
-            {getPortofolio?.map((onePort, index) => {
-              return (
-                <Carousel.Item key={index} className=" ">
-                  <img
-                    className="d-block w-100 "
-                    height={"400px"}
-                    src={onePort.image}
-                    alt=""
-                  />
-                  <Carousel.Caption>
-                    <h3 className="">{onePort.title}</h3>
-                    <p>{onePort.caption}</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              );
-            })}
-          </Carousel>
-        </div>) }
+        {getUser.role === "customer" ? "" :
+          (<div className="container mt-5">
+            <Carousel fade className="align-center w-100 ">
+              {getPortofolio?.map((onePort, index) => {
+                return (
+                  <Carousel.Item key={index} className=" ">
+                    <img
+                      className="d-block w-100 "
+                      height={"400px"}
+                      src={onePort.image}
+                      alt=""
+                    />
+                    <Carousel.Caption>
+                      <h3 className="">{onePort.title}</h3>
+                      <p>{onePort.caption}</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
+          </div>)}
         {/* end of Carousel */}
         {/*start section buttons and content  */}
         <div className="mt-5  p-5">
@@ -683,36 +733,36 @@ function Profile() {
                       <i className="pe-2 fa fa-dashboard"></i>
                       info
                     </button>
-                    { getUser.role === "customer" ? null :
+                    {getUser.role === "customer" ? null :
                       (<button
-                      className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
-                      type="button"
-                      id="addPortfolio-tab"
-                      data-bs-target="#addPortfolio"
-                      data-bs-toggle="tab"
-                      role="tab"
-                      aria-controls="addPortfolio"
-                      aria-selected="false"
-                      tabIndex="-1"
-                    >
-                      <i class="pe-2 fa-solid fa-wand-magic-sparkles"></i>
-                      Add Portfolio
-                    </button>)}
-                    {getUser.role === "customer" ? "" : 
-                    (<button
-                      className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
-                      type="button"
-                      id="feedback-tab"
-                      data-bs-target="#feedback"
-                      data-bs-toggle="tab"
-                      role="tab"
-                      aria-controls="feedback"
-                      aria-selected="false"
-                      tabIndex="-1"
-                    >
-                      <i className="pe-2 fa fa-comment"></i>
-                      FeedBack
-                    </button>)}
+                        className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
+                        type="button"
+                        id="addPortfolio-tab"
+                        data-bs-target="#addPortfolio"
+                        data-bs-toggle="tab"
+                        role="tab"
+                        aria-controls="addPortfolio"
+                        aria-selected="false"
+                        tabIndex="-1"
+                      >
+                        <i class="pe-2 fa-solid fa-wand-magic-sparkles"></i>
+                        Add Portfolio
+                      </button>)}
+                    {getUser.role === "customer" ? "" :
+                      (<button
+                        className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
+                        type="button"
+                        id="feedback-tab"
+                        data-bs-target="#feedback"
+                        data-bs-toggle="tab"
+                        role="tab"
+                        aria-controls="feedback"
+                        aria-selected="false"
+                        tabIndex="-1"
+                      >
+                        <i className="pe-2 fa fa-comment"></i>
+                        FeedBack
+                      </button>)}
                     <button
                       className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
                       type="button"
@@ -816,18 +866,18 @@ function Profile() {
                             <strong>Email :</strong> {getUser.email}{" "}
                           </p>
                           {getUser.role === "customer" ? null :
-                          (<p>
-                            <strong>Role :</strong> {getUser.role}{" "}
-                          </p>)}
+                            (<p>
+                              <strong>Role :</strong> {getUser.role}{" "}
+                            </p>)}
                           {getUser.role === "customer" ? null :
-                          (<p>
-                            <strong>spetialization :</strong>{" "}
-                            {getUser.spetialization}{" "}
-                          </p>)}
+                            (<p>
+                              <strong>spetialization :</strong>{" "}
+                              {getUser.spetialization}{" "}
+                            </p>)}
                           {getUser.role === "customer" ? null :
-                          (<p>
-                            <strong>Experiance :</strong> {getUser.experience}{" "}
-                          </p>)}
+                            (<p>
+                              <strong>Experiance :</strong> {getUser.experience}{" "}
+                            </p>)}
                         </div>
                       </div>
                     </div>
@@ -835,111 +885,111 @@ function Profile() {
 
                     {/* <!-- Single Tab Content Start --> */}
                     {getUser.role === "customer" ? "" :
-                    (<div
-                      className="tab-pane fade"
-                      id="addPortfolio"
-                      role="tabpanel"
-                      aria-labelledby="addPortfolio-tab"
-                      tabIndex="0"
-                    >
-                      <div className="border p-4">
-                        <h3 className="border-bottom pb-2 mb-4">
-                          add Portfolio
-                        </h3>
-                        <form onSubmit={(e) => submitData(e)}>
-                          <div className=" col-12 ">
-                            <input
-                              className="border m-2 border-secondary-subtle w-100 p-3 d-block "
-                              placeholder="Write title for Portfolio "
-                              type="text"
-                              name="title"
-                              onChange={(e) => addUserData(e)}
-                            />
-                            <p className="text-danger ms-2">
-                              {" "}
-                              <small>{error.title}</small>{" "}
-                            </p>
-                          </div>
-                          <div className=" col-12 ">
-                            <input
-                              className="border m-2 border-secondary-subtle w-100 p-3 d-block "
-                              placeholder="Write caption for Portfolio"
-                              type="text"
-                              name="caption"
-                              onChange={(e) => addUserData(e)}
-                            />
-                            <p className="text-danger ms-2">
-                              {" "}
-                              <small>{error.caption}</small>{" "}
-                            </p>
-                          </div>
-                          <div className="col-12 ">
-                            <input
-                              className="w-100 p-3 m-2  m-2   form-control "
-                              accept="image/*"
-                              type="file"
-                              name="img"
-                              onChange={(e) => addUserData(e)}
-                            />
-                            <p className="text-danger ms-2">
-                              {" "}
-                              <small>{error.img}</small>{" "}
-                            </p>
-                          </div>
-                          <div className="col-12">
-                            <button
-                              className="btn btn-outline-dark text-uppercase p-2 m-2"
-                              type="reset"
-                              onClick={() => handleButtonPortfolio()}
-                              disabled={
-                                error.img ||
-                                error.caption ||
-                                error.title ||
-                                userData.img === "" ||
-                                userData.title === "" ||
-                                userData.caption === ""
-                              }
-                            >
-                              Save
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>)}
+                      (<div
+                        className="tab-pane fade"
+                        id="addPortfolio"
+                        role="tabpanel"
+                        aria-labelledby="addPortfolio-tab"
+                        tabIndex="0"
+                      >
+                        <div className="border p-4">
+                          <h3 className="border-bottom pb-2 mb-4">
+                            add Portfolio
+                          </h3>
+                          <form onSubmit={(e) => submitData(e)}>
+                            <div className=" col-12 ">
+                              <input
+                                className="border m-2 border-secondary-subtle w-100 p-3 d-block "
+                                placeholder="Write title for Portfolio "
+                                type="text"
+                                name="title"
+                                onChange={(e) => addUserData(e)}
+                              />
+                              <p className="text-danger ms-2">
+                                {" "}
+                                <small>{error.title}</small>{" "}
+                              </p>
+                            </div>
+                            <div className=" col-12 ">
+                              <input
+                                className="border m-2 border-secondary-subtle w-100 p-3 d-block "
+                                placeholder="Write caption for Portfolio"
+                                type="text"
+                                name="caption"
+                                onChange={(e) => addUserData(e)}
+                              />
+                              <p className="text-danger ms-2">
+                                {" "}
+                                <small>{error.caption}</small>{" "}
+                              </p>
+                            </div>
+                            <div className="col-12 ">
+                              <input
+                                className="w-100 p-3 m-2  m-2   form-control "
+                                accept="image/*"
+                                type="file"
+                                name="img"
+                                onChange={(e) => addUserData(e)}
+                              />
+                              <p className="text-danger ms-2">
+                                {" "}
+                                <small>{error.img}</small>{" "}
+                              </p>
+                            </div>
+                            <div className="col-12">
+                              <button
+                                className="btn btn-outline-dark text-uppercase p-2 m-2"
+                                type="reset"
+                                onClick={() => handleButtonPortfolio()}
+                                disabled={
+                                  error.img ||
+                                  error.caption ||
+                                  error.title ||
+                                  userData.img === "" ||
+                                  userData.title === "" ||
+                                  userData.caption === ""
+                                }
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>)}
                     {/* <!-- Single Tab Content End --> */}
                     {/* <!-- Single Tab Content Start --> */}
-                    {getUser.role === "customer" ? "" : 
-                    (<div
-                      className="tab-pane fade"
-                      id="feedback"
-                      role="tabpanel"
-                      aria-labelledby="feedback-tab"
-                      tabIndex="0"
-                    >
-                      <div className="border p-4">
-                        <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
+                    {getUser.role === "customer" ? "" :
+                      (<div
+                        className="tab-pane fade"
+                        id="feedback"
+                        role="tabpanel"
+                        aria-labelledby="feedback-tab"
+                        tabIndex="0"
+                      >
+                        <div className="border p-4">
+                          <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
 
-                        { getFeedback.length === 0 ? (<h2 className="fs-5">No Feedback to show!</h2>) :
-                        (getFeedback?.map((feedback, index) => {
-                          return (
-                            <>
-                              <div
-                                className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
-                                key={index}
-                              >
-                                <p className="m-4 w-75">
-                                  <strong>{feedback.comment}</strong>
-                                </p>
-                                <div className="m-4 d-flex justify-content-end w-25">
-                                  {drawStar(feedback.rating)}
-                                </div>
-                              </div>
-                            </>
-                          );
-                        }))}
-                        <hr />
-                        
-                        {/* <form onSubmit={(e) => submitData(e)}>
+                          {getFeedback.length === 0 ? (<h2 className="fs-5">No Feedback to show!</h2>) :
+                            (getFeedback?.map((feedback, index) => {
+                              return (
+                                <>
+                                  <div
+                                    className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
+                                    key={index}
+                                  >
+                                    <p className="m-4 w-75">
+                                      <strong>{feedback.comment}</strong>
+                                    </p>
+                                    <div className="m-4 d-flex justify-content-end w-25">
+                                      {drawStar(feedback.rating)}
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            }))}
+                          <hr />
+
+                          {/* <form onSubmit={(e) => submitData(e)}>
                           <div className="col-12 ">
                             <textarea
                               className="border m-2 border-secondary-subtle w-100 p-3 d-block "
@@ -987,8 +1037,8 @@ function Profile() {
                             </button>
                           </div>
                         </form> */}
-                      </div>
-                    </div>)}
+                        </div>
+                      </div>)}
                     {/* <!-- Single Tab Content End --> */}
                     {/* <!-- Single Tab Content Start --> */}
                     {<div
@@ -1000,7 +1050,64 @@ function Profile() {
                     >
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">Message</h3>
-                        <form onSubmit={(e) => submitData(e)}>
+                        {/* {getMessage?.map((message, index) => {
+                                return (
+                                  <>
+                                    <div
+                                      className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
+                                      key={index}
+                                    >
+                                      <p className="m-4 w-75">
+                                        <strong>{message.name}</strong>
+                                      </p>
+                                      <div className="m-4 d-flex justify-content-end w-25">
+                                        {message.text}
+                                      </div>
+                                    </div>
+                                  </>
+                                );
+                              })} */}
+                        {/* {getMessage.length === 0 ? (<h2 className="fs-5">No Messages to show!</h2>) : */}
+                        {
+                          (getMessage?.map((message, index) => {
+                            return (
+                              <>
+                                {/* <div
+                                  className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
+                                  key={index}
+                                >
+                                  <div >
+                                    <div
+                                      >
+                                      <div >
+                                        <p >{message.name}</p>
+                                        <p >{message.text}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                               
+                                </div> */}
+                                <div
+
+                                  key={index}
+                                >
+
+                                  <div className="chat-bubble_right d-flex justify-content-between mb-2 align-items-center" >
+                                    <div >
+                                    <Link to={`view/${message.role}/${message.uid}`} className="user-name">{message.name}</Link>
+                                    <p className="user-message">{message.text}</p></div>
+                                    <div>
+                                    <button className="btn" onClick={()=>removeFromMessage(index)}><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                  </div>
+                                  <br/>
+                                </div>
+                                
+                              </>
+                            );
+                          }))}
+
+                        {/* <form onSubmit={(e) => submitData(e)}>
                           <div className="col-12 ">
                             <textarea
                               className="border m-2 border-secondary-subtle w-100 p-3 d-block "
@@ -1013,7 +1120,7 @@ function Profile() {
                               Send
                             </button>
                           </div>
-                        </form>
+                        </form> */}
                       </div>
                     </div>}
                     {/* <!-- Single Tab Content End --> */}
@@ -1028,62 +1135,46 @@ function Profile() {
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">Cart</h3>
                         <div className="myaccount-table table-responsive text-center">
-                          <table className="table table-bordered">
-                            <thead className="thead-light">
-                              <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>Total</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
+                          {getcart.length === 0 ? (<h2 className="fs-5">No products to show!</h2>) : (
+                            <table className="table table-bordered">
+                              <thead className="thead-light">
+                                <tr>
+                                  <th>No</th>
+                                  <th>Name</th>
+                                  <th>Price</th>
+                                  <th>Quantity</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {getcart?.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td>{index + 1}</td>
+                                      <td>{item.name}</td>
+                                      <td>{item.price}</td>
+                                      <td>{item.quantity}</td>
+                                      <td>
+                                        <Link
+                                          to={`view/${item.role}/${item.id}`}
+                                          className="btn btn-outline-dark"
+                                        >
+                                          View
+                                        </Link>
+                                        <button
+                                          onClick={() => removeFromCart(index)}
+                                          className="btn btn-outline-danger ms-2"
+                                        >
+                                          Delete
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  )
+                                })}
+                              </tbody>
+                            </table>
+                          )}
 
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Mostarizing Oil</td>
-                                <td>Aug 22, 2018</td>
-                                <td>$45</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Katopeno Altuni</td>
-                                <td>July 22, 2018</td>
-                                <td>$100</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Murikhete Paris</td>
-                                <td>June 12, 2017</td>
-                                <td>$99</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
                         </div>
                       </div>
                     </div>
@@ -1099,59 +1190,44 @@ function Profile() {
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">Wishlist</h3>
                         <div className="myaccount-table table-responsive text-center">
-                          <table className="table table-bordered">
-                            <thead className="thead-light">
-                              <tr>
-                                <th>No</th>
-                                <th>Name</th>
+                          {getWishList.length === 0 ? (<h2 className="fs-5">No wishlist to show!</h2>) : (
+                            <table className="table table-bordered">
+                              <thead className="thead-light">
+                                <tr>
+                                  <th>No</th>
+                                  <th>Name</th>
 
-                                <th>Role</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>Mostarizing Oil</td>
-                                <td>$Provider</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Katopeno Altuni</td>
-                                <td>Engineer</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>Murikhete Paris</td>
-                                <td>Provider</td>
-                                <td>
-                                  <a
-                                    href="cart.html"
-                                    className="btn btn-outline-dark"
-                                  >
-                                    View
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                                  <th>Role</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {getWishList?.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td>{index + 1}</td>
+                                      <td>{item.name}</td>
+                                      <td>{item.role}</td>
+                                      <td>
+                                        <Link
+                                          to={`view/${item.role}/${item.id}`}
+                                          className="btn btn-outline-dark"
+                                        >
+                                          View
+                                        </Link>
+                                        <button
+                                          onClick={() => removeFromWhishList(index)}
+                                          className="btn btn-outline-danger ms-2"
+                                        >
+                                          Delete
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  )
+                                })}
+                              </tbody>
+                            </table>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1293,21 +1369,21 @@ function Profile() {
                                 </p>
                               </div>
                               {getUser.role === "customer" ? "" :
-                              (<div className="col-12 ">
-                                <input
-                                  className="border m-2 border-secondary-subtle w-100 p-3 d-block"
-                                  id="experince"
-                                  name="experience"
-                                  placeholder="Enter you experience"
-                                  value={getUser.experience}
-                                  onChange={(e) => changeUserData(e)}
-                                  type="text"
-                                />
-                                <p className="text-danger ms-2">
-                                  {" "}
-                                  <small>{error.experience}</small>{" "}
-                                </p>
-                              </div>)}
+                                (<div className="col-12 ">
+                                  <input
+                                    className="border m-2 border-secondary-subtle w-100 p-3 d-block"
+                                    id="experince"
+                                    name="experience"
+                                    placeholder="Enter you experience"
+                                    value={getUser.experience}
+                                    onChange={(e) => changeUserData(e)}
+                                    type="text"
+                                  />
+                                  <p className="text-danger ms-2">
+                                    {" "}
+                                    <small>{error.experience}</small>{" "}
+                                  </p>
+                                </div>)}
                               <div className="col-12 ">
                                 <input
                                   className="w-100 p-3 m-2  m-2   form-control "
@@ -1321,34 +1397,34 @@ function Profile() {
                                   <small>{error.image}</small>{" "}
                                 </p>
                               </div>
-                              {getUser.role === "customer" ? "" : 
-                              (<div className="mb-3">
-                                <select
-                                  name="spetialization"
-                                  value={getUser.spetialization}
-                                  onChange={(e) => changeUserData(e)}
-                                  className="border m-2 border-secondary-subtle w-100 p-3 d-block"
-                                >
-                                  <option>Civil Engineer</option>
-                                  <option>Interior Designer</option>
-                                  <option>Electrical Engineer</option>
-                                  <option>Mechanical Engineer</option>
-                                  <option>Mechaelectrical Engineer</option>
-                                  <option>Telecom Engineer</option>
-                                  <option>ُEnergy Engineer</option>
-                                  <option>Archetect</option>
-                                  <option>Painting Contractor</option>
-                                  <option>Electrical Contractor</option>
-                                  <option>Floor Contractor</option>
-                                  <option>Plumbing Contractor</option>
-                                  <option>Carpentry contractor</option>
-                                  <option>Blacksmith contractor</option>
-                                </select>
-                                <p className="text-danger ms-2">
-                                  {" "}
-                                  <small>{error.spetialization}</small>{" "}
-                                </p>
-                              </div>)}
+                              {getUser.role === "customer" ? "" :
+                                (<div className="mb-3">
+                                  <select
+                                    name="spetialization"
+                                    value={getUser.spetialization}
+                                    onChange={(e) => changeUserData(e)}
+                                    className="border m-2 border-secondary-subtle w-100 p-3 d-block"
+                                  >
+                                    <option>Civil Engineer</option>
+                                    <option>Interior Designer</option>
+                                    <option>Electrical Engineer</option>
+                                    <option>Mechanical Engineer</option>
+                                    <option>Mechaelectrical Engineer</option>
+                                    <option>Telecom Engineer</option>
+                                    <option>ُEnergy Engineer</option>
+                                    <option>Archetect</option>
+                                    <option>Painting Contractor</option>
+                                    <option>Electrical Contractor</option>
+                                    <option>Floor Contractor</option>
+                                    <option>Plumbing Contractor</option>
+                                    <option>Carpentry contractor</option>
+                                    <option>Blacksmith contractor</option>
+                                  </select>
+                                  <p className="text-danger ms-2">
+                                    {" "}
+                                    <small>{error.spetialization}</small>{" "}
+                                  </p>
+                                </div>)}
                               <div className="d-flex justify-content-end">
                                 <button
                                   className="btn btn-outline-dark text-uppercase p-2 m-2"

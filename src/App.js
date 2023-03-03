@@ -21,6 +21,9 @@ import Category from './Category/Category';
 import CategoryPage from './CategoryPage/CategoryPage';
 import Cart from './Cart/Cart';
 import Error from './Error/Error';
+import About from './About/About';
+import Contact from './Contacts/Contact';
+import Footer from './Footer/footer';
 
 
 function App() {
@@ -41,12 +44,15 @@ function App() {
   return (
     <>
     <Router>
-      <Navbar></Navbar>
+      <Navbar />
       <Switch>  
         <Route exact path={'/'} component={Home}/>
+        <Route exact path={'/Home'} component={Home}/>
         <UserRoute exact path={'/Profile'} component={Profile}/>
         <Route exact path={"/login"} component={Login} />        
         <Route exact path={'/navbar'} component={Navbar}/>
+        <Route exact path={'/About'} component={About}/>
+        <Route exact path={'/Contact'} component={Contact}/>
         <Route exact path={"/login"} component={Login} />
         <Route exact path={"/firstreg"} component={First_Reg} />
         <Route exact path={"/register"} component={Register} />
@@ -57,6 +63,7 @@ function App() {
         <Route exact path={"/Cart"} component={Cart} />
         <Route exact path={"*"} component={Error} />
       </Switch>
+      <Footer/>
     </Router>
 
     </>
