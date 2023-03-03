@@ -7,6 +7,7 @@ const CategoryPreview = ({ title, products }) => {
   console.log(products);
   return (
     <div className="mt-5">
+      <div>
             <Link to={`/category/${title}`} className="text-decoration-none">
               <h2 className='title1'>
                 {title.toUpperCase()}
@@ -18,6 +19,8 @@ const CategoryPreview = ({ title, products }) => {
                 ))}
             </div>
             <Link to={`/category/${title}`} className="text-decoration-none"><p className="explore">Explore More</p></Link>
+      </div>
+      <button className="btn btn-dark">Explore More</button>
     </div>
   )
 }

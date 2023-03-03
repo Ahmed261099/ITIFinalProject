@@ -43,7 +43,7 @@ function Home()
     const [operation, setOperation] = useState("");
     const dataEngColl = query(collection(db, "engineers"), limit(4));
     const dataContColl = query(collection(db, `providers`), limit(4));
-    const dataProdColl = query(collection(db, `products`), limit(4));
+    // const dataProdColl = query(collection(db, `products`), limit(4));
     const dataRef = collection(db, `${keyword}`);
     const [getDB, setGetDB] = useState("");
     const [getUser2, setGetUser2] = useState({});
@@ -83,15 +83,14 @@ function Home()
           );
         });
       }else{
-        const dataRefPro = collection(db, "products");
+        const dataRefPro = collection(db, "categories");
         onSnapshot(dataRefPro, (snapshot) => {
           setDataProFilter(
             snapshot.docs.map((doc) => ({
               id: doc.id,
               name: doc.data().name,
-              role: doc.data().role,
-              phone: doc.data().phone,
-              rate: doc.data().rate,
+              title: doc.data().title,
+              products: doc.data().products,
               spetialization: doc.data().spetialization,
             }))
           );
@@ -147,19 +146,19 @@ function Home()
         );
       });
     };
-    const loadDataProd = async () => {
-      onSnapshot(dataProdColl, (snapshot) => {
-        setDataProd(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            name: doc.data().name,
-            category: doc.data().category,
-            spetialization: doc.data().spetialization,
-            price:doc.data().price
-          }))
-        );
-      });
-    };
+    // const loadDataProd = async () => {
+    //   onSnapshot(dataProdColl, (snapshot) => {
+    //     setDataProd(
+    //       snapshot.docs.map((doc) => ({
+    //         id: doc.id,
+    //         name: doc.data().name,
+    //         category: doc.data().category,
+    //         spetialization: doc.data().spetialization,
+    //         price:doc.data().price
+    //       }))
+    //     );
+    //   });
+    // };
     const { currentUser } = useSelector((state) => state.user);
     const addToWhishList=(item)=>{
       const added = getUser2.wishlist.find(({id})=>id===item.id)
@@ -211,14 +210,14 @@ function Home()
       setSortValue("");
       loadDataEng();
       loadDataCont();
-      loadDataProd();
+      // loadDataProd();
       loadDataCategory();
     };
     const handleSearch = async (e) => {
       e.preventDefault();
       loadDataEng();
       loadDataCont();
-      loadDataProd();
+      // loadDataProd();
       loadDataCategory();
     };
     const getData2 = () => {
@@ -282,16 +281,7 @@ function Home()
     useEffect(() => {
       loadDataEng();
       loadDataCont();
-      loadDataProd();
-      // loadDataCategory();
-      // const getCategoryMap = async () => {
-      //   const categorymap = await 
-      //   // setDataCategory(categorymap);
-      //   console.log(categorymap);
-      //   console.log(dataCategory);
-      // }
       loadDataCategory();
-      // getCategoryMap();
       loadDataFilter();
       if (currentUser) getData2();
       else history.push("login");
@@ -315,7 +305,7 @@ function Home()
                   <option selected>Select By Category</option>
                   <option value="engineers">Engineers</option>
                   <option value="providers">Providers</option>
-                  <option value="c">Products</option>
+                  <option value="categories">Categories</option>
                 </select>
               </div>
               <div className='col-lg-6 mt-3 d-flex flex-row'>
@@ -568,7 +558,7 @@ function Home()
             </div>
           </section>
 
-          <section id="Popular-Products" className="py-5">
+          {/* <section id="Popular-Products" className="py-5">
             <div className="container text-center">
               <h2 className="fw-bold">Popular Products</h2>
               <div className="line line1"></div>
@@ -620,7 +610,7 @@ function Home()
                 })}
               </div>
             </div>
-          </section>
+          </section> */}
 
           <section id="Popular-Categories" className="pt-5">
             <div className="container text-center">

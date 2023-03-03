@@ -41,9 +41,7 @@ const Cart = () => {
                         </a>
                       </td>
                       <td className="pro-title">
-                        <a href="#">
-                          Product1 name
-                        </a>
+                        <a href="#">Product1 name</a>
                       </td>
                       <td className="pro-price">
                         <span>200 EGP</span>
@@ -74,9 +72,7 @@ const Cart = () => {
                         </a>
                       </td>
                       <td className="pro-title">
-                        <a href="#">
-                          Product2 name
-                        </a>
+                        <a href="#">Product2 name</a>
                       </td>
                       <td className="pro-price">
                         <span>600 EGP</span>

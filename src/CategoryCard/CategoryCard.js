@@ -29,6 +29,9 @@ const CategoryCard = (props) => {
             </div>
           </div>
         </div>
+        <div>
+          
+        </div>
     </div>
   )
 }
