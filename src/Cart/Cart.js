@@ -1,14 +1,15 @@
 import React from "react";
 import "./Cart.css";
 
-const Cart = () => {
+const Cart = ({ cartItem }) => {
+  const { name, quantity, price} = cartItem;
   return (
     <div>
       <div className="header1 mb-5">
         <div className="container">
           <div className="d-flex align-items-center">
             <div>
-              <h2 className="cart-title">Shopping Cart</h2>
+              <h2 className="cart-title">{name}</h2>
             </div>
           </div>
         </div>

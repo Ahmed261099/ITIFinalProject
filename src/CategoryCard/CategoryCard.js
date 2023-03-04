@@ -1,12 +1,28 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { AddToCartAction } from '../Store/Actions/CartAction';
 import "./Category.css"
 
 const CategoryCard = (props) => {
 
-    const {id, name, price, image, quantity, rate, spetialization} = props.products
+    const product = props.products;
+
+    const {id, name, price, image, quantity, rate, spetialization} = product
 
     console.log(id, name);
+
+    const dispatch = useDispatch();
+
+    // const [] = useSelector()
+
+    const addToCart = (product) => {
+      console.log(product);
+      dispatch(AddToCartAction(product));
+
+
+    }
+
   return (
     <div className='col-lg-3 col-md-6  col-sm-12 d-block pt-4 pb-4'>
         <div className=" overflow-hidden position-relative text-center">
@@ -18,16 +34,17 @@ const CategoryCard = (props) => {
               <span className='name '>{name}</span>
               <span className='price '>{price} $</span>
           </div>
-          <Link to={`/view/${spetialization}/${id}`}><button className="btn1 text-center">View Product</button></Link>
-          
-          <div className="Item-Icon  rounded-circle position-absolute  py-4">
-            <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
-              <i className="fa-solid fa-cart-shopping"></i>
+          <div className="  rounded-circle d-flex flex-row justify-content-between py-4">
+            <div className=" bg-white rounded-circle">
+              <i className="fa-solid fa-cart-shopping" onClick={() => {addToCart(product)}}></i>
             </div>
-            <div className="favorite-Icon bg-white Icon-shape rounded-circle">
+            <div className=" bg-white rounded-circle">
               <i className="fa-regular fa-heart "></i>
             </div>
           </div>
+          <Link to={`/view/${spetialization}/${id}`}><button className="btn1 text-center">View Product</button></Link>
+          
+          
         </div>
         <div>
           
