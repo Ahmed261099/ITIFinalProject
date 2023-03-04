@@ -989,54 +989,6 @@ function Profile() {
                             }))}
                           <hr />
 
-                          {/* <form onSubmit={(e) => submitData(e)}>
-                          <div className="col-12 ">
-                            <textarea
-                              className="border m-2 border-secondary-subtle w-100 p-3 d-block "
-                              placeholder="Left FeedBack"
-                              type="text"
-                              name="comment"
-                              onChange={(e) => addUserData(e)}
-                            />
-                            <p className="text-danger ms-2">
-                              {" "}
-                              <small>{error.comment}</small>{" "}
-                            </p>
-                          </div>
-                          <div className="mb-3 d-flex">
-                            <select
-                              name="rating"
-                              onChange={(e) => addUserData(e)}
-                              className="border m-2 border-secondary-subtle w-50 p-3 d-block"
-                            >
-                              <option selected>rating</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
-
-                            <div className="m-4 d-flex justify-content-center w-50">
-                              {drawStar(userData.rating)}
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <button
-                              className="btn btn-outline-dark text-uppercase p-2 m-2"
-                              disabled={
-                                error.rating ||
-                                error.comment ||
-                                userData.comment === "" ||
-                                userData.rating === "rating"
-                              }
-                              onClick={() => handleButtonComment()}
-                              type="reset"
-                            >
-                              Comment
-                            </button>
-                          </div>
-                        </form> */}
                         </div>
                       </div>)}
                     {/* <!-- Single Tab Content End --> */}

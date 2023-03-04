@@ -154,44 +154,26 @@ function Home()
     //     );
     //   });
     // };
-    const { currentUser } = useSelector((state) => state.user);
-    const addToWhishList=(item)=>{
-      const added = getUser2.wishlist.find(({id})=>id===item.id)
-      console.log(added)
-    if (!added) {
-      getUser2.wishlist.push({name:item.name,id:item.id,role:item.spetialization})
-      const docRef = doc(db, getDB, getUser2.id);
-      updateDoc(docRef, {
-        wishlist: getUser2.wishlist,
-      })
-        .then(() => {
-          console.log("done wishlist");
-        })
-        .catch((error) => {
-          console.log("ERROR" + error);
-        });}else{
-          alert("Item is added!")
-        }
-    }
-    const addToCart=(item)=>{
-      const added = getUser2.cart.find(({id})=>id===item.id)
-      // let quantity=parseInt("1")
-      console.log(added)
-    if (!added) {
-      getUser2.cart.push({name:item.name,id:item.id,role:item.role})
-      const docRef = doc(db, getDB, getUser2.id);
-      updateDoc(docRef, {
-        cart: getUser2.cart,
-      })
-        .then(() => {
-          console.log("done cart");
-        })
-        .catch((error) => {
-          console.log("ERROR" + error);
-        });}else{
-        //  console.log(getUser2.cart.Quantity)
-        }
-    }
+    // const { currentUser } = useSelector((state) => state.user);
+    // const addToCart=(item)=>{
+    //   const added = getUser2.cart.find(({id})=>id===item.id)
+    //   // let quantity=parseInt("1")
+    //   console.log(added)
+    // if (!added) {
+    //   getUser2.cart.push({name:item.name,id:item.id,role:item.role})
+    //   const docRef = doc(db, getDB, getUser2.id);
+    //   updateDoc(docRef, {
+    //     cart: getUser2.cart,
+    //   })
+    //     .then(() => {
+    //       console.log("done cart");
+    //     })
+    //     .catch((error) => {
+    //       console.log("ERROR" + error);
+    //     });}else{
+    //     //  console.log(getUser2.cart.Quantity)
+    //     }
+    // }
     const handleFilter = (e) => {
       let value = e.target.value;
       // setSortValue(value);
@@ -215,72 +197,71 @@ function Home()
       // loadDataProd();
       loadDataCategory();
     };
-    const getData2 = () => {
-      const q = query(
-        collection(db, "providers"),
-        where("email", "==", currentUser.email)
-      );
+    // const getData2 = () => {
+    //   const q = query(
+    //     collection(db, "providers"),
+    //     where("email", "==", currentUser.email)
+    //   );
   
-      onSnapshot(q, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setGetProvidor({ ...doc.data(), id: doc.id });
-          if (getProvidor) {
-            setGetUser2({ ...doc.data(), id: doc.id });
-            setGetDB("providers");
-          }
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
+    //   onSnapshot(q, (snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //       setGetProvidor({ ...doc.data(), id: doc.id });
+    //       if (getProvidor) {
+    //         setGetUser2({ ...doc.data(), id: doc.id });
+    //         setGetDB("providers");
+    //       }
+    //       console.log(doc.id, " => ", doc.data());
+    //     });
+    //   });
   
-      const q2 = query(
-        collection(db, "engineers"),
-        where("email", "==", currentUser.email)
-      );
+    //   const q2 = query(
+    //     collection(db, "engineers"),
+    //     where("email", "==", currentUser.email)
+    //   );
   
-      onSnapshot(q2, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setGetEngineer({ ...doc.data(), id: doc.id });
-          if (getEngineer) {
-            setGetUser2({ ...doc.data(), id: doc.id });
-            setGetDB("engineers");
-          }
+    //   onSnapshot(q2, (snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //       setGetEngineer({ ...doc.data(), id: doc.id });
+    //       if (getEngineer) {
+    //         setGetUser2({ ...doc.data(), id: doc.id });
+    //         setGetDB("engineers");
+    //       }
   
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
+    //       console.log(doc.id, " => ", doc.data());
+    //     });
+    //   });
   
-      const q3 = query(
-        collection(db, "users"),
-        where("email", "==", currentUser.email)
-      );
+    //   const q3 = query(
+    //     collection(db, "users"),
+    //     where("email", "==", currentUser.email)
+    //   );
   
-      onSnapshot(q3, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setGetCustomer({ ...doc.data(), id: doc.id });
-          if (getCustomer) {
-            setGetUser2({ ...doc.data(), id: doc.id });
-            setGetDB("users");
-          }
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
-    };
-    const exists = (movie) => {
-      if (getUser2.wishlist.filter((item) => item.id === movie.id).length > 0) {
-        return true;
-      }
+    //   onSnapshot(q3, (snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //       setGetCustomer({ ...doc.data(), id: doc.id });
+    //       if (getCustomer) {
+    //         setGetUser2({ ...doc.data(), id: doc.id });
+    //         setGetDB("users");
+    //       }
+    //       console.log(doc.id, " => ", doc.data());
+    //     });
+    //   });
+    // };
+    // const exists = (movie) => {
+    //   if (getUser2.wishlist.filter((item) => item.id === movie.id).length > 0) {
+    //     return true;
+    //   }
   
-      return false;
-    };
+    //   return false;
+    // };
     
     useEffect(() => {
       loadDataEng();
       loadDataCont();
       loadDataCategory();
       loadDataFilter();
-      if (currentUser) getData2();
-      else history.push("login");
-      }, [keyword,currentUser,history]);
+    
+      }, [keyword]);
 
     return(
         <div className='bg-white'>
@@ -359,9 +340,7 @@ function Home()
                         </div>
                        
                         <div className="Item-Icon position-absolute rounded-circle  py-4">
-                          <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
-                          {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
-                          </div>
+                          
                           <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                             <i className="fa-regular fa-eye"></i>
                             </div>
@@ -398,9 +377,7 @@ function Home()
                         </div>
                        
                         <div className="Item-Icon position-absolute rounded-circle  py-4">
-                          <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
-                          {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
-                          </div>
+                          
                           <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                             <i className="fa-regular fa-eye"></i>
                             </div>
@@ -439,13 +416,7 @@ function Home()
                       <div className="Item-Icon position-absolute rounded-circle  py-4">
                       
                           
-                          <div onClick={()=>addToCart(item)} className="view-Icon bg-white my-2 Icon-shape rounded-circle">
-                          <i className="fa-solid fa-cart-shopping"></i>
-                        </div>
-                        
-                        <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
-                        {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
-                        </div>
+
                         <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                           <i className="fa-regular fa-eye"></i>
                           </div>
@@ -492,9 +463,6 @@ function Home()
                         </div>
                         <div className="Item-Icon position-absolute rounded-circle  py-4">
                         
-                          <div onClick={()=>addToWhishList(item)} className="favorite-Icon bg-white Icon-shape rounded-circle">
-                           {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
-                          </div>
                           <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                           <i className="fa-regular fa-eye"></i>
                           </div>
@@ -537,9 +505,6 @@ function Home()
                           {!item.engRate && null}
                         </div>
                         <div className="Item-Icon position-absolute rounded-circle  py-4">
-                          <div onClick={()=>addToWhishList(item)}  className="favorite-Icon bg-white Icon-shape rounded-circle">
-                          {exists(item)?(<i className="fa-solid fa-heart "></i>):(<i className="fa-regular fa-heart "></i>)} 
-                          </div>
                           <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                           <i className="fa-regular fa-eye"></i>
                           </div>
