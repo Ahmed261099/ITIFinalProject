@@ -21,12 +21,7 @@ import {
 } from "firebase/firestore";
 
 import Testmonial from '../testmonials/testmonials' ;
-import Footer from '../Footer/footer' ;
-
-
-
-
-
+import Footer from '../Footer/footer';
 
 function Home()
 {
