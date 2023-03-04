@@ -16,9 +16,6 @@ function Navbar() {
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/Home">Home</NavLink>
                     </li>
-                    <li className="nav-item px-lg-1">
-                        <NavLink className="nav-link fs-5" aria-current="page" to="/Shop">Shop</NavLink>
-                    </li>
                     
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/About">About</NavLink>
@@ -29,7 +26,8 @@ function Navbar() {
                     </li> 
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/firstreg">Register</NavLink>
-
+                    </li>
+                    <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/Contact">Contact</NavLink>
 
                     </li>    
