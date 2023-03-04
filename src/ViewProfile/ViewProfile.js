@@ -542,7 +542,31 @@ function ViewProfile() {
     userData.comment = "";
     userData.rating = "";
   };
+  console.log(userData.comment , userData.rating);
+  console.log(getProduct);
+  console.log(getDB);
+  const handleButtonCommentProduct = () => {
+    getProduct[0].feedback.push({
+      comment: userData.comment,
+      rating: userData.rating,
+    });
 
+    const docRef = doc(db, "chairs", getProduct[0].id);
+
+    updateDoc(docRef, {
+      feedback: getProduct[0].feedback,
+      rate: getProduct[0].rate,
+    })
+      .then(() => {
+        console.log("done feedback");
+      })
+      .catch((error) => {
+        console.log("ERROR" + error);
+      });
+
+    userData.comment = "";
+    userData.rating = "";
+  };
   const sendMessage = () => {
 
     console.log(getDB)
@@ -1142,7 +1166,7 @@ function ViewProfile() {
                                           userData.comment === "" ||
                                           userData.rating === "rating"
                                         }
-                                        onClick={() => handleButtonComment()}
+                                        onClick={() =>handleButtonCommentProduct()}
                                         type="reset"
                                       >
                                         Comment

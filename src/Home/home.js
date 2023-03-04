@@ -389,7 +389,7 @@ function Home()
           
                 })
               ):(
-                dataProFilter.filter(user=>user.spetialization.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
+                dataProFilter.filter(user=>user.title.toLowerCase().includes(`${searchValue}`.toLowerCase())).map((item) => {
                 return(
                     
                     <div className="col-lg-3">
@@ -416,11 +416,10 @@ function Home()
                       <div className="Item-Icon position-absolute rounded-circle  py-4">
                       
                           
-
-                        <Link  className='text-decoration-none text-success-emphasis' to={`view/${item.role}/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
-                          <i className="fa-regular fa-eye"></i>
-                          </div>
-                          </Link>
+                      <Link  className='text-decoration-none text-success-emphasis' to={`/category/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                            <i className="fa-regular fa-eye"></i>
+                            </div>
+                            </Link>
                       </div>
                     </div>
                   </div>
@@ -587,7 +586,7 @@ function Home()
                         <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
                         <img src={item.image} className='w-100' alt=''/>
                         </div>
-                        <Link  to={`/category/${item.id}`}><h3 className="py-2">{item.title}</h3></Link>
+                       <h3 className="py-2">{item.title}</h3>
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
                           {item?.engRate && (
                             <>
@@ -599,12 +598,12 @@ function Home()
                           )} 
                           {!item.engRate && null}
                         </div>
-                        <div className="Item-Icon position-absolute rounded-circle  py-4">
-                          <div className="favorite-Icon bg-white Icon-shape rounded-circle">
-                            <i className="fa-regular fa-heart "></i>
-                          </div>
+                        <div className="Item-Icon position-absolute rounded-circle  py-4">                          
                           <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
+                          <Link  className='text-decoration-none text-success-emphasis' to={`/category/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                             <i className="fa-regular fa-eye"></i>
+                            </div>
+                            </Link>
                           </div>
                         </div>
                       </div>
