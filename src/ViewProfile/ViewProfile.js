@@ -220,7 +220,7 @@ function ViewProfile() {
             : null,
       });
 
-    }
+    } 
     else if (e.target.name === "message") {
       setUserData({
         ...userData,
@@ -565,7 +565,8 @@ function ViewProfile() {
   console.log(getDB)
   return (
     <>
-      {getDB === "engineers" || getDB === "providers" || getDB === "users" ? (<div id="profile">
+      {getDB === "engineers" || getDB === "providers" || getDB === "users" ?
+       (<div id="profile">
         {/* start of header */}
         <div className="header ">
           <div className="container">
@@ -579,11 +580,12 @@ function ViewProfile() {
                     src={require("../assets/avatar2.png")}
                     alt=""
                   ></img>
+                  
                 ) : (
                   <img className="imgprofile" src={getUser.image} alt=""></img>
                 )}
               </div>
-              <div className="d-flex ">
+              {/* <div className="d-flex ">
                 {getUser.image === "" ? (
                   <img
                     className="imgprofile"
@@ -593,7 +595,7 @@ function ViewProfile() {
                 ) : (
                   <img className="imgprofile" src={getUser.image} alt=""></img>
                 )}
-              </div>
+              </div> */}
 
               {/* end op p.p */}
               <div className="ps-5">
@@ -615,7 +617,7 @@ function ViewProfile() {
         </div>
         {/* end of header */}
               {/* end op p.p */}
-              <div className="ps-5">
+              {/* <div className="ps-5">
                 <div className="d-flex">
                   <h2 className="ps-0 fs-1">{getUser.name}</h2>
                   <div className="m-3">{drawStar(calcRating())}</div>
@@ -631,7 +633,7 @@ function ViewProfile() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* end of header */}
 
         {/* start of carousel */}
@@ -657,13 +659,13 @@ function ViewProfile() {
         </div>
         {/* end of Carousel */}
         {/*start section buttons and content  */}
-        <div className="mt-5  p-5">
+        {/* <div className="mt-5  p-5">
           <div className="container">
             <div className="col-12">
-              <div className="row">
+              <div className="row"> */}
                 {/* start section of buttons */}
         {/* start of carousel */}
-        <div className="container mt-5">
+        {/* <div className="container mt-5">
           <Carousel fade className="align-center w-100 ">
             {getPortofolio?.map((onePort, index) => {
               return (
@@ -681,8 +683,8 @@ function ViewProfile() {
                 </Carousel.Item>
               );
             })}
-          </Carousel>
-        </div>
+          </Carousel> */}
+        {/* </div> */}
         {/* end of Carousel */}
         {/*start section buttons and content  */}
         <div className="mt-5  p-5">
@@ -757,15 +759,15 @@ function ViewProfile() {
                 {/* end section of buttons */}
 
                 {/* start section of content */}
-                <div className="col-xl-9 col-12 w-xl-100">
-                  <div className="tab-content" id="myaccountContent">
+                {/* <div className="col-xl-9 col-12 w-xl-100">
+                  <div className="tab-content" id="myaccountContent"> */}
                     {/* <!-- Single Tab Content Start --> */}
                 {/* start section of content */}
                 <div className="col-xl-9 col-12 w-xl-100">
                   <div className="tab-content" id="myaccountContent">
                     {/* <!-- Single Tab Content Start --> */}
 
-                    <div
+                    {/* <div
                       className="tab-pane fade show active"
                       id="info"
                       role="tabpanel"
@@ -773,7 +775,7 @@ function ViewProfile() {
                       tabIndex="0"
                     >
                       <div className="border p-4">
-                        <h3 className="border-bottom pb-2 mb-4">Info</h3>
+                        <h3 className="border-bottom pb-2 mb-4">Info</h3> */}
                     <div
                       className="tab-pane fade show active"
                       id="info"
@@ -867,7 +869,7 @@ function ViewProfile() {
                               <option>4</option>
                               <option>5</option>
                             </select>
-                        {getFeedback?.map((feedback, index) => {
+                        {/* {getFeedback?.map((feedback, index) => {
                           return (
                             <>
                               <div
@@ -911,7 +913,7 @@ function ViewProfile() {
                               <option>3</option>
                               <option>4</option>
                               <option>5</option>
-                            </select>
+                            </select> */}
 
                             <div className="m-4 d-flex justify-content-center w-50">
                               {drawStar(userData.rating)}
@@ -1055,7 +1057,7 @@ function ViewProfile() {
                         )}
                 </div>
 
-          </div>
+        
           {/*start section buttons and content  */}
           <div className="mt-5  p-5">
             <div className="container">
@@ -1220,4 +1222,4 @@ function ViewProfile() {
   );
 }
 
-export default ViewProfile;
+      export default ViewProfile;
