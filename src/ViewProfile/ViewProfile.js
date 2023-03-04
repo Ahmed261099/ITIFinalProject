@@ -12,19 +12,17 @@ import {
   onSnapshot,
   doc,
   updateDoc,
-  serverTimestamp
 } from "firebase/firestore";
-import { db, storage, auth } from "../Firebase.js";
+import { db, storage } from "../Firebase.js";
 
 
 function ViewProfile() {
   const { currentUser } = useSelector((state) => state.user);
-  const param = useParams()
+  const param=useParams()
   console.log(param)
 
   const dispatch = useDispatch();
-
-  console.log(currentUser)
+  
 
   const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
   const regPass = new RegExp(
@@ -34,6 +32,7 @@ function ViewProfile() {
   const [getEngineer, setGetEngineer] = useState({});
   const [getProduct, setGetProduct] = useState({});
   const [getUser, setGetUser] = useState({});
+  const [product, setProduct] = useState({});
   const [getAddress, setAddress] = useState([]);
   const [getFeedback, setFeedback] = useState([]);
   const [getPortofolio, setPortofolio] = useState([]);
@@ -155,8 +154,9 @@ function ViewProfile() {
       })
     }
   };
-  console.log(getUser, getDB)
-
+  console.log(getUser["products"],getDB)
+  console.log(getProduct)
+  
 
   const [userData, setUserData] = useState({
     city: "",
@@ -195,12 +195,12 @@ function ViewProfile() {
   const cartButtons = document.querySelectorAll('.cart-button');
 
   cartButtons.forEach(button => {
-    button.addEventListener('click', cartClick);
+      button.addEventListener('click', cartClick);
   });
-
+  
   function cartClick() {
-    let button = this;
-    button.classList.add('clicked');
+      let button = this;
+      button.classList.add('clicked');
   }
   const addUserData = (e) => {
     if (e.target.name === "img") {
@@ -216,8 +216,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
 
     }
@@ -248,8 +248,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "caption") {
       setUserData({
@@ -263,8 +263,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "comment") {
       setUserData({
@@ -278,8 +278,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "rating") {
       setUserData({
@@ -303,8 +303,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "street") {
       setUserData({
@@ -318,8 +318,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "newPassword") {
       setUserData({
@@ -333,10 +333,10 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 8
-              ? "Min Length is 8"
-              : regPass.test(e.target.value)
-                ? ""
-                : "Invalid Password",
+            ? "Min Length is 8"
+            : regPass.test(e.target.value)
+            ? ""
+            : "Invalid Password",
       });
     } else {
       setUserData({
@@ -350,10 +350,10 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 8
-              ? "Min length is 8"
-              : e.target.value === userData.newPassword
-                ? ""
-                : "Password and confirm password should be the same",
+            ? "Min length is 8"
+            : e.target.value === userData.newPassword
+            ? ""
+            : "Password and confirm password should be the same",
       });
     }
   };
@@ -370,8 +370,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "email") {
       setGetUser({
@@ -406,8 +406,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "role") {
       setGetUser({
@@ -421,8 +421,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 3
-              ? "Min Length is 3 Char"
-              : null,
+            ? "Min Length is 3 Char"
+            : null,
       });
     } else if (e.target.name === "experience") {
       setGetUser({
@@ -436,8 +436,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 10
-              ? "Min Length is 10 Char"
-              : null,
+            ? "Min Length is 10 Char"
+            : null,
       });
     } else if (e.target.name === "spetialization") {
       setGetUser({
@@ -472,8 +472,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value.length < 11
-              ? "Min Length is 11"
-              : null,
+            ? "Min Length is 11"
+            : null,
       });
     } else if (e.target.name === "password") {
       setErros({
@@ -482,8 +482,8 @@ function ViewProfile() {
           e.target.value.length === 0
             ? "This Field is Required"
             : e.target.value === getUser.password
-              ? ""
-              : "password is not correct",
+            ? ""
+            : "password is not correct",
       });
     }
   };
@@ -583,6 +583,17 @@ function ViewProfile() {
                   <img className="imgprofile" src={getUser.image} alt=""></img>
                 )}
               </div>
+              <div className="d-flex ">
+                {getUser.image === "" ? (
+                  <img
+                    className="imgprofile"
+                    src={require("../assets/avatar2.png")}
+                    alt=""
+                  ></img>
+                ) : (
+                  <img className="imgprofile" src={getUser.image} alt=""></img>
+                )}
+              </div>
 
               {/* end op p.p */}
               <div className="ps-5">
@@ -603,7 +614,54 @@ function ViewProfile() {
           </div>
         </div>
         {/* end of header */}
+              {/* end op p.p */}
+              <div className="ps-5">
+                <div className="d-flex">
+                  <h2 className="ps-0 fs-1">{getUser.name}</h2>
+                  <div className="m-3">{drawStar(calcRating())}</div>
+                </div>
+                <ul className="paths ">
+                  <li className="dvider">
+                    <Link to="/" className="text-decoration-none text-dark">
+                      Home{" "}
+                    </Link>
+                  </li>
+                  <li>My Account</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* end of header */}
 
+        {/* start of carousel */}
+        <div className="container mt-5">
+          <Carousel fade className="align-center w-100 ">
+            {getPortofolio?.map((onePort, index) => {
+              return (
+                <Carousel.Item key={index} className=" ">
+                  <img
+                    className="d-block w-100 "
+                    height={"400px"}
+                    src={onePort.image}
+                    alt=""
+                  />
+                  <Carousel.Caption>
+                    <h3 className="">{onePort.title}</h3>
+                    <p>{onePort.caption}</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              );
+            })}
+          </Carousel>
+        </div>
+        {/* end of Carousel */}
+        {/*start section buttons and content  */}
+        <div className="mt-5  p-5">
+          <div className="container">
+            <div className="col-12">
+              <div className="row">
+                {/* start section of buttons */}
         {/* start of carousel */}
         <div className="container mt-5">
           <Carousel fade className="align-center w-100 ">
@@ -702,7 +760,20 @@ function ViewProfile() {
                 <div className="col-xl-9 col-12 w-xl-100">
                   <div className="tab-content" id="myaccountContent">
                     {/* <!-- Single Tab Content Start --> */}
+                {/* start section of content */}
+                <div className="col-xl-9 col-12 w-xl-100">
+                  <div className="tab-content" id="myaccountContent">
+                    {/* <!-- Single Tab Content Start --> */}
 
+                    <div
+                      className="tab-pane fade show active"
+                      id="info"
+                      role="tabpanel"
+                      aria-labelledby="info-tab"
+                      tabIndex="0"
+                    >
+                      <div className="border p-4">
+                        <h3 className="border-bottom pb-2 mb-4">Info</h3>
                     <div
                       className="tab-pane fade show active"
                       id="info"
@@ -751,6 +822,51 @@ function ViewProfile() {
                       <div className="border p-4">
                         <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
 
+                        {getFeedback?.map((feedback, index) => {
+                          return (
+                            <>
+                              <div
+                                className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
+                                key={index}
+                              >
+                                <p className="m-4 w-75">
+                                  <strong>{feedback.comment}</strong>
+                                </p>
+                                <div className="m-4 d-flex justify-content-end w-25">
+                                  {drawStar(feedback.rating)}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
+                        <hr />
+                        <form onSubmit={(e) => submitData(e)}>
+                          <div className="col-12 ">
+                            <textarea
+                              className="border m-2 border-secondary-subtle w-100 p-3 d-block "
+                              placeholder="Left FeedBack"
+                              type="text"
+                              name="comment"
+                              onChange={(e) => addUserData(e)}
+                            />
+                            <p className="text-danger ms-2">
+                              {" "}
+                              <small>{error.comment}</small>{" "}
+                            </p>
+                          </div>
+                          <div className="mb-3 d-flex">
+                            <select
+                              name="rating"
+                              onChange={(e) => addUserData(e)}
+                              className="border m-2 border-secondary-subtle w-50 p-3 d-block"
+                            >
+                              <option selected>rating</option>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
                         {getFeedback?.map((feedback, index) => {
                           return (
                             <>
@@ -881,7 +997,7 @@ function ViewProfile() {
                         })}
 
                         <p>Mobile: {getUser.phone}</p>
-
+                      
                       </div>
                     </div>
                     {/* <!-- Single Tab Content End --> */}
@@ -894,49 +1010,50 @@ function ViewProfile() {
         </div>
         {/*end section of buttons and content */}
       </div>
-      ) : (
+      ):(
         <div className="container">
-          <div class="row g-0 rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-primary">Products</strong>
-              <div className="d-flex">
-                <p class="mb-1 fs-1 fw-bolder text-success-emphasis">{getUser.name}</p>
-                <div className="m-3">{drawStar(calcRating())}</div>
-              </div>
-              <div class="mb-1 text-muted">{getUser.spetialization}</div>
-              <p class="card-text mb-auto">
-                {getUser.description}
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-              </p>
-              <div className="d-flex flex-row mt-4 justify-content-around">
-                <span className="fs-3">Price:</span> <p className="col-6 text-success fs-3 text-danger">{getUser.price} EGP</p>
-                {/* <Button className="col-6" variant="outline-success">Add To Card</Button>{' '} */}
-                <button class="cart-button btn btn-outline-primary">
-                  <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i>  Add to cart</span>
-                  <span class="added">Added</span>
-                  <i class="fas fa-shopping-cart"></i>
-                  <i class="fas fa-box"></i>
-                </button>
-
-              </div>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-
-              {getUser.image === "" ? (
-                <img
-                  // className="imgprofile"
-                  src={require("./../assets/Products/product-1.jpg")}
-                  alt=""
-                ></img>
-              ) : (
-                <img className="imgprofile" src={getUser.image} alt=""></img>
-              )}
-            </div>
+          { Object.keys(getProduct).map((title) => {
+          const products = getProduct[title];
+          return(
+                <div class="row g-0 rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                          <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary">Products</strong>
+                  <div className="d-flex">
+                            <p class="mb-1 fs-1 fw-bolder text-success-emphasis">{products.name}</p>
+                          <div className="m-3">{drawStar(calcRating())}</div>
+                        </div>
+                  <div class="mb-1 text-muted">{products.spetialization}</div>
+                  <p class="card-text mb-auto">
+                    {products.description}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                    It has survived not only five centuries, but also the leap into electronic typesetting, 
+                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                      and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                  </p>
+                  <div className="d-flex flex-row mt-4 justify-content-around">
+                  <span className="fs-3">Price:</span> <p className="col-6 text-success fs-3 text-danger">{products.price} EGP</p>
+                  <button class="cart-button btn btn-outline-primary">
+                    <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i>  Add to cart</span>
+                    <span class="added">Added</span>
+                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-box"></i>
+                  </button>
+                  
+                  </div>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                
+                        {products.image === "" ? (
+                          <img
+                            src={require("./../assets/Products/product-1.jpg")}
+                            alt=""
+                          ></img>
+                        ) : (
+                          <img className="imgprofile" src={products.image} alt=""></img>
+                        )}
+                </div>
 
           </div>
           {/*start section buttons and content  */}
@@ -1066,43 +1183,38 @@ function ViewProfile() {
                                 <option>5</option>
                               </select>
 
-                              <div className="m-4 d-flex justify-content-center w-50">
-                                {drawStar(userData.rating)}
+                                    <div className="m-4 d-flex justify-content-center w-50">
+                                      {drawStar(products.rating)}
+                                    </div>
+                                  </div>
+                                  <div className="col-12">
+                                    <button
+                                      className="btn btn-outline-dark text-uppercase p-2 m-2"
+                                      disabled={
+                                        error.rating ||
+                                        error.comment ||
+                                        userData.comment === "" ||
+                                        userData.rating === "rating"
+                                      }
+                                      onClick={() => handleButtonComment()}
+                                      type="reset"
+                                    >
+                                      Comment
+                                    </button>
+                                  </div>
+                                </form>
                               </div>
-                            </div>
-                            <div className="col-12">
-                              <button
-                                className="btn btn-outline-dark text-uppercase p-2 m-2"
-                                disabled={
-                                  error.rating ||
-                                  error.comment ||
-                                  userData.comment === "" ||
-                                  userData.rating === "rating"
-                                }
-                                onClick={() => handleButtonComment()}
-                                type="reset"
-                              >
-                                Comment
-                              </button>
-                            </div>
-                          </form>
+                            </div>                    
+                          </div>
                         </div>
                       </div>
-                      {/* <!-- Single Tab Content End --> */}
-
-
                     </div>
                   </div>
-                  {/* end section of content */}
                 </div>
               </div>
-            </div>
-          </div>
-          {/*end section of buttons and content */}
-
-        </div>
-
-
+          )
+          })}
+      </div>
       )}
     </>
   );

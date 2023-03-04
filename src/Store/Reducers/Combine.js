@@ -7,6 +7,5 @@ export default combineReducers({
 
     user: UserReducer,
     coll: CollReducer
-   
 
 });
