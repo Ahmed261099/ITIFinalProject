@@ -871,12 +871,12 @@ function Profile() {
                             </p>)}
                           {getUser.role === "customer" ? null :
                             (<p>
-                              <strong>spetialization :</strong>{" "}
+                              <strong>Specialization :</strong>{" "}
                               {getUser.spetialization}{" "}
                             </p>)}
                           {getUser.role === "customer" ? null :
                             (<p>
-                              <strong>Experiance :</strong> {getUser.experience}{" "}
+                              <strong>Experience :</strong> {getUser.experience}{" "}
                             </p>)}
                         </div>
                       </div>
