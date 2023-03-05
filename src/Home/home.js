@@ -59,6 +59,7 @@ function Home()
               phone: doc.data().phone,
               rate: doc.data().rate,
               spetialization: doc.data().spetialization,
+              image : doc.data().image
             }))
           );
         });
@@ -74,6 +75,7 @@ function Home()
               phone: doc.data().phone,
               rate: doc.data().rate,
               spetialization: doc.data().spetialization,
+              image : doc.data().image
             }))
           );
         });
@@ -87,6 +89,7 @@ function Home()
               title: doc.data().title,
               products: doc.data().products,
               spetialization: doc.data().spetialization,
+              image : doc.data().image
             }))
           );
         });
@@ -103,7 +106,8 @@ function Home()
             role: doc.data().role,
             phone: doc.data().phone,
             rate: doc.data().rate,
-            spetialization: doc.data().spetialization
+            spetialization: doc.data().spetialization,
+            image : doc.data().image
           }))
         );
       });
@@ -119,7 +123,8 @@ function Home()
             role: doc.data().role,
             phone: doc.data().phone,
             rate: doc.data().rate,
-            spetialization: doc.data().spetialization
+            spetialization: doc.data().spetialization,
+            image : doc.data().image
           }))
         );
       });
@@ -136,6 +141,7 @@ function Home()
             title: doc.data().title,
             products: doc.data().products,
             spetialization: doc.data().spetialization,
+            image : doc.data().image
             // name: doc.data().name
           }))
         );
@@ -322,7 +328,7 @@ function Home()
                       <div className="card-Eng position-relative">
                         <div className="card-Eng-img">
                         <div className='card-Eng-img'>
-                           <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                           <img src={item.image} className='w-100' alt=''/>
                         </div>
                         </div>
                         <h3 className="py-2">{item.name}</h3>
@@ -359,7 +365,7 @@ function Home()
                       <div className="card-Eng position-relative">
                         <div className="card-Eng-img">
                         <div className='card-Eng-img'>
-                           <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                           <img src={item.image} className='w-100' alt=''/>
                         </div>
                         </div>
                         <h3 className="py-2">{item.name}</h3>
@@ -396,7 +402,7 @@ function Home()
                     <div className="card-Eng position-relative">
                       <div className="card-Eng-img">
                       <div className='card-Eng-img'>
-                          <img src={require('../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                          <img src={item.image} className='w-100' alt=''/>
                       </div>
                       </div>
                       <h3 className="py-2">{item.name}</h3>
@@ -444,7 +450,7 @@ function Home()
                       <div className="card-Eng position-relative">
                         <div className="card-Eng-img">
                         
-                        <img src={require('./../assets/Engineers/client-1.png')} className='w-100' alt=''/>
+                        <img src={item.image} className='w-100' alt=''/>
                                            
                         </div>
                         <h3 className="py-2">{item.name}</h3>
@@ -488,7 +494,7 @@ function Home()
                     <div className="col-lg-3">
                       <div className="card-Eng position-relative">
                         <div className="card-Eng-img">
-                        <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
+                        <img src={item.image} className='w-100' alt=''/>
                         </div>
                         <h3 className="py-2">{item.name}</h3>
                         <h3 className="py-2">{item.role}</h3>
@@ -583,7 +589,6 @@ function Home()
                     <div className="col-lg-3">
                       <div className="card-Eng position-relative">
                         <div className="card-Eng-img">
-                        <img src={require('../assets/Engineers/client-4.png')} className='w-100' alt=''/>
                         <img src={item.image} className='w-100' alt=''/>
                         </div>
                        <h3 className="py-2">{item.title}</h3>
