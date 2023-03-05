@@ -169,3 +169,22 @@ paths li {
 	text-decoration: none;
 	font-size: 12px;
 }
+
+.transbox{
+    margin: 30px;
+  background-color: #ffffff86;
+  border: 1px rgb(139, 138, 138);
+  opacity: 0.9;
+  }
+  .transbox p{
+    margin: 5%;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+
+  }
+  .transbox h3{
+    margin: 5%;
+  font-weight: bold;
+  color: #000000;
+  }
