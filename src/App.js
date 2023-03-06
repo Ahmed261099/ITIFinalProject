@@ -24,6 +24,7 @@ import Error from './Error/Error';
 import About from './About/About';
 import Contact from './Contacts/Contact';
 import Footer from './Footer/footer';
+import CartComponent from './CartCompnent/CartComponent';
 
 
 function App() {
@@ -60,7 +61,7 @@ function App() {
         <Route exact path={"/view/:role/:id"} component={ViewProfile}/>
         <Route exact path={"/category"} component={Category}/>
         <Route exact path={"/category/:category"} component={CategoryPage}/>
-        <Route exact path={"/Cart"} component={Cart} />
+        <Route exact path={"/Cart"} component={CartComponent} />
         <Route exact path={"*"} component={Error} />
       </Switch>
       <Footer/>

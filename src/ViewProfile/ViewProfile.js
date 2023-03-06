@@ -53,7 +53,7 @@ function ViewProfile() {
   }, []);
 
   const getViewerData = () => {
-
+    if(currentUser){
     const q = query(
       collection(db, "providers"),
       where("email", "==", currentUser.email)
@@ -103,6 +103,10 @@ function ViewProfile() {
         console.log(doc.id, " => ", doc.data());
       });
     });
+  }
+  else{
+    console.log("no logged in user")
+  }
 
 
   };
@@ -564,7 +568,7 @@ function ViewProfile() {
     getMessage.text = "";
   }
   const exists = (wish) => {
-    if (getViewer.wishlist.filter((item) => item.id === wish.id).length > 0) {
+    if (getViewer?.wishlist?.filter((item) => item.id === wish.id).length > 0) {
       return true;
     }
 
@@ -573,17 +577,17 @@ function ViewProfile() {
 
 
   const addToWhishList = (item) => {
-    const added = getViewer.wishlist.find(({ id }) => id === item.id)
+    const added = getViewer?.wishlist.find(({ id }) => id === item.id)
     console.log(added)
     if (!added) {
       if(getDB==='engineers'||getDB==='providers'){
-        getViewer.wishlist.push({ name: item.name, id: item.id, role: item.role })}
+        getViewer?.wishlist.push({ name: item.name, id: item.id, role: item.role })}
         else{
-          getViewer.wishlist.push({ name: item.name, id: item.id, role: item.spetialization })
+          getViewer?.wishlist.push({ name: item.name, id: item.id, role: item.spetialization })
         }
-      const docRef = doc(db, getDBViewer, getViewer.id);
+      const docRef = doc(db, getDBViewer, getViewer?.id);
       updateDoc(docRef, {
-        wishlist: getViewer.wishlist,
+        wishlist: getViewer?.wishlist,
       })
         .then(() => {
           console.log("done wishlist");
@@ -596,13 +600,13 @@ function ViewProfile() {
     }
   }
   const removeFromWhishList = (item) => {
-    const index = getViewer.wishlist.findIndex(({ id }) => id === item.id)
-    getViewer.wishlist.splice(index, 1);
+    const index = getViewer?.wishlist.findIndex(({ id }) => id === item.id)
+    getViewer?.wishlist.splice(index, 1);
 
-    const docRef = doc(db, getDBViewer, getViewer.id);
+    const docRef = doc(db, getDBViewer, getViewer?.id);
 
     updateDoc(docRef, {
-      wishlist: getViewer.wishlist,
+      wishlist: getViewer?.wishlist,
     })
       .then(() => {
         console.log("remove wishlist");
