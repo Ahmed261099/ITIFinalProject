@@ -20,10 +20,10 @@ import UserRoute from './userRoute';
 import Category from './Category/Category';
 import CategoryPage from './CategoryPage/CategoryPage';
 import Cart from './Cart/Cart';
-import Error from './Error/Error';
 import About from './About/About';
 import Contact from './Contacts/Contact';
 import Footer from './Footer/footer';
+import NotFound from './Not-found/NotFound';
 
 
 function App() {
@@ -60,8 +60,8 @@ function App() {
         <Route exact path={"/view/:role/:id"} component={ViewProfile}/>
         <Route exact path={"/category"} component={Category}/>
         <Route exact path={"/category/:category"} component={CategoryPage}/>
-        <Route exact path={"/Cart"} component={Cart} />
-        <Route exact path={"*"} component={Error} />
+        <UserRoute exact path={"/Cart"} component={Cart} />
+        <Route exact path={"*"} component={NotFound} />
       </Switch>
       <Footer/>
     </Router>

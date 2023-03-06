@@ -1,5 +1,6 @@
 import React from 'react'
 import './header.css'
+import { Link } from 'react-router-dom';
 
 function header()
 {
@@ -12,7 +13,7 @@ function header()
                         <div className='carousel-caption-visibility'>
                             <h5 className='h1'>First slide label</h5>
                             <p className='h2 text-center'>Some representative placeholder content for the first slide.</p>
-                            <button className='btn btn-dark  px-4 py-2 rounded-5 '>SHOP NOW</button>
+                            <Link to='/category' className='btn btn-dark rounded-5  px-4 py-2 text-text-decoration-none'>Shop Now</Link>
                         </div>
                     </div>
                     </div>
@@ -22,7 +23,7 @@ function header()
                         <div className='carousel-caption-visibility'>
                             <h5 className='h1'>Second slide label</h5>
                             <p className='h2 text-center'>Some representative placeholder content for the Second slide.</p>
-                            <button className='btn btn-dark  px-4 py-2 rounded-5 '>SHOP NOW</button>
+                            <Link to='/category' className='btn btn-dark rounded-5  px-4 py-2 text-text-decoration-none'>Shop Now</Link>
                         </div>
                     </div>
                     </div>
@@ -32,7 +33,7 @@ function header()
                         <div className='carousel-caption-visibility'>
                             <h5 className='h1'>Third slide label</h5>
                             <p className='h2 text-center'>Some representative placeholder content for the Third slide.</p>
-                            <button className='btn btn-dark  px-4 py-2 rounded-5 '>SHOP NOW</button>
+                            <Link to='/category' className='btn btn-dark rounded-5  px-4 py-2 text-text-decoration-none'>Shop Now</Link>
                         </div>
                     </div>
                     </div>

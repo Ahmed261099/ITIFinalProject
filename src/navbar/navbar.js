@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './navbar.css'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 function Navbar() {
+
+    const { currentUser } = useSelector((state) => state.user);
 
     return(
         <nav className="navbar navbar-expand-lg bg-light navbar-light py-3">
@@ -16,17 +19,17 @@ function Navbar() {
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/Home">Home</NavLink>
                     </li>
-                    
+                    <li className="nav-item px-lg-1">
+
+                        <NavLink className="nav-link fs-5" aria-current="page" to="/category">Shop</NavLink>
+                    </li> 
+
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/About">About</NavLink>
                     </li>
-                    <li className="nav-item px-lg-1">
-
-                        <NavLink className="nav-link fs-5" aria-current="page" to="/category">Category</NavLink>
-                    </li> 
-                    <li className="nav-item px-lg-1">
+                    {/* <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/firstreg">Register</NavLink>
-                    </li>
+                    </li> */}
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/Contact">Contact</NavLink>
 
@@ -37,21 +40,28 @@ function Navbar() {
                         {/* <li className="nav-item">
                             <span className="nav-link " aria-current="page">Logout</span>
                         </li> */}
-                        <li className="nav-item px-lg-1">
+                        {/* <li className="nav-item px-lg-1">
                             <NavLink className="nav-link  fs-5" aria-current="page" to="Search"><i class="fa-solid fa-magnifying-glass"></i></NavLink>
-                        </li>              
-                        <li className="nav-item px-lg-1">
-                            <NavLink className="nav-link fs-5" aria-current="page" to="/Profile"><i class="fa-regular fa-user"></i></NavLink>
-                        </li>              
-                        <li className="nav-item px-lg-1">
-                            <NavLink className="nav-link fs-5" aria-current="page" to="/Cart"><i class="fa-solid fa-cart-shopping"></i></NavLink>
-                        </li>              
-                        {/* <li className="nav-item">
-                            <NavLink className="nav-link " aria-current="page" to="register">Register</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link  fw-bolder" aria-current="page" to="login">Login</NavLink>
                         </li> */}
+
+                        {
+                            currentUser? 
+                            <>
+                                <li className="nav-item px-lg-1">
+                                    <NavLink className="nav-link fs-5" aria-current="page" to="/Cart"><i class="fa-solid fa-cart-shopping"></i></NavLink>
+                                </li> 
+                                <li  className="nav-item px-lg-1">
+                                    <NavLink className="nav-link fs-5" aria-current="page" to="/Profile"><i class="fa-regular fa-user"></i></NavLink>
+                                </li> 
+                             </>
+                             :
+                             <li className="nav-item px-lg-1">
+                                <NavLink className="nav-link fs-5" aria-current="page" to="/firstreg"><i class="fa-solid fa-right-to-bracket"></i></NavLink>
+                            </li> 
+                        }
+                      
+                                  
+                                               
                     </ul>
                 </div>
           </div>

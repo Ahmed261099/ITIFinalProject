@@ -12,6 +12,7 @@ root.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
+    <script src='https://smtpjs.com/v3/smtp.js'></script>
   </Provider>
 );
 
