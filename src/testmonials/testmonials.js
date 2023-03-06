@@ -54,10 +54,8 @@ function testmonials()
                                       <h6 className="lead">{review.AuthorRole}</h6>
                                     </div>
                                   </div>
-                                  <div className="col-lg-2">
-                                
-                                  </div>
-                                  <div className="col-lg-10  ">
+                                  
+                                  <div className="col-lg-10 offset-lg-2 ">
                                     <div className="testmonial-member-review">
                                         <p className="lead text-muted">"{review.AuthorReview}"</p>
                                     </div>
