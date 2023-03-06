@@ -703,15 +703,15 @@ function Profile() {
                       alt=""
                     />
                     <Carousel.Caption>
-<<<<<<< HEAD
+
                       <h3 className="text-center">{onePort.title}</h3>
                       <p className="text-center">{onePort.caption}</p>
-=======
+
                       <div className="transbox">
                       <h3 className="">{onePort.title}</h3>
                       <p>{onePort.caption}</p>
                       </div>
->>>>>>> main
+
                     </Carousel.Caption>
                   </Carousel.Item>
                 );
