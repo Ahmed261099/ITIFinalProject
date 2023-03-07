@@ -56,7 +56,7 @@ function Navbar() {
                              </>
                              :
                              <li className="nav-item px-lg-1">
-                                <NavLink className="nav-link fs-5" aria-current="page" to="/firstreg"><i class="fa-solid fa-right-to-bracket"></i></NavLink>
+                                <NavLink className="nav-link fs-5" aria-current="page" to="/login"><i class="fa-solid fa-right-to-bracket"></i></NavLink>
                             </li> 
                         }
                       

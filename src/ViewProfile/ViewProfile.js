@@ -14,7 +14,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "../Firebase.js";
-
+import { ToastContainer, toast } from "react-toastify";
 
 function ViewProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -53,58 +53,60 @@ function ViewProfile() {
   }, []);
 
   const getViewerData = () => {
+    if(currentUser)
+    {
+        const q = query(
+          collection(db, "providers"),
+          where("email", "==", currentUser.email)
+        );
 
-    const q = query(
-      collection(db, "providers"),
-      where("email", "==", currentUser.email)
-    );
+        onSnapshot(q, (snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            setGetViewProvidor({ ...doc.data(), id: doc.id });
+            if (getViewProvidor) {
+              setGetViewer({ ...doc.data(), id: doc.id });
+              setGetDBViewer("providers");
 
-    onSnapshot(q, (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        setGetViewProvidor({ ...doc.data(), id: doc.id });
-        if (getViewProvidor) {
-          setGetViewer({ ...doc.data(), id: doc.id });
-          setGetDBViewer("providers");
+            }
+            console.log(doc.id, " => ", doc.data());
+          });
+        });
 
-        }
-        console.log(doc.id, " => ", doc.data());
-      });
-    });
+        const q2 = query(
+          collection(db, "engineers"),
+          where("email", "==", currentUser.email)
+        );
 
-    const q2 = query(
-      collection(db, "engineers"),
-      where("email", "==", currentUser.email)
-    );
+        onSnapshot(q2, (snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            setGetViewEngineer({ ...doc.data(), id: doc.id });
+            if (getViewEngineer) {
+              setGetViewer({ ...doc.data(), id: doc.id });
+              setGetDBViewer("engineers");
+            }
 
-    onSnapshot(q2, (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        setGetViewEngineer({ ...doc.data(), id: doc.id });
-        if (getViewEngineer) {
-          setGetViewer({ ...doc.data(), id: doc.id });
-          setGetDBViewer("engineers");
-        }
+            console.log(doc.id, " => ", doc.data());
+          });
+        });
 
-        console.log(doc.id, " => ", doc.data());
-      });
-    });
+        const q3 = query(
+          collection(db, "users"),
+          where("email", "==", currentUser.email)
+        );
 
-    const q3 = query(
-      collection(db, "users"),
-      where("email", "==", currentUser.email)
-    );
-
-    onSnapshot(q3, (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        setGetViewUser({ ...doc.data(), id: doc.id });
-        if (getViewUser) {
-          setGetViewer({ ...doc.data(), id: doc.id });
-          setGetDBViewer("users");
-        }
-        console.log(doc.id, " => ", doc.data());
-      });
-    });
-
-
+        onSnapshot(q3, (snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            setGetViewUser({ ...doc.data(), id: doc.id });
+            if (getViewUser) {
+              setGetViewer({ ...doc.data(), id: doc.id });
+              setGetDBViewer("users");
+            }
+            console.log(doc.id, " => ", doc.data());
+          });
+        });
+    }
+    else
+      console.log("You Should Signin First")
   };
 
   const getData = () => {
@@ -576,19 +578,22 @@ function ViewProfile() {
       name: getViewer.name,
       uid: getViewer.id,
       role: getViewer.role,
-
+      
     })
     updateDoc(docRef2, {
       messages: getUser.messages
     }).then(() => {
+      toast("Message Sent Succussfully")
       console.log("message sent successfully")
     }).catch((error) => {
       console.log("Error" + error)
     })
     getMessage.text = "";
+  
   }
+
   const exists = (wish) => {
-    if (getViewer.wishlist.filter((item) => item.id === wish.id).length > 0) {
+    if (getViewer?.wishlist?.filter((item) => item.id === wish.id).length > 0) {
       return true;
     }
 
@@ -647,16 +652,9 @@ function ViewProfile() {
                 {/* start op p.p */}
 
                 <div className="d-flex ">
-                  {getUser.image === "" ? (
-                    <img
-                      className="imgprofile"
-                      src={require("../assets/avatar2.png")}
-                      alt=""
-                    ></img>
 
-                  ) : (
-                    <img className="imgprofile" src={getUser.image} alt=""></img>
-                  )}
+                    <img className="imgprofile" src={getUser.image?getUser.image:require('../assets/DeaultImages/default3.jpg')} alt=""></img>
+                  
                 </div>
 
                 {/* end op p.p */}
@@ -673,11 +671,18 @@ function ViewProfile() {
                     </li>
                     <li>My Account</li>
                   </ul>
-                  {exists(getUser) ? (<button className="btn btn-dark"
-                    onClick={() => removeFromWhishList(getUser)}
-                  >Added</button>) : (<button className="btn btn-outline-dark"
-                    onClick={() => addToWhishList(getUser)}
-                  >Add to wishlist</button>)}
+                  {
+                    currentUser?
+                    exists(getUser) ? (<button className="btn btn-dark"
+                      onClick={() => removeFromWhishList(getUser)}
+                    >Added</button>) : (<button className="btn btn-outline-dark"
+                      onClick={() => addToWhishList(getUser)}
+                    >Add to wishlist</button>)
+                    :
+                    <Link className="btn btn-outline-dark"
+                      to='/login'
+                    >Add to wishlist</Link>
+                  }
 
                 </div>
               </div>
@@ -834,7 +839,9 @@ function ViewProfile() {
                         <div className="border p-4">
                           <h3 className="border-bottom pb-2 mb-4">FeedBack</h3>
 
-                          {getFeedback?.map((feedback, index) => {
+                          {
+                          
+                          getFeedback?.map((feedback, index) => {
                             return (
                               <>
                                 <div
@@ -885,19 +892,26 @@ function ViewProfile() {
                               </div>
                             </div>
                             <div className="col-12">
-                              <button
-                                className="btn btn-outline-dark text-uppercase p-2 m-2"
-                                disabled={
-                                  error.rating ||
-                                  error.comment ||
-                                  userData.comment === "" ||
-                                  userData.rating === "rating"
-                                }
-                                onClick={() => handleButtonComment()}
-                                type="reset"
-                              >
-                                Comment
-                              </button>
+                              {
+                                currentUser?
+                                  <button
+                                    className="btn btn-outline-dark text-uppercase p-2 m-2"
+                                    disabled={
+                                      error.rating ||
+                                      error.comment ||
+                                      userData.comment === "" ||
+                                      userData.rating === "rating"
+                                    }
+                                    onClick={() => handleButtonComment()}
+                                    type="reset"
+                                  >
+                                    Comment
+                                  </button>
+                                  :
+                                  <Link className="btn btn-outline-dark text-uppercase p-2 m-2"
+                                    to='/login'
+                                  >Comment</Link>
+                              }
                             </div>
                           </form>
                         </div>
@@ -927,12 +941,17 @@ function ViewProfile() {
                               />
                             </div>
                             <div className="col-12">
-                              <button className="btn btn-outline-dark text-uppercase p-2 m-2"
-                                type="reset"
-                                disabled={getMessage.text === ""}
-                                onClick={() => sendMessage()}>
-                                Send
-                              </button>
+                              {
+                                currentUser?
+                                <button className="btn btn-outline-dark text-uppercase p-2 m-2"
+                                  type="reset"
+                                  disabled={getMessage.text === ""}
+                                  onClick={() => sendMessage()}>
+                                  Send
+                                </button>
+                                :
+                                <Link className="btn btn-outline-dark text-uppercase p-2 m-2" to='/login'> Send </Link>
+                              }
                             </div>
                           </form>
                         </div>
@@ -999,19 +1018,34 @@ function ViewProfile() {
                       remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                       and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     </p>
-                    <div className="d-flex flex-row mt-4 justify-content-around">
+                    <div className="d-flex mt-4 justify-content-around">
                       <span className="fs-3">Price:</span> <p className="col-6 text-success fs-3 text-danger">{products.price} EGP</p>
-                      <button class="cart-button btn btn-outline-primary">
-                        <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i>  Add to cart</span>
+                      {
+                        currentUser?
+                        <button class="cart-button btn btn-outline-primary">
+                          <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i> Add to cart</span>
+                          <span class="added">Added</span>
+                          <i class="fas fa-shopping-cart"></i>
+                          <i class="fas fa-box"></i>
+                        </button>
+                        :
+                        <Link class="cart-button btn btn-outline-primary" to='/login'>
+                        <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i> Add to cart</span>
                         <span class="added">Added</span>
                         <i class="fas fa-shopping-cart"></i>
                         <i class="fas fa-box"></i>
-                      </button>
-                      {exists(products) ? (<button className="btn btn-dark"
-                        onClick={() => removeFromWhishList(products)}
-                      >Added</button>) : (<button className="btn btn-outline-dark"
-                        onClick={() => addToWhishList(products)}
-                      >Add to wishlist</button>)}
+                        </Link>
+                      }
+                      {
+                        currentUser?
+                        exists(products) ? (<button className="btn btn-dark"
+                          onClick={() => removeFromWhishList(products)}
+                        >Added</button>) : (<button className="btn btn-outline-dark"
+                          onClick={() => addToWhishList(products)}
+                        >Add to wishlist</button>)
+                        :
+                        <Link className="btn btn-outline-dark" to='/login'>Add to wishlist</Link>
+                      }
 
                     </div>
                   </div>
@@ -1188,6 +1222,7 @@ function ViewProfile() {
             })}
           </div>
         )}
+        <ToastContainer ></ToastContainer>
     </>
   );
 }

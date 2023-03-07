@@ -11,7 +11,7 @@ const CategoryCard = (props) => {
     <div className='col-lg-3 col-md-6 col-sm-12 d-block pt-4 pb-4 card-Eng'>
         <div className="overflow-hidden position-relative text-center">
           <div className='card-img overflow-hidden'>
-            <img src={image} alt={`${name}`} className="img-fluid img w-100 h-100" />
+            <img src={image?image:require('../assets/DeaultImages/defaultProductImage.jpg')} alt={`${name}`} className="img-fluid img w-100 h-100" />
           </div>
         
           <div className=' footer text-center mb-2 mt-1 d-flex flex-row justify-content-between'>

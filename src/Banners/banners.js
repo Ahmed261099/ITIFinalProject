@@ -15,7 +15,7 @@ function banners()
                             <img src={require('../assets/Banners/banner1.webp')} className='w-100' alt='' />
                             <div className='banner-item01-caption text-center'>
                                 <p className='h3 fw-bolder'>OFFICE <br></br><span>FURNITURE</span> </p> 
-                                <NavLink className="nav-link fs-5 text-decoration-underline " aria-current="page" onClick={()=>{}} to="Cart">SHOP NOW</NavLink>
+                                <NavLink className="nav-link fs-5 text-decoration-underline " aria-current="page" onClick={()=>{}} to="/Category">SHOP NOW</NavLink>
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@ function banners()
                             <img src={require('../assets/Banners/banner2.webp')} className='w-100' alt='' />
                             <div className='banner-item02-caption text-center'>
                                 <p className='h3 fw-bolder'>HOME <br></br><span>FURNITURE</span> </p> 
-                                <NavLink className="nav-link fs-5 text-decoration-underline " aria-current="page" onClick={()=>{}} to="Cart">SHOP NOW</NavLink>
+                                <NavLink className="nav-link fs-5 text-decoration-underline " aria-current="page" onClick={()=>{}} to="/Category">SHOP NOW</NavLink>
                             </div>
                         </div>
                     </div>
