@@ -24,6 +24,7 @@ import About from './About/About';
 import Contact from './Contacts/Contact';
 import Footer from './Footer/footer';
 import NotFound from './Not-found/NotFound';
+import Checkout from './Checkout/checkout'
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
         <Route exact path={"/category"} component={Category}/>
         <Route exact path={"/category/:category"} component={CategoryPage}/>
         <UserRoute exact path={"/Cart"} component={Cart} />
+        <Route exact path={"/checkout"} component={Checkout} />
         <Route exact path={"*"} component={NotFound} />
       </Switch>
       <Footer/>

@@ -1001,12 +1001,12 @@ function ViewProfile() {
             {Object.keys(getProduct).map((title) => {
               const products = getProduct[title];
               return (
-                <div class="row g-0 rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-                  <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-dark">Products</strong>
+                <div class="row gy-2 rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                  <div class="col-lg-7  d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-dark">Product Name</strong>
                     <div className="d-flex">
                       <p class="mb-1 fs-1 fw-bolder text-success-emphasis">{products.name}</p>
-                      <div className="m-3">{drawStar(calcRating())}</div>
+                      {/* <div className="m-3">{drawStar(calcRating())}</div> */}
                     </div>
                     <div class="mb-1 text-muted">{products.spetialization}</div>
                     <p class="card-text mb-auto">
@@ -1018,52 +1018,58 @@ function ViewProfile() {
                       remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
                       and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     </p>
-                    <div className="d-flex mt-4 justify-content-around">
-                      <span className="fs-3">Price:</span> <p className="col-6 text-success fs-3 text-danger">{products.price} EGP</p>
+
+                  </div>
+                  <div class="col-lg-5 ">
+
+                    {products.image === "" ? (
+                      <img
+                        src={require("./../assets/Products/product-1.jpg")}
+                        alt=""
+                        className=""
+                      ></img>
+                    ) : (
+                      <img className="w-100 rounded" src={products.image} alt=""></img>
+                    )}
+                  </div>
+                  <div className="col-lg-7 ">
+                      <div className="d-flex align-items-center w-100 "> 
+                        <p className="fs-3 me-2">Price:</p> 
+                        <p className=" text-success fs-3 text-danger">{products.price} EGP</p>
+                      </div>
+                  </div>
+                  <div className="col-lg-5 d-lg-flex text-center align-items-center">
                       {
                         currentUser?
-                        <button class="cart-button btn btn-outline-primary">
+                        <button class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0">
                           <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i> Add to cart</span>
                           <span class="added">Added</span>
                           <i class="fas fa-shopping-cart"></i>
                           <i class="fas fa-box"></i>
                         </button>
                         :
-                        <Link class="cart-button btn btn-outline-primary" to='/login'>
+                        <Link class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0" to='/login'>
                         <span class="add-to-cart"><i class="fa-solid fa-cart-shopping"></i> Add to cart</span>
                         <span class="added">Added</span>
                         <i class="fas fa-shopping-cart"></i>
                         <i class="fas fa-box"></i>
                         </Link>
                       }
+                      
                       {
                         currentUser?
-                        exists(products) ? (<button className="btn btn-dark"
+                        exists(products) ? (<button className="btn btn-dark py-3"
                           onClick={() => removeFromWhishList(products)}
-                        >Added</button>) : (<button className="btn btn-outline-dark"
+                        >Added</button>) : (<button className="btn btn-outline-dark  py-3"
                           onClick={() => addToWhishList(products)}
                         >Add to wishlist</button>)
                         :
-                        <Link className="btn btn-outline-dark" to='/login'>Add to wishlist</Link>
+                        <Link className="btn btn-outline-dark py-3 " to='/login'>Add to wishlist</Link>
                       }
-
                     </div>
-                  </div>
-                  <div class="col-auto d-none d-lg-block">
-
-                    {products.image === "" ? (
-                      <img
-                        src={require("./../assets/Products/product-1.jpg")}
-                        alt=""
-                      ></img>
-                    ) : (
-                      <img className="imgprofile" src={products.image} alt=""></img>
-                    )}
-                  </div>
-
 
                   {/*start section buttons and content  */}
-                  <div className="mt-5  p-5">
+                  <div className="mt-5 py-4 mb-5">
                     <div className="container">
                       <div className="col-12">
                         <div className="row">
@@ -1084,7 +1090,7 @@ function ViewProfile() {
                                 more info
                               </button>
 
-                              <button
+                              {/* <button
                                 className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
                                 type="button"
                                 id="feedback-tab"
@@ -1097,7 +1103,7 @@ function ViewProfile() {
                               >
                                 <i className="pe-2 fa fa-comment"></i>
                                 FeedBack
-                              </button>
+                              </button> */}
                             </div>
                           </div>
                           {/* end section of buttons */}
@@ -1121,9 +1127,9 @@ function ViewProfile() {
                                     <p>
                                       <strong>Quantity :</strong> {products.quantity}{" "}
                                     </p>
-                                    <p>
+                                    {/* <p>
                                       <strong>Rate :</strong> {products.rate}{" "}
-                                    </p>
+                                    </p> */}
                                     <p>
                                       <strong>Category :</strong>{" "}
                                       {products.spetialization}{" "}

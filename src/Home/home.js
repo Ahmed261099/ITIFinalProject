@@ -37,9 +37,10 @@ function Home()
     const [sortValue, setSortValue] = useState("");
     const [keyword, setKeyword] = useState("providers");
     const [operation, setOperation] = useState("");
-    const dataEngColl = query(collection(db, "engineers"), limit(4), orderBy("rate","asc"));
+    const dataEngColl = query(collection(db, "engineers"),orderBy("rate","asc"), limit(4) );
     const dataContColl = query(collection(db, `providers`), limit(4), orderBy("rate","asc"));
     // const dataProdColl = query(collection(db, `products`), limit(4));
+    console.log(dataEngColl);
     const dataRef = collection(db, `${keyword}`);
     const [getDB, setGetDB] = useState("");
     const [getUser2, setGetUser2] = useState({});

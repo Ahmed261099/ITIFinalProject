@@ -3,6 +3,7 @@ import './navbar.css'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
+
 function Navbar() {
 
     const { currentUser } = useSelector((state) => state.user);
@@ -32,7 +33,6 @@ function Navbar() {
                     </li> */}
                     <li className="nav-item px-lg-1">
                         <NavLink className="nav-link fs-5" aria-current="page" to="/Contact">Contact</NavLink>
-
                     </li>    
                 </ul>
                 <div className=' d-flex'>
