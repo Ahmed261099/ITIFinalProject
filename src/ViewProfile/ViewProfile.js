@@ -646,13 +646,6 @@ function ViewProfile() {
   };
 
   const addToCart = (myProduct) => {
-    // const exist = getUser?.cart?.find(({ name }) => name === product.name);
-    //   if(exist){
-    //     console.log(exist);
-    //   }
-    //   else{
-    //     history.push("/Cart")
-    //   }
     console.log(myProduct, currentUser, getViewer, getDBViewer);
     dispatch(addProductToCart(myProduct, currentUser, getViewer, "engineers"))
       .then(() => {
