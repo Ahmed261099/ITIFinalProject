@@ -20,7 +20,7 @@ const CategoryPreview = ({ title, products }) => {
             </div>
             <Link to={`/category/${title}`} className="text-decoration-none"><p className="explore">Explore More</p></Link>
       </div>
-      <button className="btn btn-dark">Explore More</button>
+      {/* <button className="btn btn-dark">Explore More</button> */}
     </div>
   )
 }

@@ -80,7 +80,7 @@ display: block;
 border: 1px solid #eeeeee;
 }
 
-.pro-thumbnail a img {
+.pro-thumbnail img {
 width: 100%;
 background-color: #f6f7f8;
 }
@@ -114,9 +114,10 @@ padding: 0 10px;
 border: none;
 background-color: transparent;
 }
-.pro-quantity .pro-qty input {
+.input {
     height: 42px;
     width: 50px;
+    padding: 10px 10px;
     text-align: center;
     border-width: 0 1px;
     border-style: solid;
@@ -131,13 +132,14 @@ background-color: transparent;
     color: #151515;
 }
 
-.pro-remove a {
+.pro-remove span {
     display: block;
     font-weight: 600;
     color: #151515;
     font-size: 20px;
 }
 
-.pro-remove a:hover {
+.pro-remove span:hover {
+    cursor: pointer;
     color: #ff0000;
 }
