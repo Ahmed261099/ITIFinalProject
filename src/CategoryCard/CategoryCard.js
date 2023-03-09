@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../Firebase";
+import { addProductToCart } from "../Store/Actions/CartAction";
 // import { AddToCartAction } from "../Store/Actions/CartAction";
 import "./Category.css";
+import { ToastContainer } from "react-toastify";
 
 const CategoryCard = (props) => {
   const product = props.products;
@@ -16,11 +18,8 @@ const CategoryCard = (props) => {
 
   const dispatch = useDispatch();
 
-  // const [] = useSelector()
-  // const cartItems = useSelector((state) => state.cart);
-
     const [getDB, setGetDB] = useState("");
-    const [getUser2, setGetUser2] = useState({});
+    const [getUser, setGetUser] = useState({});
     const [getCustomer, setGetCustomer] = useState({})
     const [getProvider, setGetProvider] = useState({})
     const [getEngineer, setGetEngineer] = useState({})
@@ -31,19 +30,10 @@ const CategoryCard = (props) => {
 
     useEffect(() => {
       if(currentUser)
-        getData2();
-
-      // history.push("")
-      // if(currentUser){
-      //   getData2();
-      // }
-      // else{
-      //   toast("you need to sign up first!")
-      //   // history.push("/login")
-      // }
+        getData();
     }, [])
 
-    const getData2 = () => {
+    const getData = () => {
       const q = query(
         collection(db, "providers"),
         where("email", "==", currentUser.email)
@@ -53,7 +43,7 @@ const CategoryCard = (props) => {
         snapshot.docs.forEach((doc) => {
           setGetProvider({ ...doc.data(), id: doc.id });
           if (getProvider) {
-            setGetUser2({ ...doc.data(), id: doc.id });
+            setGetUser({ ...doc.data(), id: doc.id });
             setGetDB("providers");
           }
           console.log(doc.id, " => ", doc.data());
@@ -69,7 +59,7 @@ const CategoryCard = (props) => {
         snapshot.docs.forEach((doc) => {
           setGetEngineer({ ...doc.data(), id: doc.id });
           if (getEngineer) {
-            setGetUser2({ ...doc.data(), id: doc.id });
+            setGetUser({ ...doc.data(), id: doc.id });
             setGetDB("engineers");
           }
   
@@ -86,7 +76,7 @@ const CategoryCard = (props) => {
         snapshot.docs.forEach((doc) => {
           setGetCustomer({ ...doc.data(), id: doc.id });
           if (getCustomer) {
-            setGetUser2({ ...doc.data(), id: doc.id });
+            setGetUser({ ...doc.data(), id: doc.id });
             setGetDB("users");
           }
           console.log(doc.id, " => ", doc.data());
@@ -94,33 +84,52 @@ const CategoryCard = (props) => {
       });
     };
 
-
-    const addToCart=(product)=>{
-      const added = getUser2?.cart?.find(({name})=>name===product.name)
-      // dispatch(AddToCartAction(product));
-      // let quantity=parseInt("1")
-      console.log(added)
-    if(currentUser){
-    if (!added) {
-      getUser2?.cart?.push({name:product.name,id:product.id,image:product.image,quantity: product.quantity, price: product.price})
-      const docRef = doc(db, getDB, getUser2.id);
-      updateDoc(docRef, {
-        cart: getUser2.cart,
-      })
-        .then(() => {
-          console.log("done cart");
-        })
-        .catch((error) => {
-          console.log("ERROR" + error);
-        });}else{
-         console.log(getUser2.cart)
-         console.log(getUser2);
+    const addToCart = () => {
+      const exist = getUser?.cart?.find(({ name }) => name === product.name);
+        if(exist){
+          console.log(exist);
         }
-      }
-      else{
-        toast("you need to sign up first!")
-      }
+        else{
+          toast("added successfully")
+          history.push("/Cart")
+        }
+      dispatch(addProductToCart(product, currentUser, getUser, getDB))
+      .then(() => {
+        console.log("added successfully")
+      })
+      .catch((error) => {
+        toast("error " + error)
+      })
     }
+
+
+    // const addToCart=(product)=>{
+    //   const added = getUser2?.cart?.find(({name})=>name===product.name)
+    //   // dispatch(AddToCartAction(product));
+    //   // let quantity=parseInt("1")
+    //   console.log(added)
+    // if(currentUser){
+    // if (!added) {
+    //   getUser2?.cart?.push({name:product.name,id:product.id,image:product.image,quantity: product.quantity, price: product.price})
+    //   const docRef = doc(db, getDB, getUser2.id);
+    //   updateDoc(docRef, {
+    //     cart: getUser2.cart,
+    //   })
+    //     .then(() => {
+    //       console.log("done cart");
+    //     })
+    //     .catch((error) => {
+    //       console.log("ERROR" + error);
+    //     });}else{
+    //      console.log(getUser2.cart)
+    //      console.log(getUser2);
+    //     }
+    //   }
+    //   else{
+    //     toast("you need to sign up first!")
+    //     console.log("you need to sign up first!");
+    //   }
+    // }
 
   // const addToCart = (product) => {
   //   console.log(product);
@@ -146,9 +155,9 @@ const CategoryCard = (props) => {
           <div className=" bg-white rounded-circle">
             <i
               className="fa-solid fa-cart-shopping"
-              onClick={() => {
-                addToCart(product);
-              }}
+              onClick={
+                addToCart
+              }
             ></i>
           </div>
           <div className=" bg-white rounded-circle">
@@ -160,6 +169,7 @@ const CategoryCard = (props) => {
         </Link>
       </div>
       <div></div>
+      <ToastContainer />
     </div>
   );
 };
