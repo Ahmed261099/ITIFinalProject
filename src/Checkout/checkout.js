@@ -46,6 +46,7 @@ function checkout()
                     amount="90000"
                     stripeKey="pk_test_51MjONIGFP9mleeqXzwIgHARKFUsnPzGg5WkYtfbVrknjsR9f7y8nAArefFFzgLnD9hsa12bkBASJPyU2XixDuicE00Vo38WcKv"
                     />
+                    <img src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="w-100 opacity-25"/>
                 </div>
             </div>
         </>
