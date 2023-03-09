@@ -654,7 +654,7 @@ function ViewProfile() {
     //     history.push("/Cart")
     //   }
     console.log(myProduct, currentUser, getViewer, getDBViewer);
-    dispatch(addProductToCart(myProduct, currentUser, getViewer, "engineers"))
+    dispatch(addProductToCart(myProduct, currentUser, getViewer, getDBViewer))
       .then(() => {
         console.log("added successfully");
       })

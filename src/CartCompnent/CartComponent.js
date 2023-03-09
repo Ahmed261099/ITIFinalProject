@@ -146,10 +146,13 @@ const CartComponent = () => {
                   </table>
                 </div>
               </div>
-              <div>
+              <div className="d-flex justify-content-between">
                 <h2>Total: {cartItems?.reduce(function (acc, item) {
                   return acc + item.quantity * item.price;
                 }, 0)} EGP</h2>
+                <button className="rounded-5 px-4 py-2 text-center btn btn-outline-dark">
+                  checkout
+                </button>
               </div>
             </div>
           </div>
