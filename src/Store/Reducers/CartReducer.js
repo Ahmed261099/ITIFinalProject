@@ -1,6 +1,7 @@
 const InitialValues = {
     loading: false,
-    cartItems: []
+    cartItems: [],
+    newCartItem: {}
 }
 
 export const CartReducer = (state = InitialValues, action) => {
@@ -9,10 +10,12 @@ export const CartReducer = (state = InitialValues, action) => {
       case "CART_LIST_REQUEST":
         return {
           loading: true,
-          cartItems: []
+          // cartItems: []
+          
         }
       case "CART_LIST_SUCCESS":
         return {
+          ...state,
           loading: false,
           cartItems: action.payload
         }
@@ -27,14 +30,14 @@ export const CartReducer = (state = InitialValues, action) => {
   }
 
   export const addItemToCartReducer = (state = InitialValues, action) => {
-    let newProduct = [...state.cartItems];
-    console.log(state.cartItems);
-    // let isFavorited = false;
-    const MOVIE_INDEX = newProduct.findIndex(product => product.name === action.payload.name)
-    if(MOVIE_INDEX <= -1){
-        newProduct = newProduct.concat({...action.payload})
-        // isFavorited = true;
-    }
+    // let newProduct = [...state.cartItems];
+    // console.log(state.cartItems);
+    // // let isFavorited = false;
+    // const MOVIE_INDEX = newProduct.findIndex(product => product.name === action.payload.name)
+    // if(MOVIE_INDEX <= -1){
+    //     newProduct = newProduct.concat({...action.payload})
+    //     // isFavorited = true;
+    // }
     switch (action.type) {
       case "CART_ITEM_ADD_REQUEST":
         return {
@@ -44,10 +47,11 @@ export const CartReducer = (state = InitialValues, action) => {
         }
       case "CART_ITEM_ADD_SUCCESS":
         return {
+          ...state,
           loading: false,          
-          cartItems: newProduct
+          // cartItems: newProduct
 
-          // newCartItem: action.payload
+          newCartItem: action.payload
         }
       case "CART_ITEM_ADD_FAIL":
         return {

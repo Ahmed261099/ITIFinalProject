@@ -52,7 +52,7 @@ const CategoryPage = () => {
             {products?.map((product) => (
               <CategoryCard key={product.id} products={product} />
             ))}
-            <button className=" mt-3 btn btn-warning mb-5 ">load more</button>
+            {/* <button className=" mt-3 btn btn-warning mb-5 ">load more</button> */}
           </div>
         ) : (
           <p className=" mb-5 restock fs-1 text-center mt-4 fw-bold ">

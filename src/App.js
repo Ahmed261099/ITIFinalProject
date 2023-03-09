@@ -20,11 +20,12 @@ import UserRoute from './userRoute';
 import Category from './Category/Category';
 import CategoryPage from './CategoryPage/CategoryPage';
 import Cart from './Cart/Cart';
-import Error from './Error/Error';
 import About from './About/About';
 import Contact from './Contacts/Contact';
 import Footer from './Footer/footer';
 import CartComponent from './CartCompnent/CartComponent';
+import NotFound from './Not-found/NotFound';
+import Checkout from './Checkout/checkout'
 
 
 function App() {
@@ -62,7 +63,8 @@ function App() {
         <Route exact path={"/category"} component={Category}/>
         <Route exact path={"/category/:category"} component={CategoryPage}/>
         <Route exact path={"/Cart"} component={CartComponent} />
-        <Route exact path={"*"} component={Error} />
+        <Route exact path={"/checkout"} component={Checkout} />
+        <Route exact path={"*"} component={NotFound} />
       </Switch>
       <Footer/>
     </Router>

@@ -5,6 +5,7 @@ import "../Register/register.css";
 import { loginInitiate } from "../Store/Actions/AuthAction";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
@@ -93,6 +94,7 @@ function Login() {
             <ToastContainer />
             <br/>
         </div>
+        <h3 className="text-center text-white">You don't have an account: <Link className="text-decoration-underline text-white border-0 fs-4 fw-bolder"  to={"/firstreg"}>SignUp</Link></h3>
         </div>
         </body>
     )

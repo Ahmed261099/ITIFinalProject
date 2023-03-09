@@ -17,7 +17,7 @@ function First_Reg(){
                 </Link>
                 <br/> <br/>
                 <h4 id="log">
-                If you have an account : <Link id="log2" to={"/login"}> LOGIN</Link> 
+                Already have an account : <Link className="text-white fw-bolder" to={"/login"}> LOGIN</Link> 
                 </h4>
             </div>
         </body>

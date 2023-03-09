@@ -1,7 +1,23 @@
+import React, { useEffect } from "react";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Badge } from "@mui/material";
+import { Mail } from "@mui/icons-material";
 
 function Navbar() {
+  const { currentUser } = useSelector((state) => state.user);
+
+  const cartItems = useSelector((state) => state.cartItemsList.cartItems);
+
+  console.log(cartItems);
+
+//   let size;
+
+  useEffect(() => {
+    
+  }, [cartItems])
+
   return (
     <nav className="navbar navbar-expand-lg bg-light navbar-light py-3">
       <div className="container">
@@ -27,6 +43,15 @@ function Navbar() {
                 Home
               </NavLink>
             </li>
+            <li className="nav-item px-lg-1">
+              <NavLink
+                className="nav-link fs-5"
+                aria-current="page"
+                to="/category"
+              >
+                Shop
+              </NavLink>
+            </li>
 
             <li className="nav-item px-lg-1">
               <NavLink
@@ -41,24 +66,6 @@ function Navbar() {
               <NavLink
                 className="nav-link fs-5"
                 aria-current="page"
-                to="/category"
-              >
-                Category
-              </NavLink>
-            </li>
-            <li className="nav-item px-lg-1">
-              <NavLink
-                className="nav-link fs-5"
-                aria-current="page"
-                to="/firstreg"
-              >
-                Register
-              </NavLink>
-            </li>
-            <li className="nav-item px-lg-1">
-              <NavLink
-                className="nav-link fs-5"
-                aria-current="page"
                 to="/Contact"
               >
                 Contact
@@ -67,42 +74,40 @@ function Navbar() {
           </ul>
           <div className=" d-flex">
             <ul className="navbar-nav ms-lg-auto me-sm-auto mb-2 mb-lg-0 me-2">
-              {/* <li className="nav-item">
-                            <span className="nav-link " aria-current="page">Logout</span>
-                        </li> */}
-              <li className="nav-item px-lg-1">
-                <NavLink
-                  className="nav-link  fs-5"
-                  aria-current="page"
-                  to="Search"
-                >
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item px-lg-1">
-                <NavLink
-                  className="nav-link fs-5"
-                  aria-current="page"
-                  to="/Profile"
-                >
-                  <i class="fa-regular fa-user"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item px-lg-1">
-                <NavLink
-                  className="nav-link fs-5"
-                  aria-current="page"
-                  to="/Cart"
-                >
-                  <i class="fa-solid fa-cart-shopping"></i>
-                </NavLink>
-              </li>
-              {/* <li className="nav-item">
-                            <NavLink className="nav-link " aria-current="page" to="register">Register</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link  fw-bolder" aria-current="page" to="login">Login</NavLink>
-                        </li> */}
+              {currentUser ? (
+                <>
+                  <li className="nav-item px-lg-1">
+                    <NavLink
+                      className="nav-link fs-5"
+                      aria-current="page"
+                      to="/Cart"
+                    >
+                        <Badge badgeContent={cartItems?.length} color="primary">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </Badge>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item px-lg-1">
+                    <NavLink
+                      className="nav-link fs-5"
+                      aria-current="page"
+                      to="/Profile"
+                    >
+                      <i class="fa-regular fa-user"></i>
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item px-lg-1">
+                  <NavLink
+                    className="nav-link fs-5"
+                    aria-current="page"
+                    to="/login"
+                  >
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
         </div>

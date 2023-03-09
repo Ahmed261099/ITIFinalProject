@@ -1,6 +1,4 @@
-*, *::after, *::before {
-    box-sizing: border-box;
-}
+
 
 .header1{
     background-image: url(../assets/breadcrumb.webp);
@@ -42,16 +40,14 @@
 
 .table thead {
     background-color: #151515;
+    color: white;
 }
 
 .mb-30 {
     margin-bottom: 30px !important;
 }
-.table-responsive {
-    overflow-x: auto;
-}
 
-thead tr th {
+.Cart-table-head tr th {
     text-align: center;
     border: none;
     font-size: 16px;
@@ -60,7 +56,7 @@ thead tr th {
     padding: 12px 20px;
 }
 
-tr td {
+.Cart-table-body tr td {
     height: 25vh;
     text-align: center;
     border: none;
@@ -118,9 +114,10 @@ padding: 0 10px;
 border: none;
 background-color: transparent;
 }
-.pro-quantity .pro-qty input {
+.input {
     height: 42px;
     width: 50px;
+    padding: 10px 10px;
     text-align: center;
     border-width: 0 1px;
     border-style: solid;
@@ -135,13 +132,14 @@ background-color: transparent;
     color: #151515;
 }
 
-.pro-remove a {
+.pro-remove span {
     display: block;
     font-weight: 600;
     color: #151515;
     font-size: 20px;
 }
 
-.pro-remove a:hover {
+.pro-remove span:hover {
+    cursor: pointer;
     color: #ff0000;
 }

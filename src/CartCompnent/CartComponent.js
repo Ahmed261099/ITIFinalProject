@@ -8,7 +8,7 @@ import { listCartItems } from "../Store/Actions/CartAction";
 import "./CartComponent.css";
 
 const CartComponent = () => {
-  const { cartItems } = useSelector((state) => state.cartItemsList);
+  const cartItems = useSelector((state) => state.cartItemsList.cartItems);
   const added = useSelector((state) => state.addToCart);
   console.log(cartItems);
   console.log(added);
@@ -19,7 +19,6 @@ const CartComponent = () => {
   const [getProvider, setGetProvider] = useState({});
   const [getEngineer, setGetEngineer] = useState({});
   const [getUser, setGetUser] = useState({});
-  const [getTotal, setTotal] = useState(0);
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -33,7 +32,7 @@ const CartComponent = () => {
       snapshot.docs.forEach((doc) => {
         setGetProvider({ ...doc.data(), id: doc.id });
         if (getProvider) {
-          setGetUser({ ...doc.data(), id: doc.id })
+          setGetUser({ ...doc.data(), id: doc.id });
           setGetDB("providers");
         }
         console.log(doc.id, " => ", doc.data());
@@ -49,7 +48,7 @@ const CartComponent = () => {
       snapshot.docs.forEach((doc) => {
         setGetEngineer({ ...doc.data(), id: doc.id });
         if (getEngineer) {
-          setGetUser({ ...doc.data(), id: doc.id })
+          setGetUser({ ...doc.data(), id: doc.id });
           setGetDB("engineers");
         }
 
@@ -66,7 +65,7 @@ const CartComponent = () => {
       snapshot.docs.forEach((doc) => {
         setGetCustomer({ ...doc.data(), id: doc.id });
         if (getCustomer) {
-          setGetUser({ ...doc.data(), id: doc.id })
+          setGetUser({ ...doc.data(), id: doc.id });
           setGetDB("users");
         }
         console.log(doc.id, " => ", doc.data());
@@ -74,122 +73,89 @@ const CartComponent = () => {
       });
     });
     console.log(getDB);
+
     return getDB;
   };
 
   console.log(getDB);
 
-  const handleLength = () => {
-    if(cartItems?.length > 0){
-    let totalPrice = cartItems?.reduce(function (accumulator, item) {
-      return accumulator + item.qty * item.price;
-    }, 0);
-    setTotal(totalPrice)
-    }
-    
-    console.log(cartItems);
-    console.log(getTotal);
-  }
-
   useEffect(() => {
-    
     if (currentUser) {
       getData();
       dispatch(listCartItems(getDB, currentUser.email));
       console.log(getDB);
 
-      handleLength();
-      
-      console.log(cartItems);
-      
-      console.log(getTotal);
     } else {
       console.log("no user");
     }
-    
   }, [currentUser, dispatch, getDB]);
 
   return (
     <div>
       <div id="AboutHero">
-            <div className="header ">
-                <div className="container">
-                    <div className="d-flex align-items-center">
-                        <div className="ps-5">
-                            <h2 className="h1">Shopping Cart</h2>
-                            <ul className="paths">
-                                <li className="dvider">
-                                    <Link to="/" className="text-decoration-none text-dark">
-                                    Home{" "}
-                                    </Link>
-                                </li>
-                                <li>Shopping Cart</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <div className="header ">
+          <div className="container">
+            <div className="d-flex align-items-center">
+              <div className="ps-5">
+                <h2 className="h1">Shopping Cart</h2>
+                <ul className="paths">
+                  <li className="dvider">
+                    <Link to="/" className="text-decoration-none text-dark">
+                      Home{" "}
+                    </Link>
+                  </li>
+                  <li>Shopping Cart</li>
+                </ul>
+              </div>
             </div>
           </div>
-          {cartItems?.length === 0 ? (
-          <div className="text-center mb-5 mt-5">
-            <img
-              src={require("../assets/cart/empty-cart.png")}
-              alt="no cart items"
-            />
-            <h2 className="fw-bolder fs-3 cart">No items in your cart!</h2>
-          </div>
-        ) : (
-      <div className=" cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20 mt5 ">
-        <div className="container py-5">
-        <h2 className="h1 fw-bold text-center">Cart</h2>
-                <div className="line line1"></div>
-                <div className="line line2"></div>
-                <div className="line line1"></div>
-          <div className="row py-5">
-            <div className="col-12">
-              <div className="cart-table table-responsive mb-30">
-                <table className="table">
-                  <thead className="Cart-table-head">
-                    <tr>
-                      <th className="pro-thumbnail">Image</th>
-                      <th className="pro-title">Product</th>
-                      <th className="pro-price">Price</th>
-                      <th className="pro-quantity">Quantity</th>
-                      <th className="pro-subtotal">Total</th>
-                      <th className="pro-remove">Remove</th>
+        </div>
+      </div>
+      {cartItems?.length === 0 ? (
+        <div className="text-center mb-5 mt-5">
+          <img
+            src={require("../assets/cart/empty-cart.png")}
+            alt="no cart items"
+          />
+          <h2 className="fw-bolder fs-3 cart">No items in your cart!</h2>
+        </div>
+      ) : (
+        <div className=" cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20 mt5 ">
+          <div className="container py-5">
+            <h2 className="h1 fw-bold text-center">Cart</h2>
+            <div className="line line1"></div>
+            <div className="line line2"></div>
+            <div className="line line1"></div>
+            <div className="row py-5">
+              <div className="col-12">
+                <div className="cart-table table-responsive mb-30">
+                  <table className="table">
+                    <thead className="Cart-table-head">
+                      <tr>
+                        <th className="pro-thumbnail">Image</th>
+                        <th className="pro-title">Product</th>
+                        <th className="pro-price">Price</th>
+                        <th className="pro-quantity">Quantity</th>
+                        <th className="pro-subtotal">Total</th>
+                        <th className="pro-remove">Remove</th>
                       </tr>
-                      </thead>
-                      {cartItems?.map((item) => (
-                        <Cart cartItem={item} user={getUser} database={getDB} />
-                      ))}
-        
-          {/* <div className=" cart-section section pt-90 pt-lg-70 pt-md-60 pt-sm-50 pt-xs-45  pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20 mt5 ">
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                  <div className="cart-table table-responsive mb-30">
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th className="pro-thumbnail">Image</th>
-                          <th className="pro-title">Product</th>
-                          <th className="pro-price">Price</th>
-                          <th className="pro-quantity">Quantity</th>
-                          <th className="pro-subtotal">Total</th>
-                          <th className="pro-remove">Remove</th> */}
-                        
-                    </table>
-                  </div>
+                    </thead>
+                    {cartItems?.map((item) => (
+                      <Cart cartItem={item} user={getUser} database={getDB} />
+                    ))}
+                  </table>
                 </div>
               </div>
               <div>
-                <h2>Total: {getTotal}</h2>
+                <h2>Total: {cartItems?.reduce(function (acc, item) {
+                  return acc + item.quantity * item.price;
+                }, 0)} EGP</h2>
               </div>
             </div>
           </div>
-        )}
-      </div>
-    // </div>
+        </div>
+      )}
+    </div>
   );
 };
 

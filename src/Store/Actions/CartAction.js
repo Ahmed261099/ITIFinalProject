@@ -13,8 +13,8 @@ import { v4 as uuid } from "uuid";
 export const listCartItems = (database, email) => async (dispatch) => {
   let cartData = [];
 
-  console.log(email);
-  async function getData2() {
+  // console.log(email);
+  async function getData() {
     const data = collection(db, database);
 
     const q = query(data, where("email", "==", email));
@@ -30,7 +30,7 @@ export const listCartItems = (database, email) => async (dispatch) => {
 
   try {
     dispatch({ type: "CART_LIST_REQUEST" });
-    cartData = await getData2(database);
+    cartData = await getData(database);
     console.log(cartData);
     dispatch({ type: "CART_LIST_SUCCESS", payload: cartData });
   } catch (error) {
@@ -102,18 +102,6 @@ export const CartQuantity =
         type: "CART_ITEM_UPDATE_REQUEST",
       });
 
-      // updateDoc(docRef, {
-      //   name: getUser.name,
-      //   username: getUser.username,
-      //   experience: getUser.experience,
-      //   email: getUser.email,
-      //   spetialization: getUser.spetialization,
-      //   image: downloadURL,
-      // })
-      // getUser.cart.quantity = qty
-
-      // const exist = getUser?.cart?.find(({ id }) => id === item_id);
-
       const editedProduct = {
         id: item_id,
         name: product.name,
@@ -122,19 +110,9 @@ export const CartQuantity =
         quantity: qty,
       };
 
-      // if(exist){
       const newItem = getUser?.cart?.map((u) =>
         u.id !== item_id ? u : editedProduct
       );
-      // {
-      // id: item_id,
-      // name: product.name,
-      // price: product.price,
-      // image: product.image,
-      // quantity: qty
-      // }
-      // }
-      // console.log(exist);
       console.log(newItem);
       await updateDoc(doc(db, database, getUser.id), {
         ...getUser,
@@ -157,8 +135,6 @@ export const deleteFromCart =
   (getUser, item_id, database) => async (dispatch) => {
     try {
       dispatch({ type: "CART_ITEM_REMOVE_REQUEST" });
-
-      // await deleteDoc(doc(db, database, item_id))
       const items = getUser?.cart?.filter((item) => item.id !== item_id);
       console.log(items);
 

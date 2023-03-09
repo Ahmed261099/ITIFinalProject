@@ -90,69 +90,42 @@ const CategoryCard = (props) => {
           console.log(exist);
         }
         else{
-          toast("added successfully")
           history.push("/Cart")
         }
+        console.log(product, currentUser, getUser, getDB);
+
       dispatch(addProductToCart(product, currentUser, getUser, getDB))
       .then(() => {
-        console.log("added successfully")
+        console.log("added successfully");
       })
       .catch((error) => {
         toast("error " + error)
       })
+
+
     }
 
-
-    // const addToCart=(product)=>{
-    //   const added = getUser2?.cart?.find(({name})=>name===product.name)
-    //   // dispatch(AddToCartAction(product));
-    //   // let quantity=parseInt("1")
-    //   console.log(added)
-    // if(currentUser){
-    // if (!added) {
-    //   getUser2?.cart?.push({name:product.name,id:product.id,image:product.image,quantity: product.quantity, price: product.price})
-    //   const docRef = doc(db, getDB, getUser2.id);
-    //   updateDoc(docRef, {
-    //     cart: getUser2.cart,
-    //   })
-    //     .then(() => {
-    //       console.log("done cart");
-    //     })
-    //     .catch((error) => {
-    //       console.log("ERROR" + error);
-    //     });}else{
-    //      console.log(getUser2.cart)
-    //      console.log(getUser2);
-    //     }
-    //   }
-    //   else{
-    //     toast("you need to sign up first!")
-    //     console.log("you need to sign up first!");
-    //   }
-    // }
-
-  // const addToCart = (product) => {
-  //   console.log(product);
-    
-  // };
-
   return (
-    <div className=" contain col-lg-3 col-md-6  col-sm-12 d-block pt-4 pb-4 ">
+    <div className=" contain col-lg-3 col-md-6  col-sm-12 d-block pt-4 pb-4 card-Eng ">
       <div className=" overflow-hidden position-relative text-center">
-        <div>
+      <div className="card-img overflow-hidden">
           <img
-            src={image}
+            src={
+              image
+                ? image
+                : require("../assets/DeaultImages/defaultProductImage.jpg")
+            }
             alt={`${name}`}
-            className="img-fluid img w-100 mb-2 mt-2"
+            className="img-fluid img w-100 h-100"
           />
         </div>
 
-        <div className=" footer text-center mb-2 mt-1 d-flex flex-row justify-content-between">
+        <div className=" footer text-center mb-2 mt-1 d-flex flex-row justify-content-between ">
           <span className="name ">{name}</span>
           <span className="price ">{price} $</span>
         </div>
-        <div className="  rounded-circle d-flex flex-row justify-content-between py-4">
-          <div className=" bg-white rounded-circle">
+        <div className="  Item-Icon  rounded-circle position-absolute  py-4 ">
+          <div className=" view-Icon bg-white my-2 Icon-shape rounded-circle ">
             <i
               className="fa-solid fa-cart-shopping"
               onClick={
@@ -160,12 +133,14 @@ const CategoryCard = (props) => {
               }
             ></i>
           </div>
-          <div className=" bg-white rounded-circle">
+          <div className=" favorite-Icon bg-white Icon-shape rounded-circle ">
             <i className="fa-regular fa-heart "></i>
           </div>
         </div>
         <Link to={`/view/${spetialization}/${id}`}>
-          <button className="btn1 text-center">View Product</button>
+          <button className="rounded-5 px-4 py-2 text-center btn btn-outline-dark">
+            View Product
+          </button>
         </Link>
       </div>
       <div></div>
