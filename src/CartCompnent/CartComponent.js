@@ -6,6 +6,11 @@ import Cart from "../Cart/Cart";
 import { db } from "../Firebase";
 import { listCartItems } from "../Store/Actions/CartAction";
 import "./CartComponent.css";
+import StripeCheckout from 'react-stripe-checkout';
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 const CartComponent = () => {
   const cartItems = useSelector((state) => state.cartItemsList.cartItems);
@@ -90,6 +95,21 @@ const CartComponent = () => {
     }
   }, [currentUser, dispatch, getDB]);
 
+  const onToken = (token) => 
+  {
+      console.log(token)
+  }
+
+  var settings = {
+    infinite: true,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    slidesToShow: 1,
+    speed: 6000,
+    arrows: false,
+  };
+
   return (
     <div>
       <div id="AboutHero">
@@ -146,14 +166,27 @@ const CartComponent = () => {
                   </table>
                 </div>
               </div>
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between align-items-center">
                 <h2>Total: {cartItems?.reduce(function (acc, item) {
                   return acc + item.quantity * item.price;
                 }, 0)} EGP</h2>
-                <button className="rounded-5 px-4 py-2 text-center btn btn-outline-dark">
-                  Checkout
-                </button>
+                
+                <StripeCheckout
+                    className="  btn btn-dark py-2 px-2 "
+                    token={onToken}
+                    name="Tashtib Payment"
+                    currency="USD"
+                    amount= {cartItems?.reduce(function (acc, item) {
+                      return acc + item.quantity * item.price ;
+                    }, 0)}
+                    stripeKey="pk_test_51MjONIGFP9mleeqXzwIgHARKFUsnPzGg5WkYtfbVrknjsR9f7y8nAArefFFzgLnD9hsa12bkBASJPyU2XixDuicE00Vo38WcKv"
+                    />
+
               </div>
+              <Slider {...settings} className='w-100 m-auto text-center'>
+              <img src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="pay-Image  opacity-25 mt-5 "/>
+              <img src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="pay-Image  opacity-25 mt-5 "/>
+              </Slider>
             </div>
           </div>
         </div>
