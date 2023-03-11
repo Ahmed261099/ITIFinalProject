@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../Firebase.js";
 import { ToastContainer, toast } from "react-toastify";
-import { addProductToCart } from "../Store/Actions/CartAction";
+import { addProductToCart, deleteFromCart } from "../Store/Actions/CartAction";
 
 function ViewProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -24,10 +24,14 @@ function ViewProfile() {
 
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
   const regPass = new RegExp(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
   );
+  const cartItems = useSelector((state) => state.cartItemsList.cartItems);
+
   const [getProvidor, setGetProvidor] = useState({});
   const [getEngineer, setGetEngineer] = useState({});
   const [getProduct, setGetProduct] = useState({});
@@ -608,13 +612,13 @@ function ViewProfile() {
         wishlist: getViewer?.wishlist,
       })
         .then(() => {
-          console.log("done wishlist");
+          toast("added to wishlist");
         })
         .catch((error) => {
           console.log("ERROR" + error);
         });
     } else {
-      alert("Item is added!");
+      toast("Item is already added!");
     }
   };
   const removeFromWhishList = (item) => {
@@ -627,7 +631,7 @@ function ViewProfile() {
       wishlist: getViewer?.wishlist,
     })
       .then(() => {
-        console.log("remove wishlist");
+        toast("item removed from wishlist");
       })
       .catch((error) => {
         console.log("ERROR" + error);
@@ -637,7 +641,7 @@ function ViewProfile() {
 
   const existsInCart = (product) => {
     if (
-      getViewer?.cart?.filter((item) => item.name === product.id).length > 0
+      getViewer?.cart?.filter((item) => item.name === product.name).length > 0
     ) {
       return true;
     }
@@ -646,13 +650,13 @@ function ViewProfile() {
   };
 
   const addToCart = (myProduct) => {
-    // const exist = getUser?.cart?.find(({ name }) => name === product.name);
-    //   if(exist){
-    //     console.log(exist);
-    //   }
-    //   else{
-    //     history.push("/Cart")
-    //   }
+    const exist = getViewer?.cart?.find(({ name }) => name === product.name);
+      if(exist){
+        console.log(exist);
+      }
+      else{
+        history.push("/Cart")
+      }
     console.log(myProduct, currentUser, getViewer, getDBViewer);
     dispatch(addProductToCart(myProduct, currentUser, getViewer, getDBViewer))
       .then(() => {
@@ -662,6 +666,12 @@ function ViewProfile() {
         toast("error " + error);
       });
   };
+
+  const removeFromCart = (product) => {
+    const exist = getViewer?.cart?.find(({ name }) => name === product.name)
+    // console.log(getViewer, exist.id , getDBViewer);
+    dispatch(deleteFromCart(getViewer, exist.id, getDBViewer))
+  }
 
   return (
     <>
@@ -1086,7 +1096,7 @@ function ViewProfile() {
                   </div>
                 </div>
                 <div className="col-lg-5 d-lg-flex text-center align-items-center">
-                  {currentUser ? (
+                  {/* {currentUser ? (
                     <button
                       class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
                       onClick={() => addToCart(products)}
@@ -1109,6 +1119,51 @@ function ViewProfile() {
                       <span class="added">Added</span>
                       <i class="fas fa-shopping-cart"></i>
                       <i class="fas fa-box"></i>
+                    </Link>
+                  )} */}
+                  {currentUser ? (
+                    existsInCart(products) ? (
+                      <button
+                      class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
+                      onClick={() => removeFromCart(products)}
+                    >
+                      {/* <span class="add-to-cart">
+                        <i class="fa-solid fa-cart-shopping"></i> Add to cart
+                      </span> */}
+                      <span class="">Added</span>
+                      <i class="fas fa-shopping-cart"></i>
+                      <i class="fas fa-box"></i>
+                    </button>
+                      
+                      // <button
+                      //   className="btn btn-dark"
+                      //   onClick={() => removeFromCart(products)}
+                      // >
+                      //   Added
+                      // </button>
+                      
+                    ) : (
+                      <button
+                      class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
+                      onClick={() => addToCart(products)}
+                    >
+                      <span class="add-to-cart">
+                        <i class="fa-solid fa-cart-shopping"></i> Add to cart
+                      </span>
+                      {/* <span class="added">Added</span>
+                      <i class="fas fa-shopping-cart"></i>
+                      <i class="fas fa-box"></i> */}
+                    </button>
+                      // <button
+                      //   className="btn btn-outline-dark"
+                      //   onClick={() => addToCart(products)}
+                      // >
+                      //   Add to cart
+                      // </button>
+                    )
+                  ) : (
+                    <Link className="btn btn-outline-dark" to="/login">
+                      Add to cart
                     </Link>
                   )}
 

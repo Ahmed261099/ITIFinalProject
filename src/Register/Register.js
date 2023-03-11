@@ -264,7 +264,7 @@ function Register() {
           console.log("added successfuly");
         })
         .catch(function (error) {
-          alert("ERROR " + error);
+          console.log("ERROR " + error);
           console.log("ERROR " + error);
         });
 

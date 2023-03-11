@@ -233,10 +233,10 @@ function Register() {
           timestamp: serverTimestamp(),
         })
           .then(function (res) {
-            alert("added successfuly ");
+            toast("added successfuly ");
           })
           .catch(function (error) {
-            alert("ERROR " + error);
+            console.log("ERROR " + error);
           });
         // push record to Firebase
       }

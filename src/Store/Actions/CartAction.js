@@ -86,7 +86,7 @@ export const addProductToCart =
         console.log("you need to sign up first!");
       }
     } catch (error) {
-      alert("Failed To Add " + product.name + " " + error.message);
+      console.log("Failed To Add " + product.name + " " + error.message);
       dispatch({
         type: "CART_ITEM_ADD_FAIL",
         payload: error.message,
@@ -153,3 +153,19 @@ export const deleteFromCart =
       });
     }
   };
+
+export const CartCounter = async (database, email, items) => {
+  const data = collection(db, database);
+
+  const q = query(data, where("email", "==", email));
+
+  const querySnapshot = await getDocs(q);
+  let newData = [];
+  querySnapshot.forEach((doc) => (newData = doc.data().cart));
+  console.log(items);
+
+  return {
+    type: "CART_COUNT",
+    payload: items,
+  };
+};

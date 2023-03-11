@@ -1,114 +1,188 @@
-import { collection, doc, onSnapshot, updateDoc, where, query } from "@firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+  where,
+  query,
+} from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../Firebase";
-import { addProductToCart } from "../Store/Actions/CartAction";
+import { addProductToCart, CartCounter } from "../Store/Actions/CartAction";
 // import { AddToCartAction } from "../Store/Actions/CartAction";
 import "./Category.css";
 import { ToastContainer } from "react-toastify";
 
 const CategoryCard = (props) => {
+  const cartItems = useSelector((state) => state.cartItemsList.cartItems);
+
   const product = props.products;
 
-  const { id, name, price, image, quantity, rate, spetialization } = product;
+  const { id, name, price, image, spetialization } = product;
 
   console.log(id, name);
 
   const dispatch = useDispatch();
 
-    const [getDB, setGetDB] = useState("");
-    const [getUser, setGetUser] = useState({});
-    const [getCustomer, setGetCustomer] = useState({})
-    const [getProvider, setGetProvider] = useState({})
-    const [getEngineer, setGetEngineer] = useState({})
+  const [getDB, setGetDB] = useState("");
+  const [getUser, setGetUser] = useState({});
+  const [getCustomer, setGetCustomer] = useState({});
+  const [getProvider, setGetProvider] = useState({});
+  const [getEngineer, setGetEngineer] = useState({});
 
-    const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
-    const history = useHistory()
+  const history = useHistory();
 
-    useEffect(() => {
-      if(currentUser)
-        getData();
-    }, [])
+  useEffect(() => {
+    if (currentUser) getData();
+  }, []);
 
-    const getData = () => {
-      const q = query(
-        collection(db, "providers"),
-        where("email", "==", currentUser.email)
-      );
-  
-      onSnapshot(q, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setGetProvider({ ...doc.data(), id: doc.id });
-          if (getProvider) {
-            setGetUser({ ...doc.data(), id: doc.id });
-            setGetDB("providers");
-          }
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
-  
-      const q2 = query(
-        collection(db, "engineers"),
-        where("email", "==", currentUser.email)
-      );
-  
-      onSnapshot(q2, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setGetEngineer({ ...doc.data(), id: doc.id });
-          if (getEngineer) {
-            setGetUser({ ...doc.data(), id: doc.id });
-            setGetDB("engineers");
-          }
-  
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
-  
-      const q3 = query(
-        collection(db, "users"),
-        where("email", "==", currentUser.email)
-      );
-  
-      onSnapshot(q3, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          setGetCustomer({ ...doc.data(), id: doc.id });
-          if (getCustomer) {
-            setGetUser({ ...doc.data(), id: doc.id });
-            setGetDB("users");
-          }
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
-    };
+  const getData = () => {
+    const q = query(
+      collection(db, "providers"),
+      where("email", "==", currentUser.email)
+    );
 
-    const addToCart = () => {
-      const exist = getUser?.cart?.find(({ name }) => name === product.name);
-        if(exist){
-          console.log(exist);
+    onSnapshot(q, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetProvider({ ...doc.data(), id: doc.id });
+        if (getProvider) {
+          setGetUser({ ...doc.data(), id: doc.id });
+          setGetDB("providers");
         }
-        else{
-          history.push("/Cart")
-        }
-        console.log(product, currentUser, getUser, getDB);
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
 
-      dispatch(addProductToCart(product, currentUser, getUser, getDB))
+    const q2 = query(
+      collection(db, "engineers"),
+      where("email", "==", currentUser.email)
+    );
+
+    onSnapshot(q2, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetEngineer({ ...doc.data(), id: doc.id });
+        if (getEngineer) {
+          setGetUser({ ...doc.data(), id: doc.id });
+          setGetDB("engineers");
+        }
+
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+
+    const q3 = query(
+      collection(db, "users"),
+      where("email", "==", currentUser.email)
+    );
+
+    onSnapshot(q3, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetCustomer({ ...doc.data(), id: doc.id });
+        if (getCustomer) {
+          setGetUser({ ...doc.data(), id: doc.id });
+          setGetDB("users");
+        }
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+  };
+
+  const exists = (wish) => {
+    if (getUser?.wishlist?.filter((item) => item.id === wish.id).length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const addToWhishList = (item) => {
+    const added = getUser?.wishlist.find(({ id }) => id === item.id);
+    console.log(added);
+    if (!added) {
+      if (getDB === "engineers" || getDB === "providers") {
+        getUser?.wishlist.push({
+          name: item.name,
+          id: item.id,
+          role: item.role,
+        });
+      } else {
+        getUser?.wishlist.push({
+          name: item.name,
+          id: item.id,
+          role: item.spetialization,
+        });
+      }
+      const docRef = doc(db, getDB, getUser?.id);
+      updateDoc(docRef, {
+        wishlist: getUser?.wishlist,
+      })
+        .then(() => {
+          toast("added to wishlist");
+        })
+        .catch((error) => {
+          console.log("ERROR" + error);
+        });
+    } else {
+      toast("Item is already added!");
+    }
+  };
+  const removeFromWhishList = (item) => {
+    const index = getUser?.wishlist.findIndex(({ id }) => id === item.id);
+    getUser?.wishlist.splice(index, 1);
+
+    const docRef = doc(db, getDB, getUser?.id);
+
+    updateDoc(docRef, {
+      wishlist: getUser?.wishlist,
+    })
+      .then(() => {
+        toast("item removed from wishlist");
+      })
+      .catch((error) => {
+        console.log("ERROR" + error);
+      });
+  };
+  console.log(getDB);
+
+  const existsInCart = (product) => {
+    if (
+      getUser?.cart?.filter((item) => item.name === product.name).length > 0
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const addToCart = () => {
+    const exist = getUser?.cart?.find(({ name }) => name === product.name);
+    if (exist) {
+      console.log(exist);
+    } else {
+      history.push("/Cart");
+    }
+    console.log(product, currentUser, getUser, getDB);
+
+    dispatch(addProductToCart(product, currentUser, getUser, getDB))
       .then(() => {
         console.log("added successfully");
       })
       .catch((error) => {
-        toast("error " + error)
-      })
+        toast("error " + error);
+      });
 
-
-    }
+    dispatch(CartCounter(getDB, currentUser.email, cartItems.length));
+  };
 
   return (
     <div className=" contain col-lg-3 col-md-6  col-sm-12 d-block pt-4 pb-4 card-Eng ">
       <div className=" overflow-hidden position-relative text-center">
-      <div className="card-img overflow-hidden">
+        <div className="card-img overflow-hidden">
           <img
             src={
               image
@@ -125,17 +199,55 @@ const CategoryCard = (props) => {
           <span className="price ">{price} $</span>
         </div>
         <div className="  Item-Icon  rounded-circle position-absolute  py-4 ">
-          <div className=" view-Icon bg-white my-2 Icon-shape rounded-circle ">
-            <i
-              className="fa-solid fa-cart-shopping"
-              onClick={
-                addToCart
-              }
-            ></i>
-          </div>
-          <div className=" favorite-Icon bg-white Icon-shape rounded-circle ">
-            <i className="fa-regular fa-heart "></i>
-          </div>
+          {currentUser ? (
+            existsInCart(product) ? (
+              <div className=" view-Icon bg-warning my-2 Icon-shape rounded-circle ">
+                <i
+                  className="fa-solid fa-cart-shopping text-white"
+                  onClick={addToCart}
+                ></i>
+              </div>
+            ) : (
+              <div className=" view-Icon bg-white my-2 Icon-shape rounded-circle ">
+                <i
+                  className="fa-solid fa-cart-shopping"
+                  onClick={addToCart}
+                ></i>
+              </div>
+            )
+          ) : (
+            <Link
+              className=" view-Icon bg-white my-2 Icon-shape rounded-circle "
+              to="/login"
+            >
+              <i className="fa-solid fa-cart-shopping"></i>
+            </Link>
+          )}
+
+          {currentUser ? (
+            exists(product) ? (
+              <div className=" favorite-Icon bg-danger Icon-shape rounded-circle ">
+                <i
+                  className="fa-solid fa-heart text-white"
+                  onClick={() => removeFromWhishList(product)}
+                ></i>
+              </div>
+            ) : (
+              <div className=" favorite-Icon bg-white Icon-shape rounded-circle ">
+                <i
+                  className="fa-regular fa-heart"
+                  onClick={() => addToWhishList(product)}
+                ></i>
+              </div>
+            )
+          ) : (
+            <Link
+              className="favorite-Icon bg-white Icon-shape rounded-circle"
+              to="/login"
+            >
+              <i className="fa-regular fa-heart"></i>
+            </Link>
+          )}
         </div>
         <Link to={`/view/${spetialization}/${id}`}>
           <button className="rounded-5 px-4 py-2 text-center btn btn-outline-dark">

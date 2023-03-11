@@ -30,6 +30,7 @@ const Cart = ({ cartItem, user, database }) => {
   };
 
   const deleteItemFromCart = () => {
+    console.log(user, id, database);
     dispatch(deleteFromCart(user, id, database));
   };
 
