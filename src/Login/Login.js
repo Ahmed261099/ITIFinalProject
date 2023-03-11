@@ -39,7 +39,7 @@ function Login() {
 
             setErros({
                 ...error,
-                email:reg.test(e.target.value)?'':"Invalid email address"
+                email:e.target.value.length == 0?'This Field is Required':""
             })
         }
         else {
@@ -50,8 +50,7 @@ function Login() {
 
             setErros({
                 ...error,
-                password: e.target.value.length == 0 ? "This Field is Required" : e.target.value.length < 8 ? "Min Length is 8"
-                 :regPass.test(e.target.value)? '': "Invalid Password"
+                password: e.target.value.length == 0 ? "This Field is Required" : "" 
             })
         }
     }

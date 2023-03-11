@@ -1026,26 +1026,12 @@ function Profile() {
                                   </>
                                 );
                               })} */}
-                        {/* {getMessage.length === 0 ? (<h2 className="fs-5">No Messages to show!</h2>) : */}
-                        {
+                        {getMessage.length === 0 ? (<h2 className="fs-5 text-center">No Messages to show!</h2>) :
+                        
                           (getMessage?.map((message, index) => {
                             return (
                               <>
-                                {/* <div
-                                  className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
-                                  key={index}
-                                >
-                                  <div >
-                                    <div
-                                      >
-                                      <div >
-                                        <p >{message.name}</p>
-                                        <p >{message.text}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                               
-                                </div> */}
+                                
                                 <div
 
                                   key={index}
