@@ -272,7 +272,7 @@ function About()
 
                         <div className='slider_item position-relative overflow-hidden text-center'>
                             <div className="slider_item_img position-relative overflow-hidden rounded-2">
-                                <img src={require('../assets/Members/Ahmed Samy A.Baset.jpg')} className='w-100 rounded' alt=""/>  
+                                <img src={require('../assets/Members/Zahwa Khaled.JPG')} className='w-100 rounded' alt=""/>  
                                 <div className="position-absolute top-0 left-0 h-100 w-25 ">
                                     <div className="Member-Data w-100 position-absolute h-100 p-2 ">
         
