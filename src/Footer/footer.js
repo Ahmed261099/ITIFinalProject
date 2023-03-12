@@ -4,7 +4,7 @@ import './footer.css';
 function footer()
 {
     return(
-        <section id="Footer" className="container-fluid mt-3 p-0 m-0 ">
+        <section id="Footer" className="container-fluid  p-0 m-0 ">
             <div className="container pb-3">
                 <div className="row gy-2 d-flex justify-content-center align-items-center">
                     <div className="col-lg-3">

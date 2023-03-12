@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link, Route, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 
 const UserRoute = ({ children, ...rest }) => {
 
@@ -13,4 +13,4 @@ const UserRoute = ({ children, ...rest }) => {
   )
 }
 
-export default UserRoute
+export default UserRoute;

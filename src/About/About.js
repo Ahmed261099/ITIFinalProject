@@ -80,7 +80,7 @@ function About()
                         </div>
                     </div>
                     <div className="col-lg-6">
-                        <div className="About-Img bg-danger">
+                        <div className="About-Img">
                             <img src={require('../assets/About/About.webp')} className='w-100' alt="AboutImage"></img>
                         </div>
                     </div>
@@ -132,7 +132,7 @@ function About()
 
                         <div className='slider_item position-relative overflow-hidden text-center'>
                             <div className="slider_item_img position-relative overflow-hidden rounded-2">
-                                <img src={require('../assets/Members/Ahmed Samy A.Baset.jpg')} className='w-100 rounded' alt=""/>  
+                            <img src={require('../assets/Members/Emad Mohamed.jpg')} className='w-100 rounded' alt=""/>  
                                 <div className="position-absolute top-0 left-0 h-100 w-25 ">
                                     <div className="Member-Data w-100 position-absolute h-100 p-2 ">
         
@@ -140,22 +140,22 @@ function About()
                                     <div className="Portfolio-Icons w-100 position-absolute  p-2 ">
                                         <div className="member-Social-Icons  pb-2 ">
                                             <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.facebook.com/ahmedroski261099/" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
+                                                <a href="https://www.facebook.com/EmadMohamedSaleh98/" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberSecondIcon pb-2  ">
                                             <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.instagram.com/ahmed_roski/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
+                                                <a href="https://www.linkedin.com/in/emadmohamed98" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberThirdIcon  pb-2 ">
                                             <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.linkedin.com/in/ahmed-sami-a-bast-601416173/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
+                                                <a href="https://www.linkedin.com/in/emad-mohamed-dev/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberFourthIcon  pb-2 ">
                                             <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://github.com/Ahmed261099" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
+                                                <a href="https://github.com/emadmohamedmahmoud" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
                                             </div> 
                                         </div>
                  
@@ -163,6 +163,41 @@ function About()
                                 </div>
                             </div>
                             <h3 className="pt-2">Ahmed Samy</h3>
+                         </div>
+
+                        <div className='slider_item position-relative overflow-hidden text-center'>
+                            <div className="slider_item_img position-relative overflow-hidden rounded-2">
+                                <img src={require('../assets/Members/esraa.jpg')} className='w-100 rounded' alt=""/>  
+                                <div className="position-absolute top-0 left-0 h-100 w-25 ">
+                                    <div className="Member-Data w-100 position-absolute h-100 p-2 ">
+        
+                                    </div>
+                                    <div className="Portfolio-Icons w-100 position-absolute  p-2 ">
+                                        <div className="member-Social-Icons  pb-2 ">
+                                            <div className=" member-Icon Icon-shape bg-white rounded-circle">
+                                                <a href="#" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
+                                            </div> 
+                                        </div>
+                                        <div className="member-Social-Icons memberSecondIcon pb-2  ">
+                                            <div className=" member-Icon Icon-shape bg-white rounded-circle">
+                                                <a href="#" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
+                                            </div> 
+                                        </div>
+                                        <div className="member-Social-Icons memberThirdIcon  pb-2 ">
+                                            <div className="member-Icon Icon-shape bg-white rounded-circle">
+                                                <a href="https://www.linkedin.com/in/esraa-taha-b180a7234/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
+                                            </div> 
+                                        </div>
+                                        <div className="member-Social-Icons memberFourthIcon  pb-2 ">
+                                            <div className="member-Icon Icon-shape bg-white rounded-circle">
+                                                <a href="https://github.com/esraataha22" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
+                                            </div> 
+                                        </div>
+                 
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 className="pt-2">Esraa Taha</h3>
                          </div>
 
                         <div className='slider_item position-relative overflow-hidden text-center'>
@@ -202,7 +237,7 @@ function About()
 
                         <div className='slider_item position-relative overflow-hidden text-center'>
                             <div className="slider_item_img position-relative overflow-hidden rounded-2">
-                                <img src={require('../assets/Members/Ahmed Samy A.Baset.jpg')} className='w-100 rounded' alt=""/>  
+                                <img src={require('../assets/Members/rami.jpg')} className='w-100 rounded' alt=""/>  
                                 <div className="position-absolute top-0 left-0 h-100 w-25 ">
                                     <div className="Member-Data w-100 position-absolute h-100 p-2 ">
         
@@ -210,64 +245,29 @@ function About()
                                     <div className="Portfolio-Icons w-100 position-absolute  p-2 ">
                                         <div className="member-Social-Icons  pb-2 ">
                                             <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.facebook.com/ahmedroski261099/" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
+                                                <a href="#" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberSecondIcon pb-2  ">
                                             <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.instagram.com/ahmed_roski/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
+                                                <a href="#" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberThirdIcon  pb-2 ">
                                             <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.linkedin.com/in/ahmed-sami-a-bast-601416173/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
+                                                <a href="https://www.linkedin.com/in/ramy-menassa/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberFourthIcon  pb-2 ">
                                             <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://github.com/Ahmed261099" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
+                                                <a href="https://github.com/ramiMenasa" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
                                             </div> 
                                         </div>
                  
                                     </div>
                                 </div>
                             </div>
-                            <h3 className="pt-2">Ahmed Samy</h3>
-                         </div>
-
-                        <div className='slider_item position-relative overflow-hidden text-center'>
-                            <div className="slider_item_img position-relative overflow-hidden rounded-2">
-                                <img src={require('../assets/Members/Ahmed Samy A.Baset.jpg')} className='w-100 rounded' alt=""/>  
-                                <div className="position-absolute top-0 left-0 h-100 w-25 ">
-                                    <div className="Member-Data w-100 position-absolute h-100 p-2 ">
-        
-                                    </div>
-                                    <div className="Portfolio-Icons w-100 position-absolute  p-2 ">
-                                        <div className="member-Social-Icons  pb-2 ">
-                                            <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.facebook.com/ahmedroski261099/" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
-                                            </div> 
-                                        </div>
-                                        <div className="member-Social-Icons memberSecondIcon pb-2  ">
-                                            <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.instagram.com/ahmed_roski/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
-                                            </div> 
-                                        </div>
-                                        <div className="member-Social-Icons memberThirdIcon  pb-2 ">
-                                            <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.linkedin.com/in/ahmed-sami-a-bast-601416173/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
-                                            </div> 
-                                        </div>
-                                        <div className="member-Social-Icons memberFourthIcon  pb-2 ">
-                                            <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://github.com/Ahmed261099" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
-                                            </div> 
-                                        </div>
-                 
-                                    </div>
-                                </div>
-                            </div>
-                            <h3 className="pt-2">Ahmed Samy</h3>
+                            <h3 className="pt-2">Ramy Menassa</h3>
                          </div>
 
                         <div className='slider_item position-relative overflow-hidden text-center'>

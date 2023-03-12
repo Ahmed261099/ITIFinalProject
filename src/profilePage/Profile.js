@@ -703,8 +703,15 @@ function Profile() {
                       alt=""
                     />
                     <Carousel.Caption>
+
+                      <h3 className="text-center">{onePort.title}</h3>
+                      <p className="text-center">{onePort.caption}</p>
+
+                      <div className="transbox">
                       <h3 className="">{onePort.title}</h3>
                       <p>{onePort.caption}</p>
+                      </div>
+
                     </Carousel.Caption>
                   </Carousel.Item>
                 );
@@ -871,12 +878,12 @@ function Profile() {
                             </p>)}
                           {getUser.role === "customer" ? null :
                             (<p>
-                              <strong>spetialization :</strong>{" "}
+                              <strong>Specialization :</strong>{" "}
                               {getUser.spetialization}{" "}
                             </p>)}
                           {getUser.role === "customer" ? null :
                             (<p>
-                              <strong>Experiance :</strong> {getUser.experience}{" "}
+                              <strong>Experience :</strong> {getUser.experience}{" "}
                             </p>)}
                         </div>
                       </div>
@@ -989,54 +996,6 @@ function Profile() {
                             }))}
                           <hr />
 
-                          {/* <form onSubmit={(e) => submitData(e)}>
-                          <div className="col-12 ">
-                            <textarea
-                              className="border m-2 border-secondary-subtle w-100 p-3 d-block "
-                              placeholder="Left FeedBack"
-                              type="text"
-                              name="comment"
-                              onChange={(e) => addUserData(e)}
-                            />
-                            <p className="text-danger ms-2">
-                              {" "}
-                              <small>{error.comment}</small>{" "}
-                            </p>
-                          </div>
-                          <div className="mb-3 d-flex">
-                            <select
-                              name="rating"
-                              onChange={(e) => addUserData(e)}
-                              className="border m-2 border-secondary-subtle w-50 p-3 d-block"
-                            >
-                              <option selected>rating</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
-
-                            <div className="m-4 d-flex justify-content-center w-50">
-                              {drawStar(userData.rating)}
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <button
-                              className="btn btn-outline-dark text-uppercase p-2 m-2"
-                              disabled={
-                                error.rating ||
-                                error.comment ||
-                                userData.comment === "" ||
-                                userData.rating === "rating"
-                              }
-                              onClick={() => handleButtonComment()}
-                              type="reset"
-                            >
-                              Comment
-                            </button>
-                          </div>
-                        </form> */}
                         </div>
                       </div>)}
                     {/* <!-- Single Tab Content End --> */}
@@ -1067,26 +1026,12 @@ function Profile() {
                                   </>
                                 );
                               })} */}
-                        {/* {getMessage.length === 0 ? (<h2 className="fs-5">No Messages to show!</h2>) : */}
-                        {
+                        {getMessage.length === 0 ? (<h2 className="fs-5 text-center">No Messages to show!</h2>) :
+                        
                           (getMessage?.map((message, index) => {
                             return (
                               <>
-                                {/* <div
-                                  className="bg-body-secondary rounded-3 d-flex m-2 align-items-center"
-                                  key={index}
-                                >
-                                  <div >
-                                    <div
-                                      >
-                                      <div >
-                                        <p >{message.name}</p>
-                                        <p >{message.text}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                               
-                                </div> */}
+                                
                                 <div
 
                                   key={index}
