@@ -162,7 +162,7 @@ function About()
                                     </div>
                                 </div>
                             </div>
-                            <h3 className="pt-2">Ahmed Samy</h3>
+                            <h3 className="pt-2">Emad Mohamed</h3>
                          </div>
 
                         <div className='slider_item position-relative overflow-hidden text-center'>
