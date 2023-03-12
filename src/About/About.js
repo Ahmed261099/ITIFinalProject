@@ -280,29 +280,29 @@ function About()
                                     <div className="Portfolio-Icons w-100 position-absolute  p-2 ">
                                         <div className="member-Social-Icons  pb-2 ">
                                             <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.facebook.com/ahmedroski261099/" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
+                                                <a href="https://www.facebook.com/zahwa.khaled.5" target='_blank' rel='noreferrer' className="w-100 "><i className="fab fa-facebook-f "></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberSecondIcon pb-2  ">
                                             <div className=" member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.instagram.com/ahmed_roski/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
+                                                <a href="#" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-instagram text-danger"></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberThirdIcon  pb-2 ">
                                             <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://www.linkedin.com/in/ahmed-sami-a-bast-601416173/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
+                                                <a href="https://www.linkedin.com/in/zahwa-khaled/" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-linkedin"></i></a>
                                             </div> 
                                         </div>
                                         <div className="member-Social-Icons memberFourthIcon  pb-2 ">
                                             <div className="member-Icon Icon-shape bg-white rounded-circle">
-                                                <a href="https://github.com/Ahmed261099" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
+                                                <a href="https://github.com/ZahwaKhaled" target='_blank' rel='noreferrer' className="w-100"><i className="fab fa-github text-black"></i></a>
                                             </div> 
                                         </div>
                  
                                     </div>
                                 </div>
                             </div>
-                            <h3 className="pt-2">Ahmed Samy</h3>
+                            <h3 className="pt-2">Zahwa khaled</h3>
                          </div>
 
                     </Slider>
