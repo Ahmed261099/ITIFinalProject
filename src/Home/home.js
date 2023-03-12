@@ -216,7 +216,7 @@ function Home()
                       Search
                     </Button> */}
                     <Button variant="outline-danger ms-2 w-25" onClick={() => handleRest()}>
-                      Rest
+                      Reset
                     </Button>
                   </Form>
               </div>
