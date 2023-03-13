@@ -21,11 +21,10 @@ const regPass = new RegExp(
 );
 // const regPhone = RegExp(/^[1-9]\d{2}\s\d{3}\s\d{4}/);
 function Register() {
+
   const history = useHistory();
 
   const { currentUser } = useSelector((state) => state.user);
-
-  console.log(currentUser);
 
   const dispatch = useDispatch();
 
@@ -176,8 +175,7 @@ function Register() {
 
   useEffect(() => {
     if (currentUser) {
-      //   console.log(currentUser);
-      history.push("profile");
+      history.push("/profile");
     }
   }, [currentUser, history]);
 
@@ -233,10 +231,10 @@ function Register() {
           timestamp: serverTimestamp(),
         })
           .then(function (res) {
-            alert("added successfuly ");
+            toast("added successfuly ");
           })
           .catch(function (error) {
-            alert("ERROR " + error);
+            console.log("ERROR " + error);
           });
         // push record to Firebase
       }
@@ -384,6 +382,7 @@ function Register() {
             />
           <br /> <br />
             </form>
+            <ToastContainer />
             <br/> <br/>
         </div>
         </div>

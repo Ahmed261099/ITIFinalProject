@@ -59,8 +59,8 @@
 }
 .Item-Icon .Icon-shape:hover
 {
-    background-color: black !important;
-    color: white;
+    /* background-color: black !important; */
+    color: black;
 }
 
 

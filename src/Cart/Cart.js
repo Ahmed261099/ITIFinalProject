@@ -5,14 +5,12 @@ import "./Cart.css";
 
 const Cart = ({ cartItem, user, database }) => {
   const { name, quantity, price, image, id } = cartItem;
-  console.log(cartItem, user, database, quantity);
 
   const dispatch = useDispatch();
 
   useEffect(() => {}, [quantity, cartItem]);
 
   const handleQty = (action, id) => {
-    console.log(id);
 
     if (action === "add") {
       cartItem.quantity += 1;
@@ -30,6 +28,7 @@ const Cart = ({ cartItem, user, database }) => {
   };
 
   const deleteItemFromCart = () => {
+    console.log(user, id, database);
     dispatch(deleteFromCart(user, id, database));
   };
 

@@ -13,7 +13,6 @@ import { v4 as uuid } from "uuid";
 export const listCartItems = (database, email) => async (dispatch) => {
   let cartData = [];
 
-  // console.log(email);
   async function getData() {
     const data = collection(db, database);
 
@@ -22,8 +21,6 @@ export const listCartItems = (database, email) => async (dispatch) => {
     const querySnapshot = await getDocs(q);
     let newData = [];
     querySnapshot.forEach((doc) => (newData = doc.data().cart));
-
-    console.log(newData);
 
     return newData;
   }
@@ -86,7 +83,7 @@ export const addProductToCart =
         console.log("you need to sign up first!");
       }
     } catch (error) {
-      alert("Failed To Add " + product.name + " " + error.message);
+      console.log("Failed To Add " + product.name + " " + error.message);
       dispatch({
         type: "CART_ITEM_ADD_FAIL",
         payload: error.message,
@@ -143,7 +140,7 @@ export const deleteFromCart =
         cart: items,
       });
 
-      window.location.reload();
+      window.location.replace("/Cart");
 
       dispatch({ type: "CART_ITEM_REMOVE_SUCCESS" });
     } catch (error) {
@@ -153,3 +150,19 @@ export const deleteFromCart =
       });
     }
   };
+
+export const CartCounter = async (database, email, items) => {
+  const data = collection(db, database);
+
+  const q = query(data, where("email", "==", email));
+
+  const querySnapshot = await getDocs(q);
+  let newData = [];
+  querySnapshot.forEach((doc) => (newData = doc.data().cart));
+  console.log(items);
+
+  return {
+    type: "CART_COUNT",
+    payload: items,
+  };
+};

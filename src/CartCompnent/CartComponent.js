@@ -14,9 +14,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 const CartComponent = () => {
   const cartItems = useSelector((state) => state.cartItemsList.cartItems);
-  const added = useSelector((state) => state.addToCart);
+
   console.log(cartItems);
-  console.log(added);
+  
   const dispatch = useDispatch();
 
   const [getDB, setGetDB] = useState("");

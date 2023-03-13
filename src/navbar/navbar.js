@@ -3,20 +3,16 @@ import "./navbar.css";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Badge } from "@mui/material";
-import { Mail } from "@mui/icons-material";
 
 function Navbar() {
+
   const { currentUser } = useSelector((state) => state.user);
 
-  const cartItems = useSelector((state) => state.cartItemsList.cartItems);
+  const {cartItems} = useSelector((state) => state.cartItemsList);
 
-  console.log(cartItems);
+  const size = cartItems?.length;
 
-//   let size;
-
-  useEffect(() => {
-    
-  }, [cartItems])
+  useEffect(() => {}, [cartItems]);
 
   return (
     <nav className="navbar navbar-expand-lg bg-light navbar-light py-3">
@@ -82,9 +78,13 @@ function Navbar() {
                       aria-current="page"
                       to="/Cart"
                     >
-                        <Badge badgeContent={cartItems?.length} color="primary">
-                            <i class="fa-solid fa-cart-shopping"></i>
+                      {cartItems?.length > 0 ? (
+                        <Badge badgeContent={size} color={"primary"}>
+                          <i class="fa-solid fa-cart-shopping"></i>
                         </Badge>
+                      ) : (
+                        <i class="fa-solid fa-cart-shopping"></i>
+                      )}
                     </NavLink>
                   </li>
                   <li className="nav-item px-lg-1">
