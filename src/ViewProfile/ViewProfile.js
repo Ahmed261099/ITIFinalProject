@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ViewProfile.css";
 import Carousel from "react-bootstrap/Carousel";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { logoutInitiate } from "../Store/Actions/AuthAction";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "react-bootstrap/Button";
 import {
   collection,
   query,
@@ -13,14 +11,13 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { db, storage } from "../Firebase.js";
+import { db } from "../Firebase.js";
 import { ToastContainer, toast } from "react-toastify";
 import { addProductToCart, deleteFromCart } from "../Store/Actions/CartAction";
 
 function ViewProfile() {
   const { currentUser } = useSelector((state) => state.user);
   const param = useParams();
-  console.log(param);
 
   const dispatch = useDispatch();
 
@@ -651,12 +648,11 @@ function ViewProfile() {
 
   const addToCart = (myProduct) => {
     const exist = getViewer?.cart?.find(({ name }) => name === product.name);
-      if(exist){
-        console.log(exist);
-      }
-      else{
-        history.push("/Cart")
-      }
+    if (exist) {
+      console.log(exist);
+    } else {
+      history.push("/Cart");
+    }
     console.log(myProduct, currentUser, getViewer, getDBViewer);
     dispatch(addProductToCart(myProduct, currentUser, getViewer, getDBViewer))
       .then(() => {
@@ -668,10 +664,9 @@ function ViewProfile() {
   };
 
   const removeFromCart = (product) => {
-    const exist = getViewer?.cart?.find(({ name }) => name === product.name)
-    // console.log(getViewer, exist.id , getDBViewer);
-    dispatch(deleteFromCart(getViewer, exist.id, getDBViewer))
-  }
+    const exist = getViewer?.cart?.find(({ name }) => name === product.name);
+    dispatch(deleteFromCart(getViewer, exist.id, getDBViewer));
+  };
 
   return (
     <>
@@ -1055,21 +1050,28 @@ function ViewProfile() {
                     <p class="mb-1 fs-1 fw-bolder text-success-emphasis">
                       {products.name}
                     </p>
-                    {/* <div className="m-3">{drawStar(calcRating())}</div> */}
                   </div>
                   <div class="mb-1 text-muted">{products.spetialization}</div>
                   <p class="card-text mb-auto">
-                    {products.description}
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
+                    {products.description ? (
+                      <p className="card-text mb-auto">
+                        {products.description}
+                      </p>
+                    ) : (
+                      <p>
+                        Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was popularised in the 1960s with the release of
+                        Letraset sheets containing Lorem Ipsum passages, and
+                        more recently with desktop publishing software like
+                        Aldus PageMaker including versions of Lorem Ipsum.
+                      </p>
+                    )}
                   </p>
                 </div>
                 <div class="col-lg-5 ">
@@ -1096,70 +1098,26 @@ function ViewProfile() {
                   </div>
                 </div>
                 <div className="col-lg-5 d-lg-flex text-center align-items-center">
-                  {/* {currentUser ? (
-                    <button
-                      class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
-                      onClick={() => addToCart(products)}
-                    >
-                      <span class="add-to-cart">
-                        <i class="fa-solid fa-cart-shopping"></i> Add to cart
-                      </span>
-                      <span class="added">Added</span>
-                      <i class="fas fa-shopping-cart"></i>
-                      <i class="fas fa-box"></i>
-                    </button>
-                  ) : (
-                    <Link
-                      class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
-                      to="/login"
-                    >
-                      <span class="add-to-cart">
-                        <i class="fa-solid fa-cart-shopping"></i> Add to cart
-                      </span>
-                      <span class="added">Added</span>
-                      <i class="fas fa-shopping-cart"></i>
-                      <i class="fas fa-box"></i>
-                    </Link>
-                  )} */}
                   {currentUser ? (
                     existsInCart(products) ? (
                       <button
-                      class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
-                      onClick={() => removeFromCart(products)}
-                    >
-                      {/* <span class="add-to-cart">
-                        <i class="fa-solid fa-cart-shopping"></i> Add to cart
-                      </span> */}
-                      <span class="">Added</span>
-                      <i class="fas fa-shopping-cart"></i>
-                      <i class="fas fa-box"></i>
-                    </button>
-                      
-                      // <button
-                      //   className="btn btn-dark"
-                      //   onClick={() => removeFromCart(products)}
-                      // >
-                      //   Added
-                      // </button>
-                      
+                        class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
+                        onClick={() => removeFromCart(products)}
+                      >
+                        <span class="">remove from cart</span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-box"></i>
+                      </button>
                     ) : (
+
                       <button
-                      class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
-                      onClick={() => addToCart(products)}
-                    >
-                      <span class="add-to-cart">
-                        <i class="fa-solid fa-cart-shopping"></i> Add to cart
-                      </span>
-                      {/* <span class="added">Added</span>
-                      <i class="fas fa-shopping-cart"></i>
-                      <i class="fas fa-box"></i> */}
-                    </button>
-                      // <button
-                      //   className="btn btn-outline-dark"
-                      //   onClick={() => addToCart(products)}
-                      // >
-                      //   Add to cart
-                      // </button>
+                        class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
+                        onClick={() => addToCart(products)}
+                      >
+                        <span class="add-to-cart">
+                          <i class="fa-solid fa-cart-shopping"></i> Add to cart
+                        </span>
+                      </button>
                     )
                   ) : (
                     <Link className="btn btn-outline-dark" to="/login">
@@ -1173,7 +1131,7 @@ function ViewProfile() {
                         className="btn btn-dark py-3"
                         onClick={() => removeFromWhishList(products)}
                       >
-                        Added
+                        remove from wishlist
                       </button>
                     ) : (
                       <button
@@ -1211,21 +1169,6 @@ function ViewProfile() {
                               <i className="pe-2 fa fa-dashboard"></i>
                               more info
                             </button>
-
-                            {/* <button
-                                className="btn btn-outline-dark text-start border-secondary-subtle rounded-0 p-3 text-uppercase"
-                                type="button"
-                                id="feedback-tab"
-                                data-bs-target="#feedback"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-controls="feedback"
-                                aria-selected="false"
-                                tabIndex="-1"
-                              >
-                                <i className="pe-2 fa fa-comment"></i>
-                                FeedBack
-                              </button> */}
                           </div>
                         </div>
                         {/* end section of buttons */}

@@ -13,7 +13,6 @@ import { v4 as uuid } from "uuid";
 export const listCartItems = (database, email) => async (dispatch) => {
   let cartData = [];
 
-  // console.log(email);
   async function getData() {
     const data = collection(db, database);
 
@@ -22,8 +21,6 @@ export const listCartItems = (database, email) => async (dispatch) => {
     const querySnapshot = await getDocs(q);
     let newData = [];
     querySnapshot.forEach((doc) => (newData = doc.data().cart));
-
-    console.log(newData);
 
     return newData;
   }
@@ -143,7 +140,7 @@ export const deleteFromCart =
         cart: items,
       });
 
-      window.location.reload();
+      window.location.replace("/Cart");
 
       dispatch({ type: "CART_ITEM_REMOVE_SUCCESS" });
     } catch (error) {

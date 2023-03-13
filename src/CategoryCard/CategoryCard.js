@@ -12,7 +12,6 @@ import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../Firebase";
 import { addProductToCart, CartCounter } from "../Store/Actions/CartAction";
-// import { AddToCartAction } from "../Store/Actions/CartAction";
 import "./Category.css";
 import { ToastContainer } from "react-toastify";
 
@@ -22,8 +21,6 @@ const CategoryCard = (props) => {
   const product = props.products;
 
   const { id, name, price, image, spetialization } = product;
-
-  console.log(id, name);
 
   const dispatch = useDispatch();
 
@@ -102,7 +99,6 @@ const CategoryCard = (props) => {
 
   const addToWhishList = (item) => {
     const added = getUser?.wishlist.find(({ id }) => id === item.id);
-    console.log(added);
     if (!added) {
       if (getDB === "engineers" || getDB === "providers") {
         getUser?.wishlist.push({
@@ -147,8 +143,7 @@ const CategoryCard = (props) => {
         console.log("ERROR" + error);
       });
   };
-  console.log(getDB);
-
+  
   const existsInCart = (product) => {
     if (
       getUser?.cart?.filter((item) => item.name === product.name).length > 0

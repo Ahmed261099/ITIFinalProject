@@ -9,19 +9,8 @@ function Navbar() {
   const { currentUser } = useSelector((state) => state.user);
 
   const {cartItems} = useSelector((state) => state.cartItemsList);
+
   const size = cartItems?.length;
-
-  // const count = useSelector((state) => state.cartItemsList);
-
-  // console.log(count.cartItems.length);
-
-  // const count = useSelector((state) => state.count);
-
-  // console.log(count);
-
-  console.log(cartItems);
-
-  //   let size;
 
   useEffect(() => {}, [cartItems]);
 
@@ -89,13 +78,13 @@ function Navbar() {
                       aria-current="page"
                       to="/Cart"
                     >
-                      {/* {cartItems?.length > 0 ? ( */}
+                      {cartItems?.length > 0 ? (
                         <Badge badgeContent={size} color={"primary"}>
                           <i class="fa-solid fa-cart-shopping"></i>
                         </Badge>
-                      {/* ) : ( */}
-                        {/* <i class="fa-solid fa-cart-shopping"></i> */}
-                      {/* )} */}
+                      ) : (
+                        <i class="fa-solid fa-cart-shopping"></i>
+                      )}
                     </NavLink>
                   </li>
                   <li className="nav-item px-lg-1">

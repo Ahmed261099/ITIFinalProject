@@ -5,7 +5,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const registerStart = () => ({
@@ -70,7 +70,6 @@ export const registerInitiate = (email, password, userName, phone) => {
       })
       .catch((error) => {
         dispatch(registerFail(error.message));
-        // auth/internal-error
         console.log(error);
         if (error.code === "auth/invalid-email") toast("invalid-email");
         else if (error.code === "auth/email-already-in-use")

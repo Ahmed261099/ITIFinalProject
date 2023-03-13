@@ -2,7 +2,7 @@ import React from 'react'
 import './home.css'
 import Header from '../Header/header'
 import Banners from '../Banners/banners'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
@@ -14,15 +14,11 @@ import {
   onSnapshot,
   query,
   limit,
-  getDocs,
-  where,
-  updateDoc,
-  doc,
   orderBy
 } from "firebase/firestore";
 
 import Testmonial from '../testmonials/testmonials' ;
-import Footer from '../Footer/footer';
+// import Footer from '../Footer/footer';
 
 function Home()
 {
@@ -209,12 +205,8 @@ function Home()
                       value={searchValue}
                       onChange={(e) => 
                           setSearchValue(e.target.value)
-                          // setDataFilter(dataFilter.filter(user=>user.name.toLowerCase().includes(`${searchValue}`.toLowerCase())))}
                       }
                     />
-                    {/* <Button type="submit" variant="outline-success">
-                      Search
-                    </Button> */}
                     <Button variant="outline-danger ms-2 w-25" onClick={() => handleRest()}>
                       Reset
                     </Button>
@@ -241,7 +233,6 @@ function Home()
                         </div>
                         </div>
                         <h3 className="py-2">{item.name}</h3>
-                        {/* <h3 className="pb-2">{item.role}</h3> */}
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
                           {item?.rate && (
                             <>
@@ -278,7 +269,6 @@ function Home()
                         </div>
                         </div>
                         <h3 className="py-2">{item.name}</h3>
-                        {/* <h3 className="pb-2">{item.role}</h3> */}
                         <div className="d-flex align-items-center position-absolute item-vote bg-white fw-bolder p-1">
                           {item?.rate && (
                             <>
@@ -315,9 +305,7 @@ function Home()
                       </div>
                       </div>
                       <h3 className="py-2">{item.title}</h3>
-                      {/* <h3 className="pb-2">{item.role}</h3>      */}
                       <div className="Item-Icon position-absolute rounded-circle  py-4">
-                      
                           
                       <Link  className='text-decoration-none text-success-emphasis' to={`/category/${item.id}`}> <div className="view-Icon bg-white my-2 Icon-shape rounded-circle">
                             <i className="fa-regular fa-eye"></i>
@@ -451,7 +439,6 @@ function Home()
               </div>
             </div>
           </section>
-
 
         </div>
       ) :dataEngFilter.length===0 ||dataContFilter.length===0||dataProFilter===0?(

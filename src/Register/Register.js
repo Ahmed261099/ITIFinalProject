@@ -180,8 +180,7 @@ function Register() {
 
   useEffect(() => {
     if (currentUser) {
-      //   console.log(currentUser);
-      history.push("profile");
+      history.push("/profile");
     }
   }, [currentUser, history]);
 
@@ -426,7 +425,7 @@ function Register() {
               }
             />
           </form>
-          {/* <ToastContainer /> */}
+          <ToastContainer />
           <br /> <br />
         </div>
       </div>
