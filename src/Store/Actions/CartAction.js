@@ -151,6 +151,26 @@ export const deleteFromCart =
     }
   };
 
+  export const deleteCart =
+  (getUser, database) => async (dispatch) => {
+    try {
+      dispatch({ type: "CART_ITEM_REMOVE_REQUEST" });
+      await updateDoc(doc(db, database, getUser.id), {
+        ...getUser,
+        cart: [],
+      });
+
+      window.location.replace("/Cart");
+
+      dispatch({ type: "CART_REMOVE_SUCCESS" });
+    } catch (error) {
+      dispatch({
+        type: "CART_REMOVE_FAIL",
+        payload: error.message,
+      });
+    }
+  };
+
 export const CartCounter = async (database, email, items) => {
   const data = collection(db, database);
 

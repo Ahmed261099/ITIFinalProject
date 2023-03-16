@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query, where } from "@firebase/firestore";
+import { collection, onSnapshot, query, where,doc,updateDoc,addDoc, setDoc } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,14 +9,14 @@ import "./CartComponent.css";
 import StripeCheckout from 'react-stripe-checkout';
 
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const CartComponent = () => {
   const cartItems = useSelector((state) => state.cartItemsList.cartItems);
 
   console.log(cartItems);
-  
+
   const dispatch = useDispatch();
 
   const [getDB, setGetDB] = useState("");
@@ -24,6 +24,8 @@ const CartComponent = () => {
   const [getProvider, setGetProvider] = useState({});
   const [getEngineer, setGetEngineer] = useState({});
   const [getUser, setGetUser] = useState({});
+  const [getOrder, setOrder] = useState({});
+
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -95,9 +97,9 @@ const CartComponent = () => {
     }
   }, [currentUser, dispatch, getDB]);
 
-  const onToken = (token) => 
-  {
-      console.log(token)
+  const onToken = (token) => {
+    addToOrders();
+    console.log(token)
   }
 
   var settings = {
@@ -108,6 +110,30 @@ const CartComponent = () => {
     slidesToShow: 1,
     speed: 6000,
     arrows: false,
+  };
+
+  const addToOrders = () => {
+    const oid = new Date().getTime() + getUser.email;
+
+    setOrder({
+      id: oid,
+      name:getUser.name,
+      email:getUser.email,
+      image:getUser.image,
+      order:cartItems
+    })
+
+    // const docRef = doc(db,'orders',getUser.id,getUser.email);
+    addDoc(collection(db, "orders"), {
+      getOrder
+    })
+      .then(() => {
+        console.log("added to Orders");
+      })
+      .catch((error) => {
+        console.log("ERROR on add orders" + error);
+      });
+      cartItems=[]
   };
 
   return (
@@ -170,22 +196,23 @@ const CartComponent = () => {
                 <h2>Total: {cartItems?.reduce(function (acc, item) {
                   return acc + item.quantity * item.price;
                 }, 0)} EGP</h2>
-                
+
                 <StripeCheckout
-                    className="  btn btn-dark py-2 px-2 "
-                    token={onToken}
-                    name="Tashtib Payment"
-                    currency="USD"
-                    amount= {cartItems?.reduce(function (acc, item) {
-                      return acc + item.quantity * item.price ;
-                    }, 0)}
-                    stripeKey="pk_test_51MjONIGFP9mleeqXzwIgHARKFUsnPzGg5WkYtfbVrknjsR9f7y8nAArefFFzgLnD9hsa12bkBASJPyU2XixDuicE00Vo38WcKv"
-                    />
+                  className="  btn btn-dark py-2 px-2 "
+                  token={onToken}
+                  name="Tashtib Payment"
+                  currency="USD"
+                  amount={cartItems?.reduce(function (acc, item) {
+                    return acc + item.quantity * item.price;
+                  }, 0)}
+                  stripeKey="pk_test_51MjONIGFP9mleeqXzwIgHARKFUsnPzGg5WkYtfbVrknjsR9f7y8nAArefFFzgLnD9hsa12bkBASJPyU2XixDuicE00Vo38WcKv"
+                  
+                />
 
               </div>
               <Slider {...settings} className='w-100 m-auto text-center'>
-              <img src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="pay-Image  opacity-25 mt-5 "/>
-              <img src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="pay-Image  opacity-25 mt-5 "/>
+                <img  src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="pay-Image  opacity-25 mt-5 " />
+                <img src={require('../assets/testemonial/payment.png')} alt='payment Methods' className="pay-Image  opacity-25 mt-5 " />
               </Slider>
             </div>
           </div>
