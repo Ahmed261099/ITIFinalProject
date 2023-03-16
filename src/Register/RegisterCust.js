@@ -16,10 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const reg = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+).*$/);
-const regPass = new RegExp(
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-);
-// const regPhone = RegExp(/^[1-9]\d{2}\s\d{3}\s\d{4}/);
+const regPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
+const regPhone = RegExp(/^01[0125][0-9]{8}$/);
 function Register() {
 
   const history = useHistory();
@@ -130,11 +128,13 @@ function Register() {
       setErros({
         ...error,
         phone:
-          e.target.value.length === 0
+          e.target.value.length == 0
             ? "This Field is Required"
-            : e.target.value.length < 11
-            ? "Min Length is 11"
-            : null,
+            : e.target.value.length < 11 
+            ? "Min Length is 11" 
+            : regPhone.test(e.target.value) 
+            ? ""
+            : "Please Enter phone number",
       });
     } else if (e.target.name === "password") {
       setUserData({

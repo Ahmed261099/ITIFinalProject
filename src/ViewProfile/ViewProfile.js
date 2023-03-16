@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../Firebase.js";
 import { ToastContainer, toast } from "react-toastify";
-import { addProductToCart, deleteFromCart } from "../Store/Actions/CartAction";
+import { addProductToCart, deleteFromCart, listCartItems } from "../Store/Actions/CartAction";
 
 function ViewProfile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -651,7 +651,7 @@ function ViewProfile() {
     if (exist) {
       console.log(exist);
     } else {
-      history.push("/Cart");
+      // history.push("/Cart");
     }
     console.log(myProduct, currentUser, getViewer, getDBViewer);
     dispatch(addProductToCart(myProduct, currentUser, getViewer, getDBViewer))
@@ -661,11 +661,14 @@ function ViewProfile() {
       .catch((error) => {
         toast("error " + error);
       });
+
+      dispatch(listCartItems(getDBViewer, getViewer?.email))
   };
 
   const removeFromCart = (product) => {
     const exist = getViewer?.cart?.find(({ name }) => name === product.name);
     dispatch(deleteFromCart(getViewer, exist.id, getDBViewer));
+    dispatch(listCartItems(getDBViewer, getViewer?.email))
   };
 
   return (

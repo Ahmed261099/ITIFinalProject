@@ -57,9 +57,9 @@ function Login() {
 
     useEffect(() => {
         if(currentUser){
-          history.push("profile")
+            history.push("profile")
         }
-      }, [currentUser, history])
+    }, [currentUser, history])
 
       
     const submitData = (e) => {

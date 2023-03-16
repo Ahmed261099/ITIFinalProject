@@ -63,14 +63,12 @@ export const addProductToCart =
             cart: getUser.cart,
           });
           toast("Item " + product.name + " successfully added");
-
+          console.log(product);
           dispatch({
             type: "CART_ITEM_ADD_SUCCESS",
             payload: product,
           });
         } else {
-          console.log(getUser.cart);
-          console.log(getUser);
           toast(product.name + " already in cart");
 
           dispatch({
@@ -140,9 +138,9 @@ export const deleteFromCart =
         cart: items,
       });
 
-      window.location.replace("/Cart");
+      toast("removed from cart")
 
-      dispatch({ type: "CART_ITEM_REMOVE_SUCCESS" });
+      dispatch({ type: "CART_ITEM_REMOVE_SUCCESS"});
     } catch (error) {
       dispatch({
         type: "CART_ITEM_REMOVE_FAIL",
@@ -171,18 +169,3 @@ export const deleteFromCart =
     }
   };
 
-export const CartCounter = async (database, email, items) => {
-  const data = collection(db, database);
-
-  const q = query(data, where("email", "==", email));
-
-  const querySnapshot = await getDocs(q);
-  let newData = [];
-  querySnapshot.forEach((doc) => (newData = doc.data().cart));
-  console.log(items);
-
-  return {
-    type: "CART_COUNT",
-    payload: items,
-  };
-};
