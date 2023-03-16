@@ -139,6 +139,8 @@ export const deleteFromCart =
       });
       console.log(getUser?.cart);
 
+      toast("removed from cart")
+
       dispatch({ type: "CART_ITEM_REMOVE_SUCCESS"});
     } catch (error) {
       dispatch({
