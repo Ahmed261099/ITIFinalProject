@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { db } from "../../Firebase";
 import { v4 as uuid } from "uuid";
 
-export const listCartItems = (database, email) => async (dispatch) => {
+export const listCartItems = (database, email,checkout) => async (dispatch) => {
   let cartData = [];
 
   async function getData() {
@@ -20,7 +20,11 @@ export const listCartItems = (database, email) => async (dispatch) => {
 
     const querySnapshot = await getDocs(q);
     let newData = [];
-    querySnapshot.forEach((doc) => (newData = doc.data().cart));
+    if(checkout){
+      querySnapshot.forEach((doc) => (newData = doc.data().cart));
+    }else{
+      newData=[];
+    }
 
     return newData;
   }

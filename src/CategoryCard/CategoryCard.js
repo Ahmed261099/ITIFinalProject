@@ -173,7 +173,7 @@ const CategoryCard = (props) => {
         toast("error " + error);
       });
 
-      dispatch(listCartItems(getDB, currentUser?.email))
+      dispatch(listCartItems(getDB, currentUser?.email,true))
   };
 
   return (

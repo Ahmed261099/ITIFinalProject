@@ -20,7 +20,7 @@ function Navbar() {
   }, [currentUser]);
 
   const cartItemsFunction = () => {
-    dispatch(listCartItems("users", currentUser?.email))
+    dispatch(listCartItems("users", currentUser?.email,true))
   }
 
   return (

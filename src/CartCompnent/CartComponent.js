@@ -11,6 +11,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const CartComponent = () => {
   const cartItems = useSelector((state) => state.cartItemsList.cartItems);
@@ -89,7 +90,7 @@ const CartComponent = () => {
   useEffect(() => {
     if (currentUser) {
       getData();
-      dispatch(listCartItems(getDB, currentUser.email));
+      dispatch(listCartItems(getDB, currentUser.email,true));
       console.log(getDB);
 
     } else {
@@ -133,7 +134,18 @@ const CartComponent = () => {
       .catch((error) => {
         console.log("ERROR on add orders" + error);
       });
-      cartItems=[]
+
+      const docRef = doc(db, getDB, getUser?.id);
+      updateDoc(docRef, {
+        cart: [],
+      })
+        .then(() => {
+          toast("success bayment");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log("ERROR" + error);
+        });
   };
 
   return (
@@ -218,6 +230,7 @@ const CartComponent = () => {
           </div>
         </div>
       )}
+      <ToastContainer></ToastContainer>
     </div>
   );
 };

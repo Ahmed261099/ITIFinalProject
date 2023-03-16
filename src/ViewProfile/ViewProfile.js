@@ -662,13 +662,13 @@ function ViewProfile() {
         toast("error " + error);
       });
 
-      dispatch(listCartItems(getDBViewer, getViewer?.email))
+      dispatch(listCartItems(getDBViewer, getViewer?.email,true))
   };
 
   const removeFromCart = (product) => {
     const exist = getViewer?.cart?.find(({ name }) => name === product.name);
     dispatch(deleteFromCart(getViewer, exist.id, getDBViewer));
-    dispatch(listCartItems(getDBViewer, getViewer?.email))
+    dispatch(listCartItems(getDBViewer, getViewer?.email,true))
   };
 
   return (
