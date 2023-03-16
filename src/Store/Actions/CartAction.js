@@ -137,7 +137,6 @@ export const deleteFromCart =
         ...getUser,
         cart: items,
       });
-      console.log(getUser?.cart);
 
       toast("removed from cart")
 

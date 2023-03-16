@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import { CartQuantity, deleteFromCart, listCartItems } from "../Store/Actions/CartAction";
 import "./Cart.css";
 
@@ -75,6 +76,7 @@ const Cart = ({ cartItem, user, database }) => {
           </span>
         </td>
       </tr>
+      <ToastContainer></ToastContainer>
     </tbody>
   );
 };
