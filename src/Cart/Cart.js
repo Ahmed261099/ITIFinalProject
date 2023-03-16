@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { CartQuantity, deleteFromCart } from "../Store/Actions/CartAction";
+import { CartQuantity, deleteFromCart, listCartItems } from "../Store/Actions/CartAction";
 import "./Cart.css";
 
 const Cart = ({ cartItem, user, database }) => {
@@ -17,7 +17,7 @@ const Cart = ({ cartItem, user, database }) => {
       dispatch(CartQuantity(cartItem, user, cartItem.quantity, database, id));
     } else if (action === "remove") {
       if (cartItem.quantity === 0) {
-        cartItem.quantity = 0;
+        deleteFromCart();
       } else {
         cartItem.quantity -= 1;
       }
@@ -30,6 +30,7 @@ const Cart = ({ cartItem, user, database }) => {
   const deleteItemFromCart = () => {
     console.log(user, id, database);
     dispatch(deleteFromCart(user, id, database));
+    dispatch(listCartItems(database, user?.email))
   };
 
   return (

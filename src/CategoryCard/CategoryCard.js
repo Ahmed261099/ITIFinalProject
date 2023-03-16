@@ -11,12 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../Firebase";
-import { addProductToCart, CartCounter } from "../Store/Actions/CartAction";
+import { addProductToCart, CartCounter, listCartItems } from "../Store/Actions/CartAction";
 import "./Category.css";
 import { ToastContainer } from "react-toastify";
 
 const CategoryCard = (props) => {
   const cartItems = useSelector((state) => state.cartItemsList.cartItems);
+
 
   const product = props.products;
 
@@ -159,7 +160,8 @@ const CategoryCard = (props) => {
     if (exist) {
       console.log(exist);
     } else {
-      history.push("/Cart");
+      // history.push("/Cart");
+      console.log("not exist");
     }
     console.log(product, currentUser, getUser, getDB);
 
@@ -171,7 +173,7 @@ const CategoryCard = (props) => {
         toast("error " + error);
       });
 
-    dispatch(CartCounter(getDB, currentUser.email, cartItems.length));
+      dispatch(listCartItems(getDB, currentUser?.email))
   };
 
   return (
@@ -191,7 +193,7 @@ const CategoryCard = (props) => {
 
         <div className=" footer text-center mb-2 mt-1 d-flex flex-row justify-content-between ">
           <span className="name ">{name}</span>
-          <span className="price ">{price} $</span>
+          <span className="price ">{price} EGP</span>
         </div>
         <div className="  Item-Icon  rounded-circle position-absolute  py-4 ">
           {currentUser ? (

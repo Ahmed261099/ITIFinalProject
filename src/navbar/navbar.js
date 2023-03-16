@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Badge } from "@mui/material";
+import { listCartItems } from "../Store/Actions/CartAction";
 
 function Navbar() {
 
@@ -12,7 +13,15 @@ function Navbar() {
 
   const size = cartItems?.length;
 
-  useEffect(() => {}, [cartItems]);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    cartItemsFunction();
+  }, [currentUser]);
+
+  const cartItemsFunction = () => {
+    dispatch(listCartItems("users", currentUser?.email))
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-light navbar-light py-3">
