@@ -13,6 +13,7 @@ import {
   query,
 } from "@firebase/firestore";
 import { db } from "../Firebase";
+import { logoutInitiate } from "../Store/Actions/AuthAction";
 
 function Navbar() {
 
@@ -89,6 +90,12 @@ function Navbar() {
   const cartItemsFunction = () => {
     dispatch(listCartItems(getDB, currentUser?.email,true))
   }
+
+  const handleAuth = () => {
+    if (currentUser) {
+      dispatch(logoutInitiate());
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-light navbar-light py-3">
@@ -172,6 +179,17 @@ function Navbar() {
                       <i class="fa-regular fa-user"></i>
                     </NavLink>
                   </li>
+                  <li className="nav-item px-lg-1">
+                    <NavLink
+                      className="nav-link fs-5"
+                      aria-current="page"
+                      to="/login"
+                      onClick={handleAuth}
+                    >
+                      <i className="pe-1 fa fa-sign-out"></i>
+                    </NavLink>
+                  </li>
+                  
                 </>
               ) : (
                 <li className="nav-item px-lg-1">
