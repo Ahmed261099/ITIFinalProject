@@ -275,14 +275,20 @@ function ViewProfile() {
             : null,
       });
     } else if (e.target.name === "rating") {
-      setUserData({
-        ...userData,
-        rating: e.target.value,
-      });
-
+      if(e.target.value==='rating'||e.target.value===''){
+        setUserData({
+          ...userData,
+          rating:0,
+        });
+      }else{
+        setUserData({
+          ...userData,
+          rating: e.target.value,
+        })
+      }
       setErros({
         ...error,
-        rating: e.target.value.length === 0 ? "This Field is Required" : null,
+        // rating: e.target.value === 'rating' ? "This Field is Required" : null,
       });
     } else if (e.target.name === "city") {
       setUserData({
@@ -511,10 +517,17 @@ function ViewProfile() {
   };
 
   const handleButtonComment = () => {
+    if(userData.rating==='')
+    {
+      getUser.feedback.push({
+        comment: userData.comment,
+        rating: 0,
+      })
+    }else{
     getUser.feedback.push({
       comment: userData.comment,
       rating: userData.rating,
-    });
+    });}
 
     const docRef = doc(db, getDB, getUser.id);
 
@@ -528,7 +541,7 @@ function ViewProfile() {
       .catch((error) => {
         console.log("ERROR" + error);
       });
-
+    console.log(getUser.feedback);
     userData.comment = "";
     userData.rating = "";
   };
@@ -940,8 +953,7 @@ function ViewProfile() {
                                   disabled={
                                     error.rating ||
                                     error.comment ||
-                                    userData.comment === "" ||
-                                    userData.rating === "rating"
+                                    userData.comment === ""
                                   }
                                   onClick={() => handleButtonComment()}
                                   type="reset"
@@ -1285,8 +1297,8 @@ function ViewProfile() {
                                       disabled={
                                         error.rating ||
                                         error.comment ||
-                                        userData.comment === "" ||
-                                        userData.rating === "rating"
+                                        userData.comment ==="" ||
+                                        userData.rating ==="rating"
                                       }
                                       onClick={() =>
                                         handleButtonCommentProduct()
