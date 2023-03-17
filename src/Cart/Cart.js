@@ -16,12 +16,8 @@ const Cart = ({ cartItem, user, database }) => {
     if (action === "add") {
       cartItem.quantity += 1;
       dispatch(CartQuantity(cartItem, user, cartItem.quantity, database, id));
-    } else if (action === "remove") {
-      if (cartItem.quantity === 0) {
-        deleteFromCart();
-      } else {
+    } else if (action === "remove") { 
         cartItem.quantity -= 1;
-      }
       dispatch(CartQuantity(cartItem, user, cartItem.quantity, database, id));
     } else {
       console.log("no change");
@@ -51,7 +47,9 @@ const Cart = ({ cartItem, user, database }) => {
             <button
               className="qtybtn"
               onClick={() => {
-                handleQty("remove", id);
+                quantity - 1 === 0
+                  ? deleteItemFromCart()
+                  : handleQty("remove", id);
               }}
             >
               -

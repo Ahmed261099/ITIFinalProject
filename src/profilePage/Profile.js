@@ -660,7 +660,7 @@ function Profile() {
                 {getUser.image === "" ? (
                   <img
                     className="imgprofile"
-                    src={require("../assets/avatar2.png")}
+                    src={require("../assets/DeaultImages/default3.jpg")}
                     alt=""
                   ></img>
                 ) : (
@@ -708,8 +708,8 @@ function Profile() {
                       <p className="text-center">{onePort.caption}</p>
 
                       <div className="transbox">
-                      <h3 className="">{onePort.title}</h3>
-                      <p>{onePort.caption}</p>
+                        <h3 className="">{onePort.title}</h3>
+                        <p>{onePort.caption}</p>
                       </div>
 
                     </Carousel.Caption>
@@ -1027,11 +1027,11 @@ function Profile() {
                                 );
                               })} */}
                         {getMessage.length === 0 ? (<h2 className="fs-5 text-center">No Messages to show!</h2>) :
-                        
+
                           (getMessage?.map((message, index) => {
                             return (
                               <>
-                                
+
                                 <div
 
                                   key={index}
@@ -1039,15 +1039,15 @@ function Profile() {
 
                                   <div className="chat-bubble_right d-flex justify-content-between mb-2 align-items-center" >
                                     <div >
-                                    <Link to={`view/${message.role}/${message.uid}`} className="user-name">{message.name}</Link>
-                                    <p className="user-message">{message.text}</p></div>
+                                      <Link to={`view/${message.role}/${message.uid}`} className="user-name">{message.name}</Link>
+                                      <p className="user-message">{message.text}</p></div>
                                     <div>
-                                    <button className="btn" onClick={()=>removeFromMessage(index)}><i class="fa-solid fa-xmark"></i></button>
+                                      <button className="btn" onClick={() => removeFromMessage(index)}><i class="fa-solid fa-xmark"></i></button>
                                     </div>
                                   </div>
-                                  <br/>
+                                  <br />
                                 </div>
-                                
+
                               </>
                             );
                           }))}
@@ -1078,7 +1078,15 @@ function Profile() {
                       tabIndex="0"
                     >
                       <div className="border p-4">
-                        <h3 className="border-bottom pb-2 mb-4">Cart</h3>
+                        <div className="d-flex border-bottom justify-content-between">
+                          <h3 className="  ">Cart</h3>
+                          <Link
+                            to={`/Cart`}
+                            className="btn btn-outline-dark"
+                          >
+                            View
+                          </Link>
+                        </div>
                         <div className="myaccount-table table-responsive text-center">
                           {getcart.length === 0 ? (<h2 className="fs-5">No products to show!</h2>) : (
                             <table className="table table-bordered">
@@ -1100,12 +1108,6 @@ function Profile() {
                                       <td>{item.price}</td>
                                       <td>{item.quantity}</td>
                                       <td>
-                                        <Link
-                                          to={`view/${item.role}/${item.id}`}
-                                          className="btn btn-outline-dark"
-                                        >
-                                          View
-                                        </Link>
                                         <button
                                           onClick={() => removeFromCart(index)}
                                           className="btn btn-outline-danger ms-2"

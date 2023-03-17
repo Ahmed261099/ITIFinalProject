@@ -602,7 +602,12 @@ function ViewProfile() {
           name: item.name,
           id: item.id,
           role: item.spetialization,
-        });
+          spetialization:item.spetialization,
+          quantity:1,
+          description:item.description,
+          price:item.price,
+          image:item.image,
+        });    
       }
       const docRef = doc(db, getDBViewer, getViewer?.id);
       updateDoc(docRef, {
@@ -1117,9 +1122,9 @@ function ViewProfile() {
                         class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
                         onClick={() => addToCart(products)}
                       >
-                        <span class="add-to-cart">
-                          <i class="fa-solid fa-cart-shopping"></i> Add to cart
-                        </span>
+                        <span class="add-to-cart"> Add to cart</span>
+                        <i class="fas fa-box"></i>
+                        <i class="fa-solid fa-cart-shopping"> Add to cart</i>
                       </button>
                     )
                   ) : (

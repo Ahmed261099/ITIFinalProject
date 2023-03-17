@@ -99,21 +99,20 @@ const CategoryCard = (props) => {
   };
 
   const addToWhishList = (item) => {
+    console.log(db, getDB, getUser?.id);
     const added = getUser?.wishlist.find(({ id }) => id === item.id);
     if (!added) {
-      if (getDB === "engineers" || getDB === "providers") {
-        getUser?.wishlist.push({
-          name: item.name,
-          id: item.id,
-          role: item.role,
-        });
-      } else {
         getUser?.wishlist.push({
           name: item.name,
           id: item.id,
           role: item.spetialization,
-        });
-      }
+          spetialization:item.spetialization,
+          quantity:1,
+          description:item.description,
+          price:item.price,
+          image:item.image,
+        });        
+     
       const docRef = doc(db, getDB, getUser?.id);
       updateDoc(docRef, {
         wishlist: getUser?.wishlist,

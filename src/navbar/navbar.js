@@ -1,11 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Badge } from "@mui/material";
 import { listCartItems } from "../Store/Actions/CartAction";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+  where,
+  query,
+} from "@firebase/firestore";
+import { db } from "../Firebase";
 
 function Navbar() {
+
+  const [getDB, setGetDB] = useState("");
+  const [getCustomer, setGetCustomer] = useState({});
+  const [getProvider, setGetProvider] = useState({});
+  const [getEngineer, setGetEngineer] = useState({});
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -16,11 +30,64 @@ function Navbar() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+      getData();
+    
     cartItemsFunction();
   }, [currentUser]);
 
+
+  const getData = () => {
+    if(currentUser){
+    const q = query(
+      collection(db, "providers"),
+      where("email", "==", currentUser?.email)
+    );
+
+    onSnapshot(q, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetProvider({ ...doc.data(), id: doc.id });
+        if (getProvider) {
+          setGetDB("providers");
+        }
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+
+    const q2 = query(
+      collection(db, "engineers"),
+      where("email", "==", currentUser?.email)
+    );
+
+    onSnapshot(q2, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetEngineer({ ...doc.data(), id: doc.id });
+        if (getEngineer) {
+          setGetDB("engineers");
+        }
+
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+
+    const q3 = query(
+      collection(db, "users"),
+      where("email", "==", currentUser?.email)
+    );
+
+    onSnapshot(q3, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        setGetCustomer({ ...doc.data(), id: doc.id });
+        if (getCustomer) {
+          setGetDB("users");
+        }
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+  }
+  };
+
   const cartItemsFunction = () => {
-    dispatch(listCartItems("users", currentUser?.email,true))
+    dispatch(listCartItems(getDB, currentUser?.email,true))
   }
 
   return (
