@@ -1122,28 +1122,30 @@ function ViewProfile() {
                         class="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0"
                         onClick={() => addToCart(products)}
                       >
-                        <span class="add-to-cart"> Add to cart</span>
-                        <i class="fas fa-box"></i>
-                        <i class="fa-solid fa-cart-shopping"> Add to cart</i>
+                        <span class="">Add to Cart </span>
+                        {/* <i class="fa-solid fa-cart-shopping"></i> */}
+                        {/* <i class="fas fa-box"></i> */}
                       </button>
                     )
                   ) : (
-                    <Link className="btn btn-outline-dark" to="/login">
-                      Add to cart
+                    <Link className="cart-button btn btn-outline-primary me-lg-2 mb-2 mb-lg-0" to="/login">
+                        <span class="add-to-cart">Add to Cart </span>
+                        {/* <i class="fas fa-box"></i>
+                        <i class="fa-solid fa-cart-shopping"></i> */}
                     </Link>
                   )}
 
                   {currentUser ? (
                     exists(products) ? (
                       <button
-                        className="btn btn-dark py-3"
+                        className="btn btn-dark py-3 w-50"
                         onClick={() => removeFromWhishList(products)}
                       >
                         remove from wishlist
                       </button>
                     ) : (
                       <button
-                        className="btn btn-outline-dark  py-3"
+                        className="btn btn-outline-dark  py-3 w-50"
                         onClick={() => addToWhishList(products)}
                       >
                         Add to wishlist

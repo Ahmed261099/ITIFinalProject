@@ -155,7 +155,7 @@ function Register() {
             ? "Min Length is 8"
             : regPass.test(e.target.value)
             ? ""
-            : "Invalid Password",
+            : "Password should contain uppercase & lowercase letters & special character & numbers",
       });
     } else {
       setUserData({

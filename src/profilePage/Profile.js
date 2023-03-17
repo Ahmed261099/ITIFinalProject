@@ -570,7 +570,25 @@ function Profile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const docRef = doc(db, getDB, getUser.id);
+          if (getDB === 'users') {
+            updateDoc(docRef, {
+              name: getUser.name,
+              username: getUser.username,
+              email: getUser.email,
+              image: downloadURL,
+            })
 
+          } else {
+            updateDoc(docRef, {
+              name: getUser.name,
+              username: getUser.username,
+              experience: getUser.experience,
+              email: getUser.email,
+              spetialization: getUser.spetialization,
+              image: downloadURL,
+            })
+
+          }
           updateDoc(docRef, {
             name: getUser.name,
             username: getUser.username,
@@ -703,10 +721,6 @@ function Profile() {
                       alt=""
                     />
                     <Carousel.Caption>
-
-                      <h3 className="text-center">{onePort.title}</h3>
-                      <p className="text-center">{onePort.caption}</p>
-
                       <div className="transbox">
                         <h3 className="">{onePort.title}</h3>
                         <p>{onePort.caption}</p>
